@@ -28,29 +28,21 @@ public class Puzzle_Tile : MonoBehaviour
     Vector3 outPosition;
     Vector3 InPosition;
 
+    MeshRenderer rend;
+    Material mat;
 
-    /// <summary>
-    /// 플레이어는 말이 위에 없는 타일을 들어서 옮길 수 있다.
-    /// </summary>
-    public bool isGrounded;
-
-    private void OnEnable()
+    private void Awake()
     {
-        SetRay();
+        rend = GetComponent<MeshRenderer>();
+    }
+    private void Start()
+    {
+        mat = rend.materials[0];
+        //mat.SetInt();
     }
 
-    Ray ray = new Ray();
 
-    public void SetRay()
-    {
-        ray.origin = transform.position;
-        ray.direction = transform.up;
-    }
 
-    bool IsOnboard()
-    {
-        return Physics.Raycast(ray, out RaycastHit hit, 1) && hit.transform.name == "Horse";
-    }
 
     void OnBoardEvent(Transform horse)
     {

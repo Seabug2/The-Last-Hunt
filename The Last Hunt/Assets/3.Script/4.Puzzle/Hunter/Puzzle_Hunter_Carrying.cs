@@ -15,20 +15,24 @@ public class Puzzle_Hunter_Carrying : MonoBehaviour
     /// </summary>
     bool isCarrying = false;
 
-    Puzzle_Tile tile = null;
 
     [SerializeField]
     LayerMask tileLayer;
 
     [SerializeField]
-    Transform tileMark;
-    MeshRenderer tileMarkRend;
+    Puzzle_Guide guideTile;
 
-    Transform selectedTile;
+    Puzzle_Tile selectedTile;
 
+    float tilePosY = 0.25f;
     private void Awake()
     {
-        tileMarkRend = tileMark.GetComponent<MeshRenderer>();
+        tilePosY = -transform.lossyScale.y * .5f;
+    }
+
+    private void OnEnable()
+    {
+        isCarrying = false;
     }
 
     /// <summary>
@@ -39,14 +43,15 @@ public class Puzzle_Hunter_Carrying : MonoBehaviour
         get
         {
             Vector3 origin = transform.position + transform.forward * offset.x + Vector3.up * offset.y;
-            Vector3 direction = origin + Vector3.down;
+            Vector3 direction = origin + Vector3.down * rayDown;
             return new Ray(origin, direction);
         }
     }
 
+    const float rayDown = 3f;
+
     public void CarryingAction()
     {
-        TileCheck();
         //들고 있을 때
         if (isCarrying)
         {
@@ -59,20 +64,37 @@ public class Puzzle_Hunter_Carrying : MonoBehaviour
         }
     }
 
+    //타일 내려두기의 조건
     void SetTile()
     {
-
+        isCarrying = false;
     }
+
+    //타일 들기의 조건
     void TakeTile()
     {
+        print("타일을 든다");
 
+        //눈 앞의 타일을 가져온다
+        selectedTile = TileCheck();
+        if (selectedTile != null)
+        {
+            print(selectedTile.name);
+
+            //selectedTile.gameObject.SetActive(false);
+            isCarrying = true;
+        }
     }
 
     Puzzle_Tile TileCheck()
     {
-        if (Physics.Raycast(FrontRay, out RaycastHit hit, 10, tileLayer))
+        //Raycast를 해서 타일을 가져옵니다.
+        if (Physics.Raycast(FrontRay, out RaycastHit hit, rayDown, tileLayer))
         {
             print(hit.transform.name);
+            //만약 타일 위에 아무것도 없을 경우
+            //if (!tile.isGrounded)
+            return hit.transform.GetComponent<Puzzle_Tile>();
         }
 
         return null;
@@ -80,23 +102,24 @@ public class Puzzle_Hunter_Carrying : MonoBehaviour
 
     private void Update()
     {
-        if (isCarrying)
-        {
-            tileMarkRend.enabled = false;
-        }
-        else
-        {
-            float x = Mathf.Round(FrontRay.origin.x / 3) * 3;
-            float z = Mathf.Round(FrontRay.origin.z /3) * 3;
-            tileMark.position = new Vector3(x, -.25f, z);
-            if(!tileMarkRend.enabled)
-                tileMarkRend.enabled = true;
-        }
+        ShowGuide();
+    }
+
+    void ShowGuide()
+    {
+        guideTile.transform.position = SetPosition();
+    }
+
+    public Vector3 SetPosition()
+    {
+        float x = Mathf.Round(FrontRay.origin.x / 3) * 3;
+        float z = Mathf.Round(FrontRay.origin.z / 3) * 3;
+        return new Vector3(x, tilePosY, z);
     }
 
     private void OnDrawGizmos()
     {
         // 타일을 검출할 Ray의 시작 위치
-        Gizmos.DrawWireSphere(FrontRay.origin, 0.1f);
+        Gizmos.DrawLine(FrontRay.origin, FrontRay.origin + Vector3.down * rayDown);
     }
 }

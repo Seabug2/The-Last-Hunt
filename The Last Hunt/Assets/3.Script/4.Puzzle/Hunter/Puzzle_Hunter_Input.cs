@@ -31,5 +31,4 @@ public class Puzzle_Hunter_Input : MonoBehaviour
             carrying.CarryingAction();
         }
     }
-
 }
