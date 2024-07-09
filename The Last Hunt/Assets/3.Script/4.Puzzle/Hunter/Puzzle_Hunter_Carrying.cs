@@ -22,8 +22,14 @@ public class Puzzle_Hunter_Carrying : MonoBehaviour
 
     [SerializeField]
     Transform tileMark;
+    MeshRenderer tileMarkRend;
 
     Transform selectedTile;
+
+    private void Awake()
+    {
+        tileMarkRend = tileMark.GetComponent<MeshRenderer>();
+    }
 
     /// <summary>
     /// 플레이어 앞의 특정 위치에서 Ray를 생성
@@ -76,11 +82,15 @@ public class Puzzle_Hunter_Carrying : MonoBehaviour
     {
         if (isCarrying)
         {
-            tileMark.gameObject.SetActive(false);
+            tileMarkRend.enabled = false;
         }
         else
         {
-            tileMark.position = new Vector3(FrontRay.origin.x, 0.5f, FrontRay.origin.z);
+            float x = Mathf.Round(FrontRay.origin.x / 3) * 3;
+            float z = Mathf.Round(FrontRay.origin.z /3) * 3;
+            tileMark.position = new Vector3(x, -.25f, z);
+            if(!tileMarkRend.enabled)
+                tileMarkRend.enabled = true;
         }
     }
 
