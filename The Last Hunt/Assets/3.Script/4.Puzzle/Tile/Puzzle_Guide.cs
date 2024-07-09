@@ -1,20 +1,26 @@
 using System.Collections;
 using UnityEngine;
 
-public class Puzzle_Guide : MonoBehaviour
+public class Puzzle_Guide : Puzzle_Tile
 {
-    MeshRenderer rend;
-    Material mat;
-
-    private void Awake()
+    private void Start()
     {
-        rend = GetComponent<MeshRenderer>();
-        mat = rend.materials[0];
+        Holding();
     }
 
-    public void Invisible(bool isCarrying)
+    public void SetInvisible(bool IsVisible)
     {
-        rend.enabled = isCarrying;
-        //mat.color = isCarrying ? :
+        rend.enabled = IsVisible;
+    }
+
+    private void LateUpdate()
+    {
+        //타일만 검사
+        Collider[] cols = Physics.OverlapBox(transform.position, Vector3.one * range, Quaternion.identity, myLayer);
+        if (cols.Length == 0) return;
+        else if (cols[0].TryGetComponent(out Puzzle_Road road))
+        {
+            Overlap(road.IsOverlapping());
+        }
     }
 }

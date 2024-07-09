@@ -14,9 +14,6 @@ public class Puzzle_CameraController : MonoBehaviour
         distOffset = transform.position - target.position;
     }
 
-    [SerializeField]
-    float speed = 1;
-
     void LateUpdate()
     {
         transform.position = target.position + distOffset;
