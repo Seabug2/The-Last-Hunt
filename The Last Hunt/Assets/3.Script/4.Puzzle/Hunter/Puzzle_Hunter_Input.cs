@@ -4,34 +4,32 @@ using UnityEngine;
 
 public class Puzzle_Hunter_Input : MonoBehaviour
 {
-    /// <summary>
-    /// x = 검출 앞 거리
-    /// y = 검출 높이
-    /// </summary>
-    [SerializeField]
-    Vector2 offset = new Vector2();
+    //1.캐릭터를 가로세로로 조작할 수 있다.
+    //2.타일을 들거나 옮겨 둘 수 있다.
 
-    private void OnDrawGizmos()
+    Puzzle_Hunter_Movement movement;
+    Puzzle_Hunter_Carrying carrying;
+
+    private void Awake()
     {
-        Vector3 drawPosition = transform.position + transform.forward * offset.x + Vector3.up * offset.y;
-
-        Gizmos.DrawWireSphere(drawPosition, 1f);
+        carrying = GetComponent<Puzzle_Hunter_Carrying>();
+        movement = GetComponent<Puzzle_Hunter_Movement>();
     }
-
-    /// <summary>
-    /// 타일을 들고 있는가?
-    /// </summary>
-    bool isCarrying = false;
 
     private void Update()
     {
-        //플레이어 앞의 특정 위치에서 Raycast를 실행
-        Vector3 drawPosition = transform.position + transform.forward * offset.x + Vector3.up * offset.y;
+        float x = Input.GetAxis("Horizontal");
+        float y = Input.GetAxis("Vertical");
 
-        //아무것도 들고 있지 않을 때 검사를 시작
-        if (isCarrying)
+        //정규화된 수치로 방향 벡터를 설정
+        Vector3 dir = new Vector3(x, 0, y).normalized;
+        movement.dir = dir;
+
+        //스페이스바를 눌렀을 때 
+        if (Input.GetKeyDown(KeyCode.Space))
         {
-            
-        }  
+            carrying.CarryingAction();
+        }
     }
+
 }

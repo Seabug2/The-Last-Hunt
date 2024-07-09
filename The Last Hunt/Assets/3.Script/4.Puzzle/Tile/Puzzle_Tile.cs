@@ -25,6 +25,10 @@ public class Puzzle_Tile : MonoBehaviour
 
     public TileType tileType = new TileType();
 
+    Vector3 outPosition;
+    Vector3 InPosition;
+
+
     /// <summary>
     /// 플레이어는 말이 위에 없는 타일을 들어서 옮길 수 있다.
     /// </summary>
@@ -46,14 +50,6 @@ public class Puzzle_Tile : MonoBehaviour
     bool IsOnboard()
     {
         return Physics.Raycast(ray, out RaycastHit hit, 1) && hit.transform.name == "Horse";
-    }
-
-    private void FixedUpdate()
-    {
-        if (IsOnboard())
-        {
-            Debug.Log("말이 위에 올라옴");
-        }
     }
 
     void OnBoardEvent(Transform horse)
