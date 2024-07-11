@@ -14,9 +14,9 @@ public class Puzzle_WarningUI : MonoBehaviour
         warningText = GetComponentInChildren<Text>();
     }
 
-    void ShowMessege(string s)
-    {
-        warningText.text = s;
-        anim.SetTrigger("Pop-up");
-    }
+    //void ShowMessege(string s)
+    //{
+    //    warningText.text = s;
+    //    anim.SetTrigger("Pop-up");
+    //}
 }

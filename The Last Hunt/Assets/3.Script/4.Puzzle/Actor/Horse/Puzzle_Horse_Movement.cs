@@ -11,16 +11,16 @@ public class Puzzle_Horse_Movement : Puzzle_Movement
         print("말 뒤짐");
     }
 
-    private void Start()
+    protected override void Start()
     {
+        base.Start();
         MoveToNextTile();
-        //Invoke("MoveToNextTile",0.1f);
     }
 
     //말이 자기 앞의 타일을 검사하여 그 타일의 코루틴을 실행
     public void MoveToNextTile()
     {
-        if(ViewingTile == null)
+        if (ViewingTile == null)
         {
             Falling();
             return;

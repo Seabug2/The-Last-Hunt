@@ -16,15 +16,14 @@ public class Puzzle_Road : Puzzle_Tile
     /// 2 = ³²
     /// 3 = ºÏ
     /// </summary>
-    Vector3[] gatePosition = new Vector3[]
+    readonly Vector3[] gatePosition = new Vector3[]
     {
         new Vector3(1.5f,0,0),
         new Vector3(-1.5f,0,0),
         new Vector3(0,0,-1.5f),
         new Vector3(0,0,1.5f)
     };
-
-    private void LateUpdate()
+    private void FixedUpdate()
     {
         if (IsHolding)
         {
@@ -115,8 +114,6 @@ public class Puzzle_Road : Puzzle_Tile
             }
         }
 
-
-
         float elapsedTime = 0;
         while (elapsedTime < duration)
         {
@@ -128,6 +125,7 @@ public class Puzzle_Road : Puzzle_Tile
             elapsedTime += Time.fixedDeltaTime;
             yield return new WaitForFixedUpdate();
         }
+
         horse.position = endPos;
 
         target.MoveToNextTile();
@@ -145,7 +143,7 @@ public class Puzzle_Road : Puzzle_Tile
 
         return p;
     }
-
+#if UNITY_EDITOR
     protected override void OnDrawGizmos()
     {
         base.OnDrawGizmos();
@@ -158,4 +156,5 @@ public class Puzzle_Road : Puzzle_Tile
             }
         }
     }
+#endif
 }

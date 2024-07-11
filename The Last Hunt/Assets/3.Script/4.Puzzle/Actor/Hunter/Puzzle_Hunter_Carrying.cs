@@ -6,18 +6,21 @@ using UnityEngine.UI;
 public class Puzzle_Hunter_Carrying : MonoBehaviour
 {
     /// <summary>
-    /// 타일을 들고 있지 않을 때 보고 있는 타일을 들 수 있는지 없는지 알려주는 타일
-    /// </summary>
-    [SerializeField] Puzzle_Guide guideTile;
-    [SerializeField] RectTransform guideUI;
-    Camera cam;
-
-    Puzzle_Movement movement;
-
-    /// <summary>
-    /// 현재 들고 있는 타일
+    /// 현재 플레이어가 선택 중인 타일
     /// </summary>
     Puzzle_Tile holdingTile;
+    /// <summary>
+    /// 타일을 들고 있지 않을 때 보고 있는 타일을 들 수 있는지 없는지 알려주는 타일
+    /// </summary>
+    [SerializeField, Header("가상의 가이드 타일"), Space(10)]
+    Puzzle_Guide guideTile;
+    [SerializeField, Header("타일을 들고 있을 높이"), Space(10)]
+    float holdingHeight = 1;
+    [SerializeField, Header("플레이어의 시선을 표시할UI"), Space(10)]
+    RectTransform guideUI;
+
+    Camera cam;
+    Puzzle_Movement movement;
 
     private void Awake()
     {
@@ -73,34 +76,25 @@ public class Puzzle_Hunter_Carrying : MonoBehaviour
             guideTile.SetInvisible(false);
         }
     }
+
     void SetTile()
     {
+        if (movement.ViewingTile != null) return;
+        else if (movement.ForwardPosition.x < -3 ||
+            movement.ForwardPosition.z < -9 ||
+            movement.ForwardPosition.z > 9) return;
+
         //지금 검사하고 있는 위치에 타일이 없으면 설치 가능
-        if (movement.ViewingTile == null)
+        else
         {
             holdingTile.transform.position = movement.ForwardPosition;
             holdingTile.ResetState();
             holdingTile = null;
-
             guideTile.SetInvisible(true);
         }
-        //이미 타일이 있는 자리에는 설치 불가능
-        else
-        {
-            print("현재 위치에 이미 타일이 있습니다.");
-        }
     }
 
-    private void OnDisable()
-    {
-        //guideUI.GetComponent<Image>().enabled = false;
-        print("떨어짐");
-    }
-
-    [SerializeField]
-    float holdingHeight = 1; 
-
-    private void LateUpdate()
+    private void FixedUpdate()
     {
         Vector3 forward = movement.ForwardPosition;
 

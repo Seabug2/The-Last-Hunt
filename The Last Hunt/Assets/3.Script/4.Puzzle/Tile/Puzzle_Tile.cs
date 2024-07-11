@@ -7,14 +7,15 @@ public class Puzzle_Tile : MonoBehaviour
     protected Material mat;
     BoxCollider col;
 
-    [SerializeField]
-    protected LayerMask myLayer = 0;
+    protected LayerMask myLayer;
 
+    /// <summary>
+    /// 콜라이더가 비활성화 상태라면 들고 있는 상태이다.
+    /// </summary>
     public bool IsHolding
     {
         get
         {
-            //콜라이더가 비활성화 상태라면 들고 있는 상태이다.
             return col.enabled == false;
         }
     }
@@ -25,6 +26,7 @@ public class Puzzle_Tile : MonoBehaviour
         mat = rend.materials[0];
         col = GetComponent<BoxCollider>();
     }
+
     protected virtual void Start()
     {
         myLayer = Puzzle_GameManager.instance.TileLayer;
@@ -78,7 +80,7 @@ public class Puzzle_Tile : MonoBehaviour
             return false;
         }
     }
-
+#if UNITY_EDITOR
     [Space(10)]
     public bool showGizmo;
     protected virtual void OnDrawGizmos()
@@ -89,4 +91,5 @@ public class Puzzle_Tile : MonoBehaviour
             Gizmos.DrawWireCube(transform.position, Vector3.one * range);
         }
     }
+#endif
 }

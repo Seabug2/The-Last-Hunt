@@ -9,7 +9,7 @@ public class Puzzle_Hunter_Movement : Puzzle_Movement
     /// <summary>
     /// 이동속도
     /// </summary>
-    [SerializeField]
+    [SerializeField, Header("이동 속도와 회전 속도"), Space(10)]
     protected float moveSpeed = 1;
     /// <summary>
     /// 회전속도
@@ -48,12 +48,9 @@ public class Puzzle_Hunter_Movement : Puzzle_Movement
             Quaternion targetRotation = Quaternion.LookRotation(dir, Vector3.up);
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.fixedDeltaTime * rotSpeed);
         }
-    }
 
-    private void LateUpdate()
-    {
         //발 아래에 sphere 영역만큼을 검출하여 타일이 없다면 떨어집니다.
-        if (Physics.OverlapBox(FloorCheckPosition, new Vector3(.1f,1f,.1f),Quaternion.identity, tileLayer).Length == 0)
+        if (Physics.OverlapBox(transform.position, floorCheckerSize, Quaternion.identity, tileLayer).Length == 0)
         {
             Falling();
         }
@@ -69,14 +66,17 @@ public class Puzzle_Hunter_Movement : Puzzle_Movement
         rb.AddForce(dir.normalized, ForceMode.Impulse);
     }
 
-    [SerializeField] float checkRange = 1;
+    [SerializeField, Header("바닥 감지 영역 크기"), Space(10)]
+    Vector3 floorCheckerSize;
 
-    //땅 바닥 체크
-    public Vector3 FloorCheckPosition
+#if UNITY_EDITOR
+    protected override void OnDrawGizmos()
     {
-        get
-        {
-            return transform.position + Vector3.up + transform.forward * checkRange;
-        }
+        base.OnDrawGizmos();
+
+        //앞의 타일 검사
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireCube(transform.position, floorCheckerSize);
     }
+#endif
 }

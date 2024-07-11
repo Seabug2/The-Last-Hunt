@@ -4,10 +4,9 @@ using UnityEngine;
 
 public class Puzzle_Movement : MonoBehaviour
 {
-
     protected Rigidbody rb;
 
-    [SerializeField,Header("타일 레이어"), Space(10)]
+    //[SerializeField,Header("타일 레이어"), Space(10)]
     protected LayerMask tileLayer;
 
     protected virtual void Awake()
@@ -15,7 +14,7 @@ public class Puzzle_Movement : MonoBehaviour
         rb = GetComponent<Rigidbody>();
     }
 
-    private void Start()
+    protected virtual void Start()
     {
         tileLayer = Puzzle_GameManager.instance.TileLayer;
     }
@@ -23,14 +22,16 @@ public class Puzzle_Movement : MonoBehaviour
     /// <summary>
     ///떨어졌을 때 처리
     /// </summary>
-    public virtual void Falling() {
+    public virtual void Falling()
+    {
         rb.constraints = RigidbodyConstraints.None;
         rb.isKinematic = false;
         rb.useGravity = true;
+        rb.AddForce(transform.forward, ForceMode.VelocityChange);
         enabled = false;
     }
 
-    [SerializeField]
+    [SerializeField, Header("타일을 감지할 앞쪽 거리"), Space(10)]
     float forwardRange;
 
     /// <summary>
@@ -43,7 +44,8 @@ public class Puzzle_Movement : MonoBehaviour
             Vector3 origin = transform.position + transform.forward * forwardRange;
             float x = Mathf.Round(origin.x / 3) * 3;
             float z = Mathf.Round(origin.z / 3) * 3;
-            return new Vector3(x, 0, z);
+            return new Vector3(x, 0 //transform.position .y
+                , z);
         }
     }
 
@@ -58,11 +60,14 @@ public class Puzzle_Movement : MonoBehaviour
         }
     }
 
-    private void OnDrawGizmos()
+#if UNITY_EDITOR
+    protected virtual void OnDrawGizmos()
     {
+        //앞의 타일 검사
         Gizmos.color = Color.red;
         Gizmos.DrawRay(FrontRay);
     }
+#endif
 
     /// <summary>
     /// 현재 보고있는 타일
