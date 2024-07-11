@@ -16,13 +16,22 @@ public class Puzzle_Hunter_Input : MonoBehaviour
         movement = GetComponent<Puzzle_Hunter_Movement>();
     }
 
+    public float dead = 1f;
+    Vector3 dir;
+
     private void Update()
     {
-        float x = Input.GetAxis("Horizontal");
-        float y = Input.GetAxis("Vertical");
+        if (Input.GetButton("Horizontal") || Input.GetButton("Vertical"))
+        {
+            float x = Input.GetAxis("Horizontal");
+            float z = Input.GetAxis("Vertical");
+            dir = new Vector3(x, 0, z);
+        }
+        else
+        {
+            dir = Vector3.Lerp(dir, Vector3.zero, Time.deltaTime * dead);
+        }
 
-        //정규화된 수치로 방향 벡터를 설정
-        Vector3 dir = new Vector3(x, 0, y).normalized;
         movement.dir = dir;
 
         //스페이스바를 눌렀을 때 

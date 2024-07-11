@@ -6,7 +6,7 @@ public class Puzzle_Tile : MonoBehaviour
     protected MeshRenderer rend;
     protected Material mat;
     BoxCollider col;
-    
+
     [SerializeField]
     protected LayerMask myLayer = 0;
 
@@ -21,10 +21,13 @@ public class Puzzle_Tile : MonoBehaviour
 
     protected virtual void Awake()
     {
-        rend = GetComponent<MeshRenderer>();
+        rend = GetComponentInChildren<MeshRenderer>();
         mat = rend.materials[0];
         col = GetComponent<BoxCollider>();
-        myLayer = 1 << gameObject.layer;
+    }
+    protected virtual void Start()
+    {
+        myLayer = Puzzle_GameManager.instance.TileLayer;
     }
 
     public virtual void ResetState()
@@ -41,6 +44,12 @@ public class Puzzle_Tile : MonoBehaviour
         mat.SetInt("_IsHolding", 1);
         col.enabled = false;
     }
+
+    public virtual void TileEvent(Puzzle_Horse_Movement target)
+    {
+        print($"말이 {name} 타일을 밟았습니다.");
+    }
+
     public void Overlap(bool _isOverlap)
     {
         mat.SetInt("_IsOverlapping", _isOverlap ? 1 : 0);
@@ -55,11 +64,11 @@ public class Puzzle_Tile : MonoBehaviour
     {
         int targetLayer = IsHolding ?
             //타일을 들고 있는 경우 타일은 자신은 검출 되지 않으므로 모든 레이어의 오브젝트를 검사
-            -1:
+            -1 :
             //타일이 놓여져 있는 경우 자신도 검출이 될 수 있으므로 타일 레이어를 제외한 모든 레이어를 검사
             ~myLayer.value;
 
-        Collider[] cols = Physics.OverlapBox(transform.position, Vector3.one * range,Quaternion.identity, targetLayer);
+        Collider[] cols = Physics.OverlapBox(transform.position, Vector3.one * range, Quaternion.identity, targetLayer);
         if (cols.Length > 0)
         {
             return true;
@@ -72,7 +81,7 @@ public class Puzzle_Tile : MonoBehaviour
 
     [Space(10)]
     public bool showGizmo;
-    private void OnDrawGizmos()
+    protected virtual void OnDrawGizmos()
     {
         if (showGizmo)
         {

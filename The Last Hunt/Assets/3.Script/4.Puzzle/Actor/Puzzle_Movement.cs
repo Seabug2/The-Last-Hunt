@@ -5,92 +5,78 @@ using UnityEngine;
 public class Puzzle_Movement : MonoBehaviour
 {
 
-    /// <summary>
-    /// 이동속도
-    /// </summary>
-    [SerializeField]
-    protected float moveSpeed = 1;
-    /// <summary>
-    /// 회전속도
-    /// </summary>
-    [SerializeField]
-    protected float rotSpeed = 1;
-
     protected Rigidbody rb;
+
+    [SerializeField,Header("타일 레이어"), Space(10)]
+    protected LayerMask tileLayer;
 
     protected virtual void Awake()
     {
         rb = GetComponent<Rigidbody>();
     }
 
-    [HideInInspector]
-    public Vector3 dir = new Vector3();
+    private void Start()
+    {
+        tileLayer = Puzzle_GameManager.instance.TileLayer;
+    }
 
     /// <summary>
     ///떨어졌을 때 처리
     /// </summary>
-    protected virtual void Falling() {
-        rb.AddForce(dir.normalized, ForceMode.Impulse);
+    public virtual void Falling() {
+        rb.constraints = RigidbodyConstraints.None;
+        rb.isKinematic = false;
+        rb.useGravity = true;
+        enabled = false;
     }
 
-    /// <summary>
-    /// x = 검출할 앞 쪽 거리
-    /// </summary>
     [SerializeField]
-    float checkRange = 1f;
+    float forwardRange;
 
-    public Vector3 FloorCheckPosition
+    /// <summary>
+    /// 현재 검출하고 있는 위치를 3x3 그리드로 설정
+    /// </summary>
+    public Vector3 ForwardPosition
     {
         get
         {
-            return transform.position + transform.forward * checkRange;
+            Vector3 origin = transform.position + transform.forward * forwardRange;
+            float x = Mathf.Round(origin.x / 3) * 3;
+            float z = Mathf.Round(origin.z / 3) * 3;
+            return new Vector3(x, 0, z);
         }
     }
 
-    [SerializeField, Header("타일 레이어"), Space(10)]
-    LayerMask tileLayer;
-
-    private void LateUpdate()
+    /// <summary>
+    /// 플레이어 앞의 특정 위치에서 Ray를 생성
+    /// </summary>
+    Ray FrontRay
     {
-        //발 아래에 sphere 영역만큼을 검출하여 타일이 없다면 떨어집니다.
-        if (Physics.OverlapSphere(FloorCheckPosition, .1f, tileLayer).Length == 0)
+        get
         {
-            rb.constraints = RigidbodyConstraints.None;
-            rb.isKinematic = false;
-            rb.useGravity = true;
-            enabled = false;
-            Falling();
+            return new Ray(ForwardPosition + Vector3.up, Vector3.down);
         }
     }
 
     private void OnDrawGizmos()
     {
-        //발 아래에 타일이 있는 지를 확인하는 영역
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(FloorCheckPosition, .1f);
+        Gizmos.DrawRay(FrontRay);
     }
 
-    Ray Ray
+    /// <summary>
+    /// 현재 보고있는 타일
+    /// </summary>
+    public Puzzle_Tile ViewingTile
     {
         get
         {
-            return new Ray(FloorCheckPosition, Vector3.down);
-        }
-    }
-
-    public Puzzle_Tile MyOnboardTile
-    {
-        get
-        {
-            //내 위치에서 아래 방향으로 길이가 1인 Ray를 발사하여 검출된 타일을 반환
-            if (Physics.Raycast(Ray, out RaycastHit hit, tileLayer))
+            //Raycast를 해서 타일을 가져옵니다.
+            if (Physics.Raycast(FrontRay, out RaycastHit hit, Mathf.Infinity, tileLayer))
             {
                 return hit.transform.GetComponent<Puzzle_Tile>();
             }
-            else
-            {
-                return null;
-            }
+            return null;
         }
     }
 }

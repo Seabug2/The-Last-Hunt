@@ -3,8 +3,9 @@ using UnityEngine;
 
 public class Puzzle_Guide : Puzzle_Tile
 {
-    private void Start()
+    protected override void Start()
     {
+        base.Start();
         Holding();
     }
 
@@ -20,6 +21,7 @@ public class Puzzle_Guide : Puzzle_Tile
         if (cols.Length == 0) return;
         else if (cols[0].TryGetComponent(out Puzzle_Road road))
         {
+            print(road.name);
             Overlap(road.IsOverlapping());
         }
     }

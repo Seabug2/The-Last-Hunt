@@ -19,5 +19,4 @@ public class Puzzle_WarningUI : MonoBehaviour
         warningText.text = s;
         anim.SetTrigger("Pop-up");
     }
-
 }
