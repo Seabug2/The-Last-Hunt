@@ -12,7 +12,6 @@ public class Puzzle_Hunter_Carrying : MonoBehaviour
     /// <summary>
     /// 타일을 들고 있지 않을 때 보고 있는 타일을 들 수 있는지 없는지 알려주는 타일
     /// </summary>
-    [SerializeField, Header("가상의 가이드 타일"), Space(10)]
     Puzzle_Guide guideTile;
     [SerializeField, Header("타일을 들고 있을 높이"), Space(10)]
     float holdingHeight = 1;
@@ -30,11 +29,7 @@ public class Puzzle_Hunter_Carrying : MonoBehaviour
     private void Start()
     {
         holdingTile = null;
-        if (!guideTile)
-        {
-            guideTile = FindObjectOfType<Puzzle_Guide>();
-        }
-        guideTile.SetInvisible(true);
+        guideTile = FindObjectOfType<Puzzle_Guide>();
         cam = Camera.main;
     }
 
@@ -74,6 +69,7 @@ public class Puzzle_Hunter_Carrying : MonoBehaviour
             holdingTile = movement.ViewingTile;
             holdingTile.Holding();
             guideTile.SetInvisible(false);
+            guideTile.enabled = false;
         }
     }
 
@@ -90,6 +86,7 @@ public class Puzzle_Hunter_Carrying : MonoBehaviour
             holdingTile.transform.position = movement.ForwardPosition;
             holdingTile.ResetState();
             holdingTile = null;
+            guideTile.enabled = true;
             guideTile.SetInvisible(true);
         }
     }

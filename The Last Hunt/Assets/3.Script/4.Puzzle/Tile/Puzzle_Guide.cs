@@ -1,4 +1,3 @@
-using System.Collections;
 using UnityEngine;
 
 public class Puzzle_Guide : Puzzle_Tile
@@ -8,7 +7,7 @@ public class Puzzle_Guide : Puzzle_Tile
         base.Start();
         Holding();
     }
-
+    
     public void SetInvisible(bool IsVisible)
     {
         rend.enabled = IsVisible;

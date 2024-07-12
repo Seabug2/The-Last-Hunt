@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Puzzle_Movement : MonoBehaviour
@@ -29,6 +27,7 @@ public class Puzzle_Movement : MonoBehaviour
         rb.useGravity = true;
         rb.AddForce(transform.forward, ForceMode.VelocityChange);
         enabled = false;
+        Puzzle_GameManager.instance.GameOverEvent?.Invoke();
     }
 
     [SerializeField, Header("타일을 감지할 앞쪽 거리"), Space(10)]

@@ -22,7 +22,7 @@ public class Puzzle_Tile : MonoBehaviour
 
     protected virtual void Awake()
     {
-        rend = GetComponentInChildren<MeshRenderer>();
+        rend = GetComponent<MeshRenderer>();
         mat = rend.materials[0];
         col = GetComponent<BoxCollider>();
     }
@@ -47,7 +47,8 @@ public class Puzzle_Tile : MonoBehaviour
         col.enabled = false;
     }
 
-    public virtual void TileEvent(Puzzle_Horse_Movement target)
+    //타일을 상속 구조로 만든 이유
+    public virtual  void TileEvent(Puzzle_Horse_Movement target)
     {
         print($"말이 {name} 타일을 밟았습니다.");
     }
@@ -83,12 +84,17 @@ public class Puzzle_Tile : MonoBehaviour
 #if UNITY_EDITOR
     [Space(10)]
     public bool showGizmo;
+    const int textSize = 30;
     protected virtual void OnDrawGizmos()
     {
         if (showGizmo)
         {
             Gizmos.color = Color.blue;
             Gizmos.DrawWireCube(transform.position, Vector3.one * range);
+            GUIStyle style = new GUIStyle();
+            style.fontSize = textSize;
+            style.normal.textColor = Color.red;
+            UnityEditor.Handles.Label(transform.position,$"{transform.position.x}, {transform.position.z}", style);
         }
     }
 #endif

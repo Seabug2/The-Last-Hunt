@@ -23,11 +23,11 @@ public class Puzzle_Road : Puzzle_Tile
         new Vector3(0,0,-1.5f),
         new Vector3(0,0,1.5f)
     };
+
     private void FixedUpdate()
     {
         if (IsHolding)
         {
-            print(name + "들고 있는 중");
             Overlap(IsOverlapping());
         }
     }
@@ -61,9 +61,6 @@ public class Puzzle_Road : Puzzle_Tile
     IEnumerator MoveHorse_co(Puzzle_Horse_Movement target)
     {
         Transform horse = target.transform;
-
-        print(name + " : 말 올라옴");
-
         Vector3 startPos = Vector3.zero;
         Vector3 endPos = Vector3.zero;
 

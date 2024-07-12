@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Puzzle_Hunter_Movement : Puzzle_Movement
@@ -42,6 +40,8 @@ public class Puzzle_Hunter_Movement : Puzzle_Movement
 
     private void FixedUpdate()
     {
+        rb.velocity = Vector3.zero;
+
         if (dir != Vector3.zero)
         {
             transform.position += Time.fixedDeltaTime * moveSpeed * dir;
