@@ -102,8 +102,8 @@ public class Puzzle_Hunter_Carrying : MonoBehaviour
         else
         {
             //사냥꾼의 눈 앞에 타일이 있을 때 보인다.
-            guideTile.SetInvisible(movement.ViewingTile != null);
             guideTile.transform.position = forward;//  + Vector3.up * holdingHeight;
+            guideTile.SetInvisible(movement.ViewingTile != null);
         }
     }
 }
