@@ -1,27 +1,14 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-public enum ItemType
-{
-    //¾ß¼ö¸¦ Á×ÀÏ ¼ö ÀÖ°í => µµ³¢, °î±ªÀÌ
-    //³ª¹«¸¦ º§ ¼ö ÀÖ°í => µµ³¢
-    //¹ÙÀ§¸¦ ±ý ¼ö ÀÖ°í => °î±ªÀÌ
-    Pick = 0,
-    Axe = 1
-}
+
 public class Puzzle_Item : MonoBehaviour
 {
-    public ItemType itemType;
-
     private void OnTriggerEnter(Collider other)
     {
-        if (other.TryGetComponent(out Puzzle_Hunter_Tool tool))
+        if (other.TryGetComponent(out Puzzle_Hunter tool))
         {
-            if (!tool.currentItem)
+            if (!tool.EquippedItem)
             {
-                tool.EquipItem(itemType);
-                //UI È­¸é¿¡ ¾ÆÀÌÄÜ ¶ç¿ì±â
-
+                tool.EquipItem(name);
                 Destroy(gameObject);
             }
             else

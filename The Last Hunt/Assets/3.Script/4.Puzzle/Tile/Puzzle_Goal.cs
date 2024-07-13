@@ -7,7 +7,7 @@ public class Puzzle_Goal : Puzzle_Tile
     {
         ignoreLayer = 0;
     }
-    public override void TileEvent(Puzzle_Horse_Movement target)
+    public override void TileEvent(Puzzle_Horse_TileAction target)
     {
         print("집에 도착했습니다!");
         Puzzle_GameManager.instance.GameClearEvent?.Invoke();

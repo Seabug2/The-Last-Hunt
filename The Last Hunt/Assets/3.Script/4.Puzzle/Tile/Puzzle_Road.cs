@@ -37,12 +37,12 @@ public class Puzzle_Road : Puzzle_Tile
     /// </summary>
     const float duration = 5f;
 
-    public override void TileEvent(Puzzle_Horse_Movement target)
+    public override void TileEvent(Puzzle_Horse_TileAction target)
     {
         StartMoveHorse(target);
     }
 
-    public void StartMoveHorse(Puzzle_Horse_Movement target)
+    public void StartMoveHorse(Puzzle_Horse_TileAction target)
     {
         StopMoveHorse();
         MoveHorse = StartCoroutine(MoveHorse_co(target));
@@ -58,7 +58,7 @@ public class Puzzle_Road : Puzzle_Tile
 
     Coroutine MoveHorse;
 
-    IEnumerator MoveHorse_co(Puzzle_Horse_Movement target)
+    IEnumerator MoveHorse_co(Puzzle_Horse_TileAction target)
     {
         Transform horse = target.transform;
         Vector3 endPos = Vector3.zero;

@@ -9,11 +9,10 @@ public class Puzzle_Dead : Puzzle_Tile
         ignoreLayer = 1;
     }
 
-    public override void TileEvent(Puzzle_Horse_Movement target)
+    public override void TileEvent(Puzzle_Horse_TileAction target)
     {
         print("말이 잘못된 타일을 밟았습니다.");
-        target.Falling();
-        //StartGameOver();
+
         Rigidbody hRb = target.GetComponent<Rigidbody>();
         hRb.AddForce((-target.transform.forward + Vector3.up) * 10f, ForceMode.VelocityChange);
         hRb.AddTorque(-transform.right * 180f, ForceMode.VelocityChange);

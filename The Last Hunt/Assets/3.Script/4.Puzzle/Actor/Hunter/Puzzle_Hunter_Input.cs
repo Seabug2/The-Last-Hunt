@@ -6,12 +6,14 @@ public class Puzzle_Hunter_Input : MonoBehaviour
     //2.타일을 들거나 옮겨 둘 수 있다.
 
     Puzzle_Hunter_Movement movement;
-    Puzzle_Hunter_Carrying carrying;
+    Puzzle_Hunter_TileAction carrying;
+    Animator anim;
 
     private void Awake()
     {
-        carrying = GetComponent<Puzzle_Hunter_Carrying>();
+        carrying = GetComponent<Puzzle_Hunter_TileAction>();
         movement = GetComponent<Puzzle_Hunter_Movement>();
+        anim = GetComponent<Animator>();
     }
 
     public float dead = 1f;
@@ -21,12 +23,14 @@ public class Puzzle_Hunter_Input : MonoBehaviour
     {
         if (Input.GetButton("Horizontal") || Input.GetButton("Vertical"))
         {
+            anim.SetBool("isMoving", true);
             float x = Input.GetAxis("Horizontal");
             float z = Input.GetAxis("Vertical");
             dir = new Vector3(x, 0, z);
         }
         else
         {
+            anim.SetBool("isMoving", false);
             dir = Vector3.Lerp(dir, Vector3.zero, Time.deltaTime * dead);
         }
 

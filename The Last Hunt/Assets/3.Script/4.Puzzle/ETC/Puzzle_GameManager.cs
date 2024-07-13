@@ -30,6 +30,13 @@ public class Puzzle_GameManager : MonoBehaviour
         //}
     }
 
+    public const float tileSize = 3;
+
+    /// <summary>
+    /// 게임이 끝났는가?
+    /// </summary>
+    public bool IsGameOver { get; private set; }
+
     [SerializeField, Header("플레이어"), Space(10)]
     GameObject hunter;
     public GameObject Hunter => hunter;
@@ -46,10 +53,9 @@ public class Puzzle_GameManager : MonoBehaviour
     Puzzle_Road[] roadTiles;
 
     [SerializeField, Header("시네머신 카메라"), Space(10)]
-    CinemachineVirtualCamera goalVCam;
+    CinemachineBlendListCamera goalVCam;
     [SerializeField]
     CinemachineVirtualCamera traceVCam;
-    [SerializeField]
     CinemachineBrain brainCam;
 
     private void Start()
@@ -57,6 +63,22 @@ public class Puzzle_GameManager : MonoBehaviour
         StartCoroutine(StartEvent_co());
     }
 
+    public void GameStart()
+    {
+        GameStartEvent?.Invoke();
+    }
+    
+    public void GameClear()
+    { 
+    
+    }
+    
+    public void GameOver()
+    { 
+    
+    }
+
+    public UnityEvent GameStartEvent;
     public UnityEvent GameClearEvent;
     public UnityEvent GameOverEvent;
 
@@ -92,7 +114,7 @@ public class Puzzle_GameManager : MonoBehaviour
         //페이드 인
         yield return StartCoroutine(FadeIn_co());
 
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(6f);
 
         //메세지 출력
 
@@ -112,7 +134,7 @@ public class Puzzle_GameManager : MonoBehaviour
         traceVCam.Priority = goalVCam.Priority + 1;
 
         yield return null;
-        yield return new WaitWhile(()=>brainCam.IsBlending);
+        yield return new WaitWhile(() => brainCam.IsBlending);
 
         yield return new WaitForSeconds(2f);
 
@@ -120,7 +142,7 @@ public class Puzzle_GameManager : MonoBehaviour
         hunter.GetComponent<Puzzle_Hunter_Input>().enabled = true;
         hunter.GetComponent<Puzzle_Hunter_Movement>().enabled = true;
         // 말 이동 시작
-        horse.GetComponent<Puzzle_Horse_Movement>().MoveToNextTile();
+        horse.GetComponent<Puzzle_Horse_TileAction>().MoveToNextTile();
 
         // 타이머 활성화
         // 기타 UI 활성화
@@ -128,6 +150,10 @@ public class Puzzle_GameManager : MonoBehaviour
 
     IEnumerator GameOverEvent_co()
     {
+        yield return new WaitForSeconds(1f);
+
+        //플레이어가 화나는 모습을 보여주며...?
+
         yield return StartCoroutine(FadeOut_co());
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }

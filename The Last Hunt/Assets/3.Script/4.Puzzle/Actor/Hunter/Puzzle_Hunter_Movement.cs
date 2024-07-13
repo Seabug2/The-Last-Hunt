@@ -1,8 +1,9 @@
 using UnityEngine;
 
-public class Puzzle_Hunter_Movement : Puzzle_Movement
+public class Puzzle_Hunter_Movement : MonoBehaviour
 {
-    Animator anim;
+    Rigidbody rb;
+    Puzzle_TileChecker tileChecker;
 
     /// <summary>
     /// 이동속도
@@ -20,22 +21,10 @@ public class Puzzle_Hunter_Movement : Puzzle_Movement
     [HideInInspector]
     public Vector3 dir = Vector3.zero;
 
-    protected new void Awake()
+    void Awake()
     {
-        base.Awake();
-        anim = GetComponent<Animator>();
-    }
-
-    private void Update()
-    {
-        if (Input.GetButtonDown("Horizontal") || Input.GetButtonDown("Vertical"))
-        {
-            anim.SetBool("isMoving", true);
-        }
-        else if (!Input.GetButton("Horizontal") && !Input.GetButton("Vertical"))
-        {
-            anim.SetBool("isMoving", false);
-        }
+        rb = GetComponent<Rigidbody>();
+        tileChecker = GetComponent<Puzzle_TileChecker>();
     }
 
     private void FixedUpdate()
@@ -49,34 +38,14 @@ public class Puzzle_Hunter_Movement : Puzzle_Movement
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.fixedDeltaTime * rotSpeed);
         }
 
-        //발 아래에 sphere 영역만큼을 검출하여 타일이 없다면 떨어집니다.
-        if (Physics.OverlapBox(transform.position, floorCheckerSize, Quaternion.identity, tileLayer).Length == 0)
+        //호출 시점을 정확하게 하기 위하여
+        //캐릭터 이동 직후 바닥 검사를 할 수 있게
+        //tileChecker를 참조
+        if (!tileChecker.IsGrounded)
         {
-            Falling();
+            print("플레이어 떨어짐");
+            tileChecker.Falling();
+            GetComponent<Puzzle_Hunter>().GameOver();
         }
     }
-
-    public override void Falling()
-    {
-        base.Falling();
-        //더 이상 조작 불가
-        anim.SetTrigger("Falling");
-        GetComponent<Puzzle_Hunter_Input>().enabled = false;
-        GetComponent<Puzzle_Hunter_Carrying>().enabled = false;
-        rb.AddForce(dir.normalized, ForceMode.Impulse);
-    }
-
-    [SerializeField, Header("바닥 감지 영역 크기"), Space(10)]
-    Vector3 floorCheckerSize;
-
-#if UNITY_EDITOR
-    protected override void OnDrawGizmos()
-    {
-        base.OnDrawGizmos();
-
-        //앞의 타일 검사
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireCube(transform.position, floorCheckerSize);
-    }
-#endif
 }

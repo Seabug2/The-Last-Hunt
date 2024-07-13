@@ -2,8 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using DG.Tweening;
 
-public class Puzzle_Hunter_Carrying : MonoBehaviour
+public class Puzzle_Hunter_TileAction : Puzzle_TileChecker
 {
     /// <summary>
     /// 현재 플레이어가 선택 중인 타일
@@ -19,18 +20,12 @@ public class Puzzle_Hunter_Carrying : MonoBehaviour
     RectTransform guideUI;
 
     Camera cam;
-    Puzzle_Movement movement;
 
-    private void Awake()
+    void Awake()
     {
-        movement = GetComponent<Puzzle_Hunter_Movement>();
-    }
-
-    private void Start()
-    {
-        holdingTile = null;
         guideTile = FindObjectOfType<Puzzle_Guide>();
         cam = Camera.main;
+        holdingTile = null;
     }
 
     public void CarryingAction()
@@ -50,17 +45,17 @@ public class Puzzle_Hunter_Carrying : MonoBehaviour
     void TakeTile()
     {
         //보고있는 곳에 타일이 있을 경우
-        if (movement.ViewingTile)
+        if (ViewingTile)
         {
             //사냥꾼이랑 말이 그 타일 위에 없는 경우 타일을 이동 시킬 수 있다.
-            if (movement.ViewingTile.IsOverlapping())
+            if (ViewingTile.IsOverlapping())
             {
                 print("현재 들 수 없는 타일입니다!");
                 return;
             }
-            else if (movement.ViewingTile.TryGetComponent(out Puzzle_Road _))
+            else if (ViewingTile.TryGetComponent(out Puzzle_Road _))
             {
-                holdingTile = movement.ViewingTile;
+                holdingTile = ViewingTile;
                 holdingTile.Holding();
                 guideTile.SetInvisible(false);
                 guideTile.enabled = false;
@@ -70,15 +65,17 @@ public class Puzzle_Hunter_Carrying : MonoBehaviour
 
     void SetTile()
     {
-        if (movement.ViewingTile != null) return;
-        else if (movement.ForwardPosition.x < -3 ||
-            movement.ForwardPosition.z < -9 ||
-            movement.ForwardPosition.z > 9) return;
+        if (ViewingTile != null) return;
+
+        //나중에 맵 전체 테두리에 Dead Tile을 설치하여 생략할 예정
+        else if (ForwardPosition.x < -3 ||
+            ForwardPosition.z < -9 ||
+            ForwardPosition.z > 9) return;
 
         //지금 검사하고 있는 위치에 타일이 없으면 설치 가능
         else
         {
-            holdingTile.transform.position = movement.ForwardPosition;
+            holdingTile.transform.position = ForwardPosition;
             holdingTile.ResetState();
             holdingTile = null;
             guideTile.enabled = true;
@@ -88,7 +85,7 @@ public class Puzzle_Hunter_Carrying : MonoBehaviour
 
     private void FixedUpdate()
     {
-        Vector3 forward = movement.ForwardPosition;
+        Vector3 forward = ForwardPosition;
 
         Vector2 pos = cam.WorldToScreenPoint(forward);
         guideUI.position = pos;
@@ -96,14 +93,14 @@ public class Puzzle_Hunter_Carrying : MonoBehaviour
         //타일을 이미 들고 있는 경우
         if (holdingTile)
         {
-            holdingTile.transform.position = forward;//  + Vector3.up * holdingHeight;
+            holdingTile.transform.position = forward;
         }
         //타일을 들고 있지 않은 경우
         else
         {
             //사냥꾼의 눈 앞에 타일이 있을 때 보인다.
-            guideTile.transform.position = forward;//  + Vector3.up * holdingHeight;
-            guideTile.SetInvisible(movement.ViewingTile != null);
+            guideTile.transform.position = forward;
+            guideTile.SetInvisible(ViewingTile != null);
         }
     }
 }
