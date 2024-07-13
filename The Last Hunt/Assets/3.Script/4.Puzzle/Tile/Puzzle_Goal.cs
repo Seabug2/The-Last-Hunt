@@ -3,6 +3,10 @@ using UnityEngine;
 
 public class Puzzle_Goal : Puzzle_Tile
 {
+    protected override void Start()
+    {
+        ignoreLayer = 0;
+    }
     public override void TileEvent(Puzzle_Horse_Movement target)
     {
         print("집에 도착했습니다!");

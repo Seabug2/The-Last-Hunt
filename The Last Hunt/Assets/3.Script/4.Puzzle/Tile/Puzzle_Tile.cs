@@ -7,7 +7,8 @@ public class Puzzle_Tile : MonoBehaviour
     protected Material mat;
     BoxCollider col;
 
-    protected LayerMask myLayer;
+    [SerializeField]
+    protected LayerMask ignoreLayer;
 
     /// <summary>
     /// 콜라이더가 비활성화 상태라면 들고 있는 상태이다.
@@ -29,7 +30,7 @@ public class Puzzle_Tile : MonoBehaviour
 
     protected virtual void Start()
     {
-        myLayer = Puzzle_GameManager.instance.TileLayer;
+        ignoreLayer = Puzzle_GameManager.instance.TileLayer;
     }
 
     public virtual void ResetState()
@@ -37,18 +38,20 @@ public class Puzzle_Tile : MonoBehaviour
         //불투명으로 바꿈
         mat.SetInt("_IsHolding", 0);
         mat.SetInt("_IsOverlapping", 0);
+        mat.renderQueue = 3000;
         col.enabled = true;
     }
 
-    public virtual void Holding()
+    public void Holding()
     {
         //반투명으로 바꿈
         mat.SetInt("_IsHolding", 1);
+        mat.renderQueue = 3500;
         col.enabled = false;
     }
 
     //타일을 상속 구조로 만든 이유
-    public virtual  void TileEvent(Puzzle_Horse_Movement target)
+    public virtual void TileEvent(Puzzle_Horse_Movement target)
     {
         print($"말이 {name} 타일을 밟았습니다.");
     }
@@ -58,7 +61,7 @@ public class Puzzle_Tile : MonoBehaviour
         mat.SetInt("_IsOverlapping", _isOverlap ? 1 : 0);
     }
 
-    protected const float range = 1f;
+    protected const float range = .9f;
 
     /// <summary>
     /// 현재 타일의 위치에서 검출되는 타일들을 반환
@@ -69,7 +72,7 @@ public class Puzzle_Tile : MonoBehaviour
             //타일을 들고 있는 경우 타일은 자신은 검출 되지 않으므로 모든 레이어의 오브젝트를 검사
             -1 :
             //타일이 놓여져 있는 경우 자신도 검출이 될 수 있으므로 타일 레이어를 제외한 모든 레이어를 검사
-            ~myLayer.value;
+            ~ignoreLayer.value;
 
         Collider[] cols = Physics.OverlapBox(transform.position, Vector3.one * range, Quaternion.identity, targetLayer);
         if (cols.Length > 0)
@@ -91,10 +94,12 @@ public class Puzzle_Tile : MonoBehaviour
         {
             Gizmos.color = Color.blue;
             Gizmos.DrawWireCube(transform.position, Vector3.one * range);
-            GUIStyle style = new GUIStyle();
-            style.fontSize = textSize;
+            GUIStyle style = new GUIStyle
+            {
+                fontSize = textSize
+            };
             style.normal.textColor = Color.red;
-            UnityEditor.Handles.Label(transform.position,$"{transform.position.x}, {transform.position.z}", style);
+            UnityEditor.Handles.Label(transform.position, $"{transform.position.x}, {transform.position.z}", style);
         }
     }
 #endif

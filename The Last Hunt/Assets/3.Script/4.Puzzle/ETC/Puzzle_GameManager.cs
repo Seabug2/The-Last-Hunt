@@ -28,20 +28,19 @@ public class Puzzle_GameManager : MonoBehaviour
         //    Destroy(this.gameObject);
         //    return;
         //}
-
-        Init();
     }
 
-    [SerializeField, Header("타일 레이어"), Space(10)]
-    LayerMask tileLayer;
-
-    public LayerMask TileLayer => tileLayer;
-
+    [SerializeField, Header("플레이어"), Space(10)]
     GameObject hunter;
     public GameObject Hunter => hunter;
 
+    [SerializeField, Header("말"), Space(10)]
     GameObject horse;
     public GameObject Horse => horse;
+
+    [SerializeField, Header("타일 레이어"), Space(10)]
+    LayerMask tileLayer;
+    public LayerMask TileLayer => tileLayer;
 
     [SerializeField, Header("길 타일"), Space(10)]
     Puzzle_Road[] roadTiles;
@@ -50,7 +49,8 @@ public class Puzzle_GameManager : MonoBehaviour
     CinemachineVirtualCamera goalVCam;
     [SerializeField]
     CinemachineVirtualCamera traceVCam;
-
+    [SerializeField]
+    CinemachineBrain brainCam;
 
     private void Start()
     {
@@ -73,13 +73,16 @@ public class Puzzle_GameManager : MonoBehaviour
             StartCoroutine(GameOverEvent_co());
         });
 
+        Screen.SetResolution(Mathf.RoundToInt(1920 * .5f), Mathf.RoundToInt(1080 * .5f), FullScreenMode.Windowed);
         blackBoard.rectTransform.rect.Set(0, 0, Screen.width, Screen.width);
 
         roadTiles = FindObjectsOfType<Puzzle_Road>();
-        hunter = FindObjectOfType<Puzzle_Hunter_Movement>().gameObject;
+        hunter.GetComponent<Puzzle_Hunter_Input>().enabled = false;
+        hunter.GetComponent<Puzzle_Hunter_Movement>().enabled = false;
         hunter.transform.position = new Vector3(0, 0, -3);
-        horse = FindObjectOfType<Puzzle_Horse_Movement>().gameObject;
         horse.transform.position = new Vector3(-1.5f, 0, 0);
+
+        brainCam = Camera.main.GetComponent<CinemachineBrain>();
     }
 
     IEnumerator StartEvent_co()
@@ -89,11 +92,14 @@ public class Puzzle_GameManager : MonoBehaviour
         //페이드 인
         yield return StartCoroutine(FadeIn_co());
 
+        yield return new WaitForSeconds(2f);
+
         //메세지 출력
+
         //타일을 하나씩...
         List<Puzzle_Road> roads = new List<Puzzle_Road>(roadTiles);
 
-        float t = 1f;
+        //float t = 1f;
 
         //while (roads.Count > 0)
         //{
@@ -104,10 +110,18 @@ public class Puzzle_GameManager : MonoBehaviour
         //}
 
         traceVCam.Priority = goalVCam.Priority + 1;
-        // 플레이어 조작과 이동 활성화
 
+        yield return null;
+        yield return new WaitWhile(()=>brainCam.IsBlending);
+
+        yield return new WaitForSeconds(2f);
+
+        // 플레이어 조작과 이동 활성화
+        hunter.GetComponent<Puzzle_Hunter_Input>().enabled = true;
+        hunter.GetComponent<Puzzle_Hunter_Movement>().enabled = true;
         // 말 이동 시작
         horse.GetComponent<Puzzle_Horse_Movement>().MoveToNextTile();
+
         // 타이머 활성화
         // 기타 UI 활성화
     }
@@ -132,10 +146,16 @@ public class Puzzle_GameManager : MonoBehaviour
         blackBoard.gameObject.SetActive(true);
         blackBoard.color = new Color(0, 0, 0, 1);
 
-        while (blackBoard.color.a > 0)
+        float t = fadeTime;
+
+        while (t > 0)
         {
-            blackBoard.color -= new Color(0, 0, 0, Time.fixedDeltaTime * fadeTime);
+            float a = Mathf.LerpUnclamped(0, 1, t);
+            blackBoard.color = new Color(0, 0, 0, a);
+
             yield return new WaitForFixedUpdate();
+
+            t -= Time.fixedDeltaTime;
         }
 
         blackBoard.gameObject.SetActive(false);
@@ -146,10 +166,16 @@ public class Puzzle_GameManager : MonoBehaviour
         blackBoard.gameObject.SetActive(true);
         blackBoard.color = new Color(0, 0, 0, 0);
 
-        while (blackBoard.color.a < 1)
+        float t = 0;
+
+        while (t < fadeTime)
         {
-            blackBoard.color += new Color(0, 0, 0, Time.fixedDeltaTime * fadeTime);
+            float a = Mathf.LerpUnclamped(0, 1, t);
+            blackBoard.color = new Color(0, 0, 0, a);
+
             yield return new WaitForFixedUpdate();
+
+            t += Time.fixedDeltaTime;
         }
 
         blackBoard.color = new Color(0, 0, 0, 1);

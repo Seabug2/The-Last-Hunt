@@ -17,8 +17,9 @@ public class Puzzle_Hunter_Tool
 
     public void UnequipItem()
     {
-        Items[(int)currentItem.itemType].SetActive(false);
+        foreach (GameObject item in Items)
+        {
+            item.SetActive(false);
+        }
     }
-
-
 }

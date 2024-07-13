@@ -90,6 +90,7 @@ Material:
     - _GlossMapScale: 1
     - _Glossiness: 0
     - _GlossyReflections: 1
+    - _Height: 0.5
     - _IsHolding: 0
     - _IsOverlapping: 0
     - _Metallic: 0

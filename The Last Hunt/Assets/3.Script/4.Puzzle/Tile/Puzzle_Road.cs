@@ -9,7 +9,7 @@ public class Puzzle_Road : Puzzle_Tile
     /// 2 = 남
     /// 3 = 북
     /// </summary>
-    [SerializeField, Tooltip("0 : 동 / 1 : 서 / 2 : 남 / 3 : 북")] bool[] gate = new bool[4];
+    [SerializeField, Header("0 : 동 / 1 : 서 / 2 : 남 / 3 : 북")] bool[] gate = new bool[4];
     /// <summary>
     /// 0 = 동
     /// 1 = 서
@@ -61,53 +61,40 @@ public class Puzzle_Road : Puzzle_Tile
     IEnumerator MoveHorse_co(Puzzle_Horse_Movement target)
     {
         Transform horse = target.transform;
-        Vector3 startPos = Vector3.zero;
         Vector3 endPos = Vector3.zero;
 
-        int enteringDirection = -1;
+        int enteringDirection = GetEnteringDirection(horse.position);
 
-        //말이 동쪽에서 들어옴
-        if (horse.position.x > transform.position.x)
-        {
-            if (gate[0]) enteringDirection = 0;
-        }
-        //말이 서쪽에서 들어옴
-        else if (horse.position.x < transform.position.x)
-        {
-            if (gate[1]) enteringDirection = 1;
-        }
-        //말이 남쪽에서 들어옴
-        else if (horse.position.z < transform.position.z)
-        {
-            if (gate[2]) enteringDirection = 2;
-        }
-        //말이 북쪽에서 들어옴
-        else if (horse.position.z > transform.position.z)
-        {
-            if (gate[3]) enteringDirection = 3;
-        }
+        #region
+        ////말이 동쪽에서 들어옴
+        //if (horse.position.x > transform.position.x)
+        //{
+        //    if (gate[0]) enteringDirection = 0;
+        //}
+        ////말이 서쪽에서 들어옴
+        //else if (horse.position.x < transform.position.x)
+        //{
+        //    if (gate[1]) enteringDirection = 1;
+        //}
+        ////말이 남쪽에서 들어옴
+        //else if (horse.position.z < transform.position.z)
+        //{
+        //    if (gate[2]) enteringDirection = 2;
+        //}
+        ////말이 북쪽에서 들어옴
+        //else if (horse.position.z > transform.position.z)
+        //{
+        //    if (gate[3]) enteringDirection = 3;
+        //}
+        #endregion
 
-        if (enteringDirection == -1)
+        Vector3 startPos = transform.position + gatePosition[enteringDirection];
+        for (int j = 0; j < 4; j++)
         {
-            target.Falling();
-            yield break;
-        }
-
-        for (int i = 0; i < 4; i++)
-        {
-            if (enteringDirection == i)
+            if (gate[j] && j != enteringDirection)
             {
-                startPos = transform.position + gatePosition[i];
-
-                for (int j = 0; j < 4; j++)
-                {
-
-                    if (gate[j] && j != i)
-                    {
-                        endPos = transform.position + gatePosition[j];
-                    }
-                }
-                break;
+                endPos = transform.position + gatePosition[j];
+                break; // 첫 번째 맞는 게이트를 찾으면 루프를 탈출
             }
         }
 
@@ -126,6 +113,19 @@ public class Puzzle_Road : Puzzle_Tile
         horse.position = endPos;
 
         target.MoveToNextTile();
+    }
+    int GetEnteringDirection(Vector3 horsePosition)
+    {
+        Vector3 v = horsePosition - transform.position;
+        float enterX = Mathf.RoundToInt(v.x);
+        float enterZ = Mathf.RoundToInt(v.z);
+
+        if (enterX > 0 && gate[0]) return 0; // 동쪽
+        if (enterX < 0 && gate[1]) return 1; // 서쪽
+        if (enterZ < 0 && gate[2]) return 2; // 남쪽
+        if (enterZ > 0 && gate[3]) return 3; // 북쪽
+
+        return -1; // 조건에 맞지 않는 경우
     }
 
     Vector3 CalculateQuadraticBezierPoint(float t, Vector3 p0, Vector3 p1, Vector3 p2)
