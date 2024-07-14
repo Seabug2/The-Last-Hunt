@@ -1990,7 +1990,7 @@ GameObject:
   - component: {fileID: 6140417307297877728}
   - component: {fileID: 6140417307297877729}
   - component: {fileID: 5005487815428144170}
-  - component: {fileID: 712515498}
+  - component: {fileID: 5409024778017195103}
   m_Layer: 0
   m_Name: Puzzle_Horse
   m_TagString: Untagged
@@ -2160,7 +2160,7 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &712515498
+--- !u!114 &5409024778017195103
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2169,11 +2169,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 5005487815428144341}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ca86b7f680d13e64d94d882a134b661d, type: 3}
+  m_Script: {fileID: 11500000, guid: 45bb41c98586ab14daed9904a85bbdee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   forwardRange: 1
   floorCheckerSize: {x: 0, y: 0, z: 0}
+  isAlive: 1
 --- !u!1 &5005487815428144343
 GameObject:
   m_ObjectHideFlags: 0

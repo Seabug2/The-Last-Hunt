@@ -11,7 +11,7 @@ public class Puzzle_Hunter_TileAction : Puzzle_TileChecker
     /// </summary>
     Puzzle_Tile holdingTile;
     /// <summary>
-    /// 타일을 들고 있지 않을 때 보고 있는 타일을 들 수 있는지 없는지 알려주는 타일
+    /// 타일을 들고 있지 않을 때 앞에 놓여져 있는 타일을 들 수 있는지 없는지 알려주는 타일
     /// </summary>
     Puzzle_Guide guideTile;
     //[SerializeField, Header("타일을 들고 있을 높이"), Space(10)]

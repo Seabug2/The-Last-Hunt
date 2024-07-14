@@ -17,7 +17,7 @@ public class Puzzle_Obstacle : MonoBehaviour
             //장비 있어?
             if (_hunter.EquippedItem)
             {
-                if (_hunter.EquippedItem.name.Equals(RequiredName))
+                if (IsCorrectItem(_hunter.EquippedItem.name))
                 {
                     //장비는 일회용입니다. 착용 해제
                     _hunter.UnequipItem();
@@ -32,22 +32,25 @@ public class Puzzle_Obstacle : MonoBehaviour
         }
 
         //말?
-        else if (other.TryGetComponent(out Puzzle_Horse_TileAction _horse))
+        else if (other.TryGetComponent(out Puzzle_Horse _horse))
         {
             MeetHorse(_horse);
         }
+    }
+
+    protected virtual bool IsCorrectItem(string _itemName)
+    {
+        return _itemName.Equals(RequiredName);
     }
 
     //플레이어와 만났을 때
     //플레이어가 알맞은 장비를 장착한 경우
     protected virtual void RemoveSelf(Puzzle_Hunter _hunter)
     {
-        _hunter.SetTrigger("Attack");
-        Destroy(this.gameObject);
+        _hunter.Attack();
+        //Destroy(this.gameObject);
 
         ////캐릭터가 오브젝트를 바라보게 합니다.
-        //print("장애물을 제거합니다.");
-        ////잠시 캐릭터의 이동과 플레이어의 입력을 막습니다.
         //Vector3 dir = (transform.position - _hunter.transform.position).normalized;
         //_hunter.transform.forward = new Vector3(dir.x, transform.position.y, dir.z);
         //_hunter.Anim.SetTrigger("Attack");
@@ -60,7 +63,7 @@ public class Puzzle_Obstacle : MonoBehaviour
     }
 
     //말을 만났을 때
-    protected virtual void MeetHorse(Puzzle_Horse_TileAction _horse)
+    protected virtual void MeetHorse(Puzzle_Horse _horse)
     {
         print("말이 잘못된 길로 왔습니다. (게임오버)");
     }

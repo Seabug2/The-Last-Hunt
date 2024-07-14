@@ -109,12 +109,18 @@ public class Puzzle_GameManager : MonoBehaviour
 
     IEnumerator StartEvent_co()
     {
+        blackBoard.gameObject.SetActive(true);
+        blackBoard.color = Color.black;
+
         Init();
 
         //페이드 인
-        yield return StartCoroutine(FadeIn_co());
+        //yield return StartCoroutine(FadeIn_co());
+        blackBoard.DOFade(0, fadeTime);
+        yield return new WaitForSeconds(fadeTime);
+        blackBoard.gameObject.SetActive(false);
 
-        yield return new WaitForSeconds(6f);
+        yield return new WaitForSeconds(7 - fadeTime);
 
         //메세지 출력
 
@@ -142,7 +148,7 @@ public class Puzzle_GameManager : MonoBehaviour
         hunter.GetComponent<Puzzle_Hunter_Input>().enabled = true;
         hunter.GetComponent<Puzzle_Hunter_Movement>().enabled = true;
         // 말 이동 시작
-        horse.GetComponent<Puzzle_Horse_TileAction>().MoveToNextTile();
+        horse.GetComponent<Puzzle_Horse>().MoveToNextTile();
 
         // 타이머 활성화
         // 기타 UI 활성화

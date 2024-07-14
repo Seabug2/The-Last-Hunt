@@ -2,9 +2,6 @@ using UnityEngine;
 
 public class Puzzle_Hunter_Input : MonoBehaviour
 {
-    //1.캐릭터를 가로세로로 조작할 수 있다.
-    //2.타일을 들거나 옮겨 둘 수 있다.
-
     Puzzle_Hunter_Movement movement;
     Puzzle_Hunter_TileAction carrying;
     Animator anim;

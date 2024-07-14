@@ -51,7 +51,7 @@ public class Puzzle_Tile : MonoBehaviour
     }
 
     //타일을 상속 구조로 만든 이유
-    public virtual void TileEvent(Puzzle_Horse_TileAction target)
+    public virtual void TileEvent(Puzzle_Horse target)
     {
         print($"말이 {name} 타일을 밟았습니다.");
     }
