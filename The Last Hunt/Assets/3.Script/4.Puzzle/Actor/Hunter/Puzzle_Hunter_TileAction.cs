@@ -9,7 +9,7 @@ public class Puzzle_Hunter_TileAction : Puzzle_TileChecker
     /// <summary>
     /// 현재 플레이어가 선택 중인 타일
     /// </summary>
-    Puzzle_Tile holdingTile;
+    public Puzzle_Tile HoldingTile { get; private set; }
     /// <summary>
     /// 타일을 들고 있지 않을 때 앞에 놓여져 있는 타일을 들 수 있는지 없는지 알려주는 타일
     /// </summary>
@@ -25,13 +25,13 @@ public class Puzzle_Hunter_TileAction : Puzzle_TileChecker
     {
         guideTile = FindObjectOfType<Puzzle_Guide>();
         cam = Camera.main;
-        holdingTile = null;
+        HoldingTile = null;
     }
 
     public void CarryingAction()
     {
         //들고 있지 않을 때
-        if (holdingTile == null)
+        if (HoldingTile == null)
         {
             TakeTile();
         }
@@ -55,8 +55,8 @@ public class Puzzle_Hunter_TileAction : Puzzle_TileChecker
             }
             else if (ViewingTile.TryGetComponent(out Puzzle_Road _))
             {
-                holdingTile = ViewingTile;
-                holdingTile.Holding();
+                HoldingTile = ViewingTile;
+                HoldingTile.Holding();
                 guideTile.SetInvisible(false);
                 guideTile.enabled = false;
             }
@@ -75,9 +75,9 @@ public class Puzzle_Hunter_TileAction : Puzzle_TileChecker
         //지금 검사하고 있는 위치에 타일이 없으면 설치 가능
         else
         {
-            holdingTile.transform.position = ForwardPosition;
-            holdingTile.ResetState();
-            holdingTile = null;
+            HoldingTile.transform.position = ForwardPosition;
+            HoldingTile.ResetState();
+            HoldingTile = null;
             guideTile.enabled = true;
             guideTile.SetInvisible(true);
         }
@@ -91,9 +91,9 @@ public class Puzzle_Hunter_TileAction : Puzzle_TileChecker
         guideUI.position = pos;
 
         //타일을 이미 들고 있는 경우
-        if (holdingTile)
+        if (HoldingTile)
         {
-            holdingTile.transform.position = forward;
+            HoldingTile.transform.position = forward;
         }
         //타일을 들고 있지 않은 경우
         else

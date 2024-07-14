@@ -5,7 +5,7 @@ public class Puzzle_Tile : MonoBehaviour
     //타일 클래스에서 구현해야 하는 것
     protected MeshRenderer rend;
     protected Material mat;
-    BoxCollider col;
+    protected BoxCollider col;
 
     [SerializeField]
     protected LayerMask ignoreLayer;

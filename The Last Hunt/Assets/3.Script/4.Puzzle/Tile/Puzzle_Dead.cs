@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Puzzle_Dead : Puzzle_Tile
 {
+    protected override void Awake() => col = GetComponent<BoxCollider>();
+
     protected override void Start()
     {
         ignoreLayer = 0;

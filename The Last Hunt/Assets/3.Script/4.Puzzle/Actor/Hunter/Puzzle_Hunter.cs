@@ -6,7 +6,7 @@ public class Puzzle_Hunter : MonoBehaviour
     public bool isAlive = true;
 
     public Animator Anim { get; private set; }
-    public Puzzle_TileChecker tileChecker { get; private set; }
+    public Puzzle_TileChecker TileChecker { get; private set; }
 
     /// <summary>
     /// 현재 장착 중인 아이템
@@ -17,7 +17,7 @@ public class Puzzle_Hunter : MonoBehaviour
     void Awake()
     {
         Anim = GetComponent<Animator>();
-        tileChecker = GetComponent<Puzzle_TileChecker>();
+        TileChecker = GetComponent<Puzzle_TileChecker>();
         FindTargetTransform(this.transform, "jointItemR");
     }
 

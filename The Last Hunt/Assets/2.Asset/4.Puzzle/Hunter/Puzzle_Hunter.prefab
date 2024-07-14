@@ -3785,12 +3785,12 @@ GameObject:
   - component: {fileID: 6409982326707035315}
   - component: {fileID: 8358760180332688854}
   - component: {fileID: 4879094753263337382}
-  - component: {fileID: 4879094753263337383}
   - component: {fileID: 4879094753263337379}
   - component: {fileID: 4879094753263337380}
   - component: {fileID: 4879094753263337381}
   - component: {fileID: 1732308622}
   - component: {fileID: 1465019383}
+  - component: {fileID: 1327936761299648982}
   m_Layer: 0
   m_Name: Puzzle_hunter
   m_TagString: Untagged
@@ -3850,20 +3850,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 84
   m_CollisionDetection: 3
---- !u!136 &4879094753263337383
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6034546812262008329}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.35
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0, y: 1, z: 0}
 --- !u!114 &4879094753263337379
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3919,7 +3905,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dbbad979cb1c9bb4c9bfcba1c600add6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  equippedHand: {fileID: 0}
+  isAlive: 1
+  hand: {fileID: 0}
 --- !u!82 &1465019383
 AudioSource:
   m_ObjectHideFlags: 0
@@ -4016,6 +4003,19 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!65 &1327936761299648982
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6034546812262008329}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.5, y: 2, z: 0.5}
+  m_Center: {x: 0, y: 1, z: 0}
 --- !u!1 &6041205506051890615
 GameObject:
   m_ObjectHideFlags: 0

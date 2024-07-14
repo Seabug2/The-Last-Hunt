@@ -65,30 +65,36 @@ public class Puzzle_Road : Puzzle_Tile
 
         int enteringDirection = GetEnteringDirection(horse.position);
 
-        #region
-        ////말이 동쪽에서 들어옴
-        //if (horse.position.x > transform.position.x)
-        //{
-        //    if (gate[0]) enteringDirection = 0;
-        //}
-        ////말이 서쪽에서 들어옴
-        //else if (horse.position.x < transform.position.x)
-        //{
-        //    if (gate[1]) enteringDirection = 1;
-        //}
-        ////말이 남쪽에서 들어옴
-        //else if (horse.position.z < transform.position.z)
-        //{
-        //    if (gate[2]) enteringDirection = 2;
-        //}
-        ////말이 북쪽에서 들어옴
-        //else if (horse.position.z > transform.position.z)
-        //{
-        //    if (gate[3]) enteringDirection = 3;
-        //}
-        #endregion
+        if(enteringDirection == -1)
+        {
+            print("말이 잘못된 타일을 밟았습니다.");
+            yield break;
+        }
 
-        Vector3 startPos = transform.position + gatePosition[enteringDirection];
+            #region
+            ////말이 동쪽에서 들어옴
+            //if (horse.position.x > transform.position.x)
+            //{
+            //    if (gate[0]) enteringDirection = 0;
+            //}
+            ////말이 서쪽에서 들어옴
+            //else if (horse.position.x < transform.position.x)
+            //{
+            //    if (gate[1]) enteringDirection = 1;
+            //}
+            ////말이 남쪽에서 들어옴
+            //else if (horse.position.z < transform.position.z)
+            //{
+            //    if (gate[2]) enteringDirection = 2;
+            //}
+            ////말이 북쪽에서 들어옴
+            //else if (horse.position.z > transform.position.z)
+            //{
+            //    if (gate[3]) enteringDirection = 3;
+            //}
+            #endregion
+
+            Vector3 startPos = transform.position + gatePosition[enteringDirection];
         for (int j = 0; j < 4; j++)
         {
             if (gate[j] && j != enteringDirection)

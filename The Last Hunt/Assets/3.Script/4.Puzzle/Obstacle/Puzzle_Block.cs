@@ -1,8 +1,1 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public class Puzzle_Block : Puzzle_Obstacle
-{
-
-}
+public class Puzzle_Block : Puzzle_Obstacle{}
