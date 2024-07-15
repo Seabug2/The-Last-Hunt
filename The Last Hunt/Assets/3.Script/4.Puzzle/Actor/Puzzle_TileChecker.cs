@@ -9,7 +9,7 @@ public class Puzzle_TileChecker : MonoBehaviour
     protected virtual void Start()
     {
         tileLayer = Puzzle_GameManager.instance.TileLayer;
-        gridSize = Puzzle_GameManager.tileSize;
+        gridSize = Puzzle_GameManager.instance.tileSize;
     }
 
     [SerializeField, Header("타일을 감지할 앞쪽 거리"), Space(10)]

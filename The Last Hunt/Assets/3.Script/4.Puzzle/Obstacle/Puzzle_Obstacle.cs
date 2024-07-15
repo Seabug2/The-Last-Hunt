@@ -21,6 +21,8 @@ public class Puzzle_Obstacle : MonoBehaviour
                 {
                     //장비는 일회용입니다. 착용 해제
                     _hunter.UnequipItem();
+                    print("제거 성공");
+
                     //이 오브젝트를 제거합니다.
                     RemoveSelf(_hunter);
                     return;
