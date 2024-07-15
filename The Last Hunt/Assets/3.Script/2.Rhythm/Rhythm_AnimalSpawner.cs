@@ -49,17 +49,7 @@ public class Rhythm_AnimalSpawner : MonoBehaviour
             }
             else
             {
-                Rhythm_SoundManager.instance.PlaySFX("Que");
-                // 동물 생성하는 부분
-                // 1. 동물을 풀에서 꺼내온다.
-                obj = Rhythm_AnimalPooling.instance.GetObjectFromPool();
-                // 2. 풀에서 꺼낸 동물의 위치를 설정한다.
-                obj.transform.position = Spawner.position;
-                // 3. Rigidbody에 힘 적용(방향 - forward / 크기 / 힘의 종류)
-                Vector3 v = new Vector3(-0.48f, -0.05f, -0.5f);
-                obj.GetComponent<Rigidbody>().AddForce(v * 40f, ForceMode.Impulse);
-                v = new Vector3(Random.Range(0, 1f), Random.Range(0, 1f), Random.Range(0, 1f));
-                obj.GetComponent<Rigidbody>().AddTorque(v * 10f, ForceMode.Impulse);
+                SpawnAnimal();
             }
             count++;
             if(count > 126)
@@ -70,5 +60,17 @@ public class Rhythm_AnimalSpawner : MonoBehaviour
         }
     }
 
-    
+    private void SpawnAnimal()
+    {
+        Rhythm_SoundManager.instance.PlaySFX("Cue");
+        // 동물 생성하는 부분
+        // 1. 동물을 풀에서 꺼내온다.
+        obj = Rhythm_AnimalPooling.instance.GetObjectFromPool();
+        // 2. 풀에서 꺼낸 동물의 위치를 설정한다.
+        obj.transform.position = Spawner.position;
+        // 3. Rigidbody에 힘 적용(방향 - forward / 크기 / 힘의 종류)
+        Rigidbody rb = obj.GetComponent<Rigidbody>();
+        rb.AddForce(new Vector3(-0.95f, -0.15f, -0.6f) * 24f, ForceMode.Impulse);
+        rb.AddTorque(Random.insideUnitSphere * 10f, ForceMode.Impulse);
+    }
 }
