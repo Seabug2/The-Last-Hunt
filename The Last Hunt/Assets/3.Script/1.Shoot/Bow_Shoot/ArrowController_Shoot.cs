@@ -30,7 +30,7 @@ public class ArrowController_Shoot : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Animal_Shoot"))
+        if (collision.gameObject.CompareTag("Animal"))
         {
             Debug.Log("Animal Hit");
             gameObject.transform.SetParent(collision.gameObject.transform);
