@@ -53,7 +53,9 @@ public class Puzzle_GameManager : MonoBehaviour
     Puzzle_Road[] roadTiles;
 
     [SerializeField, Header("시네머신 카메라"), Space(10)]
-    CinemachineBlendListCamera goalVCam;
+    CinemachineVirtualCamera firstCam; //시작 카메라 위치
+    [SerializeField]
+    CinemachineBlendListCamera HomeViewCam; //시작 카메라 위치
     [SerializeField]
     CinemachineVirtualCamera traceVCam;
     CinemachineBrain brainCam;
@@ -67,15 +69,15 @@ public class Puzzle_GameManager : MonoBehaviour
     {
         GameStartEvent?.Invoke();
     }
-    
+
     public void GameClear()
-    { 
-    
+    {
+
     }
-    
+
     public void GameOver()
-    { 
-    
+    {
+
     }
 
     public UnityEvent GameStartEvent;
@@ -106,13 +108,26 @@ public class Puzzle_GameManager : MonoBehaviour
 
         brainCam = Camera.main.GetComponent<CinemachineBrain>();
     }
+    [SerializeField]
+    Transform homePosition;
 
     IEnumerator StartEvent_co()
     {
-        blackBoard.gameObject.SetActive(true);
+        firstCam.Priority = 10;
         blackBoard.color = Color.black;
+        blackBoard.gameObject.SetActive(true);
 
         Init();
+
+        int i = 12;
+        //타일 설치하기
+        while (i < Mathf.RoundToInt(homePosition.position.x)-2)
+        {
+            SetDeadTile(i);
+            //if (Random.Range(0, 2) == 0) SetDeadTile(i);
+            //else SetObstacleNItem(i);
+            i = +2;
+        }
 
         //페이드 인
         //yield return StartCoroutine(FadeIn_co());
@@ -120,29 +135,20 @@ public class Puzzle_GameManager : MonoBehaviour
         yield return new WaitForSeconds(fadeTime);
         blackBoard.gameObject.SetActive(false);
 
-        yield return new WaitForSeconds(7 - fadeTime);
+        ShowMessage("말이 집까지 갈 수 있게 타일을 옮겨주세요!", 5f);
+        
+        yield return new WaitForSeconds(5);
 
-        //메세지 출력
+        HomeViewCam.Priority = firstCam.Priority + 1;
 
-        //타일을 하나씩...
-        List<Puzzle_Road> roads = new List<Puzzle_Road>(roadTiles);
+        yield return new WaitForSeconds(15);
 
-        //float t = 1f;
-
-        //while (roads.Count > 0)
-        //{
-        //    Puzzle_Road road = roads[Random.Range(0, roads.Count)];
-        //    roads.Remove(road);
-        //    yield return new WaitForSeconds(t);
-        //    t *= .9f;
-        //}
-
-        traceVCam.Priority = goalVCam.Priority + 1;
+        traceVCam.Priority = HomeViewCam.Priority + 1;
 
         yield return null;
         yield return new WaitWhile(() => brainCam.IsBlending);
 
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(1f);
 
         // 플레이어 조작과 이동 활성화
         hunter.GetComponent<Puzzle_Hunter_Input>().enabled = true;
@@ -164,12 +170,43 @@ public class Puzzle_GameManager : MonoBehaviour
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
+    [SerializeField]
+    GameObject deadTile;
+    [SerializeField]
+    GameObject basicTile;
+    [SerializeField]
+    GameObject[] item;
+    [SerializeField]
+    GameObject[] obstacle;
+
+    public void SetDeadTile(int _i)
+    {
+        //2개 설치
+        for (int i = 1; i <= 2; i++)
+        {
+            Instantiate(deadTile, new Vector3(_i + i, 0, Mathf.RoundToInt(Random.Range(-9f, 9f) / 3 * 3)), Quaternion.identity);
+        }
+    }
+
+    public void SetObstacleNItem(int _i)
+    {
+        int caes = Random.Range(0, obstacle.Length);
+
+
+        //아이템 생성
+        //GameObject tile = Instantiate(deadTile, new Vector3(_i + 1, 0, RandomVerticalPosition()), Quaternion.identity);
+
+        ////장애물 생성
+        //tile = Instantiate(deadTile, new Vector3(_i + 1, 0, RandomVerticalPosition()), Quaternion.identity);
+
+    }
+
     public void ResetGame()
     {
         StartCoroutine(GameOverEvent_co());
     }
 
-    [SerializeField]
+    [SerializeField,Header("UI"), Space(10)]
     Image blackBoard;
     [SerializeField]
     float fadeTime = 1;
@@ -211,5 +248,43 @@ public class Puzzle_GameManager : MonoBehaviour
         }
 
         blackBoard.color = new Color(0, 0, 0, 1);
+    }
+
+
+    [SerializeField]
+    Text message;
+    [SerializeField]
+    RectTransform textBack;
+
+    private Tween currentTween;
+
+    public void ShowMessage(string _message, float _time = 1)
+    {
+        // 기존 애니메이션이 있으면 중단
+        if (currentTween != null && currentTween.IsActive())
+        {
+            currentTween.Kill();
+        }
+
+        message.text = _message;
+
+        // 애니메이션 설정
+        textBack.sizeDelta = new Vector2(1920, 0); // 시작 크기
+        textBack.gameObject.SetActive(true);
+        Sequence mySequence = DOTween.Sequence();
+
+        // 0.5초 동안 크기를 키우기
+        mySequence.Append(textBack.DOSizeDelta(new Vector2(1920, 126), 0.5f).SetEase(Ease.InOutQuad));
+
+        // 1초 대기
+        mySequence.AppendInterval(_time);
+
+        // 0.5초 동안 크기를 다시 줄이기
+        mySequence.Append(textBack.DOSizeDelta(new Vector2(1920, 0), 0.5f).SetEase(Ease.InOutQuad));
+
+        textBack.gameObject.SetActive(false);
+
+        // 현재 애니메이션 저장
+        currentTween = mySequence;
     }
 }
