@@ -23,7 +23,8 @@ public class Puzzle_Hunter_Input : MonoBehaviour
             anim.SetBool("isMoving", true);
             float x = Input.GetAxis("Horizontal");
             float z = Input.GetAxis("Vertical");
-            dir = new Vector3(x, 0, z).normalized;
+            Vector3 norDir = new Vector3(x, 0, z).normalized;
+            dir = new Vector3(norDir.x * Mathf.Abs(x), 0, norDir.z * Mathf.Abs(z));
         }
         else
         {

@@ -1,5 +1,6 @@
 using UnityEngine;
 
+[RequireComponent(typeof(Rigidbody), typeof(Puzzle_TileChecker))]
 public class Puzzle_Hunter_Movement : MonoBehaviour
 {
     Rigidbody rb;

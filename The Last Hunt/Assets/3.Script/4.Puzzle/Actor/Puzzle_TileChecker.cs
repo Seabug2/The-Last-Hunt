@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Puzzle_TileChecker : MonoBehaviour
 {
@@ -9,7 +10,7 @@ public class Puzzle_TileChecker : MonoBehaviour
     protected virtual void Start()
     {
         tileLayer = Puzzle_GameManager.instance.TileLayer;
-        gridSize = Puzzle_GameManager.instance.tileSize;
+        gridSize = Puzzle_GameManager.tileSize;
     }
 
     [SerializeField, Header("타일을 감지할 앞쪽 거리"), Space(10)]
@@ -44,7 +45,6 @@ public class Puzzle_TileChecker : MonoBehaviour
     [SerializeField, Header("바닥 감지 영역 크기"), Space(10)]
     Vector3 floorCheckerSize;
 
-
     public bool IsGrounded
     {
         get
@@ -78,15 +78,13 @@ public class Puzzle_TileChecker : MonoBehaviour
         rb.isKinematic = false;
         rb.useGravity = true;
 
-        enabled = false;
-
-        //더 이상 조작 불가
-        //anim.SetTrigger("Falling");
-        //GetComponent<Puzzle_Hunter_Input>().enabled = false;
-        //GetComponent<Puzzle_Hunter_TileAction>().enabled = false;
-        //rb.AddForce(dir.normalized, ForceMode.Impulse);
-        //rb.AddForce(transform.forward, ForceMode.VelocityChange);
+        FallingEvent?.Invoke();
     }
+
+    /// <summary>
+    /// 캐릭터가 떨어지면 실행될 것들
+    /// </summary>
+    public UnityEvent FallingEvent;
 
 #if UNITY_EDITOR
     void OnDrawGizmos()

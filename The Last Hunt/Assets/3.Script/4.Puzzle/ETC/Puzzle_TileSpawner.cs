@@ -5,7 +5,7 @@ using UnityEngine;
 public class Puzzle_TileSpawner : MonoBehaviour
 {
     //타일의 크기는?
-    int tileSize;
+    int tileSize = 3;
     //맵 크기를 알아야함
     [SerializeField, Header("목적지(집)")]
     Transform home;
@@ -26,7 +26,7 @@ public class Puzzle_TileSpawner : MonoBehaviour
 
     private void Start()
     {
-        tileSize = Puzzle_GameManager.instance.tileSize;
+        tileSize = Puzzle_GameManager.tileSize;
     }
 
     public void LevelSetUp()
@@ -35,14 +35,14 @@ public class Puzzle_TileSpawner : MonoBehaviour
         int homePosition = Mathf.RoundToInt(home.position.x - tileSize);
         while (i < homePosition)
         {
-            i += tileSize * (Random.Range(0, 2) == 0 ? SetDeadTile(i) : SetRoadTile(i));
+            i += (Random.Range(0, 2) == 0 ? SetDeadTile(i) : SetRoadTile(i));
         }
     }
 
     int SetDeadTile(int i)
     {
         Instantiate(dead, new Vector3(i, 0, Mathf.Round(Random.Range(-9, 9) / tileSize) * tileSize), Quaternion.identity);
-        return 1;
+        return tileSize;
     }
 
     int SetRoadTile(int i)
@@ -58,7 +58,7 @@ public class Puzzle_TileSpawner : MonoBehaviour
         randomRoad = Instantiate(road[Random.Range(0, road.Length)]);
         randomRoad.transform.position = new Vector3(i + tileSize, 0, Mathf.Round(Random.Range(-9, 9) / tileSize) * tileSize);
         Instantiate(obstacle[pattern], randomRoad.transform);
-        return 2;
+        return 2 * tileSize;
     }
 
 #if UNITY_EDITOR

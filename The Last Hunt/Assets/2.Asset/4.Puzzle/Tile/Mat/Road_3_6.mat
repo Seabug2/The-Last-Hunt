@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Road_Corner_ES
+  m_Name: Road_3_6
   m_Shader: {fileID: -6465566751694194690, guid: 1b362d7c2b5fe1e4781b0e1e718b9f88, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
@@ -44,7 +44,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: b8030ff238374ca4eb88d87a02179ee6, type: 3}
+        m_Texture: {fileID: 2800000, guid: d9d5d8f3f627762429158d0bf2eb7ea1, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:

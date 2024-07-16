@@ -87,8 +87,6 @@ public class Puzzle_Hunter_TileAction : Puzzle_TileChecker
     {
         Vector3 forward = ForwardPosition;
 
-        Vector2 pos = cam.WorldToScreenPoint(forward);
-        guideUI.position = pos;
 
         //타일을 이미 들고 있는 경우
         if (HoldingTile)

@@ -7,6 +7,7 @@ public class Puzzle_Hunter : MonoBehaviour
 
     public Animator Anim { get; private set; }
     public Puzzle_TileChecker TileChecker { get; private set; }
+    public Puzzle_Hunter_Input Input { get; private set; }
 
     /// <summary>
     /// 현재 장착 중인 아이템
@@ -18,44 +19,40 @@ public class Puzzle_Hunter : MonoBehaviour
     {
         Anim = GetComponent<Animator>();
         TileChecker = GetComponent<Puzzle_TileChecker>();
-        FindTargetTransform(this.transform, "jointItemR");
+        this.Input = GetComponent<Puzzle_Hunter_Input>();
+        //FindTargetTransform(this.transform, "jointItemR");
     }
 
     private void Start()
     {
         UnequipItem();
-
-        Puzzle_GameManager.instance.GameOverEvent.AddListener(() => {
-
-        });
+        //Puzzle_GameManager.instance.GameOverEvent += () => {};
     }
 
     public void Attack()
     {
+        this.Input.enabled = false;
         Anim.SetTrigger("Attack");
         //플레이어 입력과 이동을 비활성화
     }
 
     public void EndMotion()
     {
-        //플레이어 입력과 이동을 다시 활성화
+        //플레이어 입력을 다시 활성화
+        this.Input.enabled = true;
     }
 
     //죽어도 게임오버
     public void Falling()
     {
-        Anim.SetTrigger("Attack");
-    }
-
-    void CanNotControl()
-    {
-
+        Anim.SetTrigger("Falling");
     }
 
     [SerializeField]
     Transform hand;
     public Transform EquippedHand => hand;
 
+    //DFS 재귀함수
     void FindTargetTransform(Transform _root, string _name)
     {
         foreach (Transform t in _root)
@@ -80,6 +77,10 @@ public class Puzzle_Hunter : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// 지정한 이름의 장비를 찾아 장착합니다.
+    /// </summary>
+    /// <param name="_PickUpItemName"></param>
     public void EquipItem(string _PickUpItemName)
     {
         GameObject pickUpItem = hand.Find(_PickUpItemName).gameObject;
@@ -106,11 +107,6 @@ public class Puzzle_Hunter : MonoBehaviour
     public void GameOver()
     {
         isAlive = false;
-
-        GetComponent<Puzzle_Hunter_Input>().enabled = false;
-        GetComponent<Puzzle_Hunter_Movement>().enabled = false;
-        GetComponent<Puzzle_Hunter_TileAction>().enabled = false;
-
         Puzzle_GameManager.instance.GameOverEvent?.Invoke();
     }
 }

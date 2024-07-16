@@ -18,6 +18,11 @@ public class Puzzle_Horse : Puzzle_TileChecker
         if (ViewingTile == null)
         {
             Falling();
+
+            //사냥꾼 화내는 애니메이션 재생
+            //사냥꾼 조작 차단
+            //게임 오버 이벤트
+
             return;
         }
         ViewingTile.TileEvent(this);

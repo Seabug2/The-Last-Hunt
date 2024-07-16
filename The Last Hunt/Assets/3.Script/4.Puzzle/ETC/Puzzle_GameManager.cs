@@ -1,10 +1,11 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using Cinemachine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
+using Cinemachine;
 using DG.Tweening;
 
 
@@ -21,7 +22,7 @@ public class Puzzle_GameManager : MonoBehaviour
         instance = this;
     }
 
-    public readonly int tileSize = 3;
+    public const int tileSize = 3;
 
     /// <summary>
     /// 게임이 끝났는가?
@@ -39,9 +40,6 @@ public class Puzzle_GameManager : MonoBehaviour
     LayerMask tileLayer;
     public LayerMask TileLayer => tileLayer;
 
-    [SerializeField, Header("길 타일"), Space(10)]
-    Puzzle_Road[] roadTiles;
-
     [SerializeField, Header("시네머신 카메라"), Space(10)]
     CinemachineVirtualCamera firstCam; //시작 카메라 위치
     [SerializeField]
@@ -57,145 +55,108 @@ public class Puzzle_GameManager : MonoBehaviour
         StartCoroutine(StartEvent_co());
     }
 
+    public void GameStart()
+    {
+        GameStartEvent?.Invoke();
+    }
     public UnityEvent GameStartEvent;
+
     public UnityEvent GameClearEvent;
     public UnityEvent GameOverEvent;
 
     void Init()
     {
-        GameClearEvent.AddListener(() =>
-        {
-            print("게임 클리어!");
-        });
-        GameOverEvent.AddListener(() =>
-        {
-            print("게임 오버...");
-        });
-
-        //Screen.SetResolution(Mathf.RoundToInt(1920 * .5f), Mathf.RoundToInt(1080 * .5f), FullScreenMode.Windowed);
         FadeBoard.rectTransform.sizeDelta = new Vector2(Screen.width, Screen.height);
-
-        roadTiles = FindObjectsOfType<Puzzle_Road>();
-        hunter.GetComponent<Puzzle_Hunter_Input>().enabled = false;
-        hunter.GetComponent<Puzzle_Hunter_Movement>().enabled = false;
-        hunter.transform.position = new Vector3(0, 0, -3);
-        horse.transform.position = new Vector3(-1.5f, 0, 0);
-
         brainCam = Camera.main.GetComponent<CinemachineBrain>();
     }
-    [SerializeField]
-    Transform homePosition;
 
     IEnumerator StartEvent_co()
     {
         firstCam.Priority = 10;
         FadeBoard.color = Color.black;
         FadeBoard.gameObject.SetActive(true);
-
         Init();
 
-        GetComponent<Puzzle_TileSpawner>().LevelSetUp();
-
         //페이드 인
-        //yield return StartCoroutine(FadeIn_co());
         FadeBoard.DOFade(0, 1);
+
         yield return new WaitForSeconds(1);
         FadeBoard.gameObject.SetActive(false);
 
-        ShowMessage("말이 집까지 갈 수 있게 타일을 옮겨주세요!", 5f);
+        uiManager.ShowMessage("말이 집까지 갈 수 있게 타일을 옮겨주세요!", 5f);
 
-        yield return new WaitForSeconds(5);
+        bool isPassed = false;
+        float t = Time.time;
 
-        HomeViewCam.Priority = firstCam.Priority + 1;
+        while (Time.time - t < 5)
+        {
+            if (Input.anyKeyDown)
+            {
+                isPassed = true;
 
-        yield return new WaitForSeconds(13);
+                break;
+            }
 
-        traceVCam.Priority = HomeViewCam.Priority + 1;
+            yield return null;
+        }
+
+        if (!isPassed)
+        {
+            HomeViewCam.Priority = firstCam.Priority + 1;
+            yield return new WaitForSeconds(13);
+            traceVCam.Priority = HomeViewCam.Priority + 1;
+        }
+
+        else
+            traceVCam.Priority = firstCam.Priority + 1;
 
         yield return null;
         yield return new WaitWhile(() => brainCam.IsBlending);
 
         yield return new WaitForSeconds(1f);
 
-        // 플레이어 조작과 이동 활성화
-        hunter.GetComponent<Puzzle_Hunter_Input>().enabled = true;
-        hunter.GetComponent<Puzzle_Hunter_Movement>().enabled = true;
-        // 말 이동 시작
-        horse.GetComponent<Puzzle_Horse>().MoveToNextTile();
-
-        // 타이머 활성화
-        // 기타 UI 활성화
+        GameStart();
     }
 
-    [SerializeField]
-    GameObject deadTile;
-    [SerializeField]
-    GameObject basicTile;
-    [SerializeField]
-    GameObject[] item;
-    [SerializeField]
-    GameObject[] obstacle;
-
-    public void SetDeadTile(int _i)
+    void GameClear()
     {
-        //2개 설치
-        for (int i = 1; i <= 2; i++)
-        {
-            Instantiate(deadTile, new Vector3(_i + i * 3, 0, Mathf.RoundToInt(Random.Range(-9f, 9f) / 3 * 3)), Quaternion.identity);
-        }
+        PuzzleGameClear();
     }
 
-    public void SetObstacleNItem(int _i)
+    IEnumerator PuzzleGameClear()
     {
-        int caes = Random.Range(0, obstacle.Length);
+        FadeBoard.color = Vector4.zero;
+        FadeBoard.gameObject.SetActive(true);
 
+        //페이드 아웃
+        FadeBoard.DOFade(1, 3);
 
-        //아이템 생성
-        //GameObject tile = Instantiate(deadTile, new Vector3(_i + 1, 0, RandomVerticalPosition()), Quaternion.identity);
-
-        ////장애물 생성
-        //tile = Instantiate(deadTile, new Vector3(_i + 1, 0, RandomVerticalPosition()), Quaternion.identity);
-
+        yield return new WaitForSeconds(1f);
+        // 다음 씬으로 수정해야함
+        SceneManager.LoadScene(0);
     }
 
-    [SerializeField, Header("UI"), Space(10)]
+    [Header("UI"), Space(10)]
+    public Puzzle_UI_Manager uiManager;
+    [SerializeField, Header("페이드아웃")]
     Image FadeBoard;
 
-    [SerializeField]
-    Text message;
-    [SerializeField]
-    RectTransform textBack;
-
-    Tween currentTween = null;
-    public void ShowMessage(string _message, float _time = 1)
-    {
-        // 기존 애니메이션이 있으면 중단
-        if (currentTween != null && currentTween.IsActive())
-        {
-            currentTween.Kill();
-        }
-
-        message.text = _message;
-
-        // 애니메이션 설정
-        textBack.sizeDelta = new Vector2(1920, 0); // 시작 크기
-        textBack.gameObject.SetActive(true);
-        Sequence mySequence = DOTween.Sequence();
-
-        // 0.5초 동안 크기를 키우기
-        mySequence.Append(textBack.DOSizeDelta(new Vector2(1920, 126), 0.5f).SetEase(Ease.InOutQuad));
-
-        // _time 동안 대기
-        mySequence.AppendInterval(_time);
-
-        // 0.5초 동안 크기를 다시 줄이기
-        mySequence.Append(textBack.DOSizeDelta(new Vector2(1920, 0), 0.5f).SetEase(Ease.InOutQuad));
-
-        // 애니메이션이 끝난 후 비활성화
-        mySequence.OnComplete(() => textBack.gameObject.SetActive(false));
-
-        // 현재 애니메이션 저장
-        currentTween = mySequence;
-    }
 }
 
+public class Puzzle_Score
+{
+    /// <summary>
+    /// 클리어까지 걸린 시간
+    /// </summary>
+    double time = 0;
+    /// <summary>
+    /// 클리어까지 타일을 옮긴 횟수 (Set Tile 할 때마다)
+    /// </summary>
+    int count = 0;
+
+    public Puzzle_Score(float _time, int _count)
+    {
+        time = _time;
+        count = _count;
+    }
+}

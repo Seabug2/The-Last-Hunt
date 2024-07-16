@@ -1,0 +1,636 @@
+fileFormatVersion: 2
+guid: 6d25bdac75c2bb5468320432e31a02d9
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 5301242546734929968
+    second: THELASTHUNT_UI_0
+  - first:
+      213: -2463081796116907267
+    second: THELASTHUNT_UI_1
+  - first:
+      213: 7184888520529353137
+    second: THELASTHUNT_UI_2
+  - first:
+      213: 7779224236406328388
+    second: THELASTHUNT_UI_3
+  - first:
+      213: -5844935030276352058
+    second: THELASTHUNT_UI_7
+  - first:
+      213: 3973806289923183722
+    second: THELASTHUNT_UI_8
+  - first:
+      213: 227138814050362128
+    second: THELASTHUNT_UI_9
+  - first:
+      213: 5010672094947495916
+    second: THELASTHUNT_UI_10
+  - first:
+      213: -6776491293594843932
+    second: THELASTHUNT_UI_11
+  - first:
+      213: -8005014153601283942
+    second: THELASTHUNT_UI_12
+  - first:
+      213: 761123239008567559
+    second: THELASTHUNT_UI_13
+  - first:
+      213: -744682901215813338
+    second: THELASTHUNT_UI_14
+  - first:
+      213: -911372037744764479
+    second: THELASTHUNT_UI_15
+  - first:
+      213: -1008208502357698690
+    second: THELASTHUNT_UI_16
+  - first:
+      213: 3873459603766018566
+    second: THELASTHUNT_UI_17
+  - first:
+      213: 1136144352749629854
+    second: THELASTHUNT_UI_18
+  - first:
+      213: -6166662163822838114
+    second: THELASTHUNT_UI_19
+  - first:
+      213: -4574153171197960407
+    second: THELASTHUNT_UI_20
+  - first:
+      213: -2108364084203933623
+    second: THELASTHUNT_UI_4
+  - first:
+      213: -8264525964258684011
+    second: THELASTHUNT_UI_5
+  - first:
+      213: 1880508903528870815
+    second: THELASTHUNT_UI_6
+  externalObjects: {}
+  serializedVersion: 11
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 0
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: iPhone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: THELASTHUNT_UI_0
+      rect:
+        serializedVersion: 2
+        x: 12
+        y: 431
+        width: 72
+        height: 72
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0389252520cc19940800000000000000
+      internalID: 5301242546734929968
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: THELASTHUNT_UI_1
+      rect:
+        serializedVersion: 2
+        x: 92
+        y: 431
+        width: 73
+        height: 72
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dfa78b9082061ddd0800000000000000
+      internalID: -2463081796116907267
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: THELASTHUNT_UI_2
+      rect:
+        serializedVersion: 2
+        x: 173
+        y: 431
+        width: 73
+        height: 72
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1b91fe0da0ad5b360800000000000000
+      internalID: 7184888520529353137
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: THELASTHUNT_UI_3
+      rect:
+        serializedVersion: 2
+        x: 254
+        y: 431
+        width: 73
+        height: 72
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 44ccb171a3b55fb60800000000000000
+      internalID: 7779224236406328388
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: THELASTHUNT_UI_7
+      rect:
+        serializedVersion: 2
+        x: 460
+        y: 417
+        width: 25
+        height: 86
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6c71429ce8e92eea0800000000000000
+      internalID: -5844935030276352058
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: THELASTHUNT_UI_8
+      rect:
+        serializedVersion: 2
+        x: 15
+        y: 257
+        width: 145
+        height: 145
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a64951d34cbc52730800000000000000
+      internalID: 3973806289923183722
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: THELASTHUNT_UI_9
+      rect:
+        serializedVersion: 2
+        x: 178
+        y: 257
+        width: 110
+        height: 162
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 013ec264c85f62300800000000000000
+      internalID: 227138814050362128
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: THELASTHUNT_UI_10
+      rect:
+        serializedVersion: 2
+        x: 356
+        y: 254
+        width: 138
+        height: 138
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cefce4109bb798540800000000000000
+      internalID: 5010672094947495916
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: THELASTHUNT_UI_11
+      rect:
+        serializedVersion: 2
+        x: 15
+        y: 173
+        width: 174
+        height: 73
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4e480c5621115f1a0800000000000000
+      internalID: -6776491293594843932
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: THELASTHUNT_UI_12
+      rect:
+        serializedVersion: 2
+        x: 213
+        y: 173
+        width: 218
+        height: 73
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a980f982a0a78e090800000000000000
+      internalID: -8005014153601283942
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: THELASTHUNT_UI_13
+      rect:
+        serializedVersion: 2
+        x: 15
+        y: 91
+        width: 263
+        height: 73
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7018663ad8d009a00800000000000000
+      internalID: 761123239008567559
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: THELASTHUNT_UI_14
+      rect:
+        serializedVersion: 2
+        x: 292
+        y: 91
+        width: 175
+        height: 73
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 62169bac8da5aa5f0800000000000000
+      internalID: -744682901215813338
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: THELASTHUNT_UI_15
+      rect:
+        serializedVersion: 2
+        x: 15
+        y: 9
+        width: 73
+        height: 72
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1c9dff7d5f72a53f0800000000000000
+      internalID: -911372037744764479
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: THELASTHUNT_UI_16
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 9
+        width: 73
+        height: 72
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e77d07575bf1202f0800000000000000
+      internalID: -1008208502357698690
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: THELASTHUNT_UI_17
+      rect:
+        serializedVersion: 2
+        x: 178
+        y: 9
+        width: 72
+        height: 72
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6028c46bcfa41c530800000000000000
+      internalID: 3873459603766018566
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: THELASTHUNT_UI_18
+      rect:
+        serializedVersion: 2
+        x: 259
+        y: 9
+        width: 73
+        height: 72
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e91353fe44564cf00800000000000000
+      internalID: 1136144352749629854
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: THELASTHUNT_UI_19
+      rect:
+        serializedVersion: 2
+        x: 340
+        y: 9
+        width: 73
+        height: 72
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e9e7f733f6d9b6aa0800000000000000
+      internalID: -6166662163822838114
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: THELASTHUNT_UI_20
+      rect:
+        serializedVersion: 2
+        x: 422
+        y: 9
+        width: 72
+        height: 72
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 92fd48afce75580c0800000000000000
+      internalID: -4574153171197960407
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: THELASTHUNT_UI_4
+      rect:
+        serializedVersion: 2
+        x: 365
+        y: 417
+        width: 61
+        height: 86
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 94035d739069db2e0800000000000000
+      internalID: -2108364084203933623
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: THELASTHUNT_UI_5
+      rect:
+        serializedVersion: 2
+        x: 431
+        y: 445
+        width: 14
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5935e5f3c618e4d80800000000000000
+      internalID: -8264525964258684011
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: THELASTHUNT_UI_6
+      rect:
+        serializedVersion: 2
+        x: 446
+        y: 431
+        width: 20
+        height: 58
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f933cc762e8e81a10800000000000000
+      internalID: 1880508903528870815
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 497db6bd42c8ed0409f31af5f30177cd
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+  spritePackingTag: 
+  pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
