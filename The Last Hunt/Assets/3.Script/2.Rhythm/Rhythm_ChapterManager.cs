@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class Rhythm_ChapterManager : MonoBehaviour
 {
-    [SerializeField] private GameObject result_obj;
+    [SerializeField] private GameObject resultUI, introUI;
     [SerializeField] private Text maxT, hitT, missT, scoreT;
     [SerializeField] private Slider scoreSlider;
     [SerializeField] private Image scoreBarFillImage;
@@ -30,6 +30,12 @@ public class Rhythm_ChapterManager : MonoBehaviour
 
     private void Start()
     {
+        introUI.SetActive(true);
+        StartCoroutine("Intro_co");
+    }
+    private IEnumerator Intro_co()
+    {
+        yield return introUI.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).length;
         Rhythm_SoundManager.instance.PlayBGM("BGM");
         BGMisPlaying = true;
     }
@@ -45,7 +51,7 @@ public class Rhythm_ChapterManager : MonoBehaviour
     {
         BGMisPlaying = false;
         int percent = (100 * Maxcount + 70 * Hitcount) / (Maxcount + Hitcount + Misscount);
-        result_obj.SetActive(true);
+        resultUI.SetActive(true);
 
         maxT.text = Maxcount.ToString();
         hitT.text = Hitcount.ToString();
