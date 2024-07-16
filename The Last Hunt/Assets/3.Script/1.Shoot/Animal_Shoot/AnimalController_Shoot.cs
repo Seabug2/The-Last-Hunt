@@ -54,7 +54,6 @@ public class AnimalController_Shoot : MonoBehaviour
     [SerializeField] private float originalScent = 0f;
     [SerializeField] private bool isAnimalInRange;
 
-    [SerializeField] private ArrowController_Shoot arrow;
     [SerializeField] private PlayerController_Shoot player;
     [SerializeField] [Range(0, 360)] private float fovAngle;
     [SerializeField] private PlayerAlertStage playerAlertStage;
@@ -155,7 +154,6 @@ public class AnimalController_Shoot : MonoBehaviour
             return stats.stamina * 0.1f;
         }
     }
-
 
     public WanderState CurrentState;
     private AnimalController_Shoot primaryPrey;
@@ -632,17 +630,38 @@ public class AnimalController_Shoot : MonoBehaviour
                 SetState(WanderState.Evade);
                 if (!isPlayerInRange)
                 {
-                    playerAlertLevel -= 0.02f;
-                    if (playerAlertLevel < 80)
-                    {
-                        playerAlertStage = PlayerAlertStage.Intrigued;
-                        Debug.Log(string.Format("Player NOT sensed by {0} : Intrigued", gameObject.name));
-                    }
+                    playerAlertStage = PlayerAlertStage.Intrigued;
+                    Debug.Log(string.Format("Player NOT sensed by {0} : Intrigued", gameObject.name));
                 }
                 break;
             default:
                 break;
         }
+    }
+
+    // Method on if and when arrow hits animal
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.transform.CompareTag("Arrow"))
+        {
+            StartCoroutine(FleeArrow_co());
+        }
+    }
+
+    // Coroutine to flee arrow
+    private IEnumerator FleeArrow_co()
+    {
+        Run();
+        var position = transform.position;
+        var targetPosition = position;
+        targetPosition = position + transform.forward * 30;
+        FaceDirection((targetPosition - position).normalized);
+        stamina -= Time.deltaTime;
+        if (stamina <= 0)
+        {
+            UpdateAI();
+        }
+        yield return new WaitForSeconds(5f);
     }
 
     // Method to face animal in direction of action
@@ -955,12 +974,14 @@ public class AnimalController_Shoot : MonoBehaviour
         {
             TrySetBool(deathStates[Random.Range(0, deathStates.Length)].animationBool, true);
         }
+        player.killCount++;
         deathEvent.Invoke();
         if (navMeshAgent && navMeshAgent.isOnNavMesh)
         {
             navMeshAgent.destination = transform.position;
         }
         enabled = false;
+        Destroy(gameObject, 5f);
     }
     // Attack method : Set turn speed -> Clear bools -> Set attack animation -> Invoke attack event
     private void Attack()

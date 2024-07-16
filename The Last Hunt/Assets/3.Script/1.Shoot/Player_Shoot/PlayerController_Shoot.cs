@@ -15,9 +15,8 @@ public class PlayerController_Shoot : MonoBehaviour
     public float releaseTime = 0.0f;
     private bool isKnock = false;
     public bool isDraw;
-    public float health = 100f;
     public bool isAlive = true;
-    public int dominance = 8;
+    public int killCount = 0;
 
 
     private void Awake()
@@ -31,60 +30,53 @@ public class PlayerController_Shoot : MonoBehaviour
 
     private void Update()
     {
-        if (isAlive)
+        MoveFB();
+        MoveLR();
+        Rotate();
+
+        if (input.MoveFBValue > 0.1 || input.MoveFBValue < -0.1)
         {
-            MoveFB();
-            MoveLR();
-            Rotate();
+            player_ani.SetFloat("MoveFB", input.MoveFBValue);
+        }
+        if (input.MoveLRValue > 0.1 || input.MoveLRValue < -0.1)
+        {
+            player_ani.SetFloat("MoveLR", input.MoveLRValue);
+        }
 
-            if (input.MoveFBValue > 0.1 || input.MoveFBValue < -0.1)
-            {
-                player_ani.SetFloat("MoveFB", input.MoveFBValue);
-            }
-            if (input.MoveLRValue > 0.1 || input.MoveLRValue < -0.1)
-            {
-                player_ani.SetFloat("MoveLR", input.MoveLRValue);
-            }
-
-            if (ammoRemain <= 0)
-            {
-                player_ani.SetBool("isKnock", false);
-                player_ani.SetBool("isDraw", false);
-            }
-            else
-            {
-                if (input.isKnock)
-                {
-                    player_ani.SetBool("isKnock", true);
-                    isKnock = true;
-                }
-                else if (input.isKnockCancel)
-                {
-                    player_ani.SetBool("isKnock", false);
-                    isKnock = false;
-                }
-                if (input.isDraw && !isDraw)
-                {
-                    player_ani.SetBool("isDraw", true);
-                    drawTime = Time.time;
-                    isDraw = true;
-                }
-                if (input.isFire && isKnock)
-                {
-                    ammoRemain--;
-                    player_ani.SetTrigger("Fire");
-                    player_ani.SetBool("isDraw", false);
-                    releaseTime = Time.time;
-                    isDraw = false;
-                    isKnock = false;
-                    Debug.Log($"Draw time : {releaseTime - drawTime}");
-                    Debug.Log($"Remaining (Player) : {ammoRemain}");
-                }
-            }
+        if (ammoRemain <= 0)
+        {
+            player_ani.SetBool("isKnock", false);
+            player_ani.SetBool("isDraw", false);
         }
         else
         {
-            player_ani.SetTrigger("Dead");
+            if (input.isKnock)
+            {
+                player_ani.SetBool("isKnock", true);
+                isKnock = true;
+            }
+            else if (input.isKnockCancel)
+            {
+                player_ani.SetBool("isKnock", false);
+                isKnock = false;
+            }
+            if (input.isDraw && !isDraw)
+            {
+                player_ani.SetBool("isDraw", true);
+                drawTime = Time.time;
+                isDraw = true;
+            }
+            if (input.isFire && isKnock)
+            {
+                ammoRemain--;
+                player_ani.SetTrigger("Fire");
+                player_ani.SetBool("isDraw", false);
+                releaseTime = Time.time;
+                isDraw = false;
+                isKnock = false;
+                Debug.Log($"Draw time : {releaseTime - drawTime}");
+                Debug.Log($"Remaining (Player) : {ammoRemain}");
+            }
         }
     }
 
@@ -109,15 +101,6 @@ public class PlayerController_Shoot : MonoBehaviour
         {
             Vector3 pointToLook = cameraRay.GetPoint(rayLength);
             transform.LookAt(new Vector3(pointToLook.x, transform.position.y, pointToLook.z));
-        }
-    }
-
-    public void TakeDamage(float damage)
-    {
-        health -= damage;
-        if (health <= 0)
-        {
-            isAlive = false;
         }
     }
 }

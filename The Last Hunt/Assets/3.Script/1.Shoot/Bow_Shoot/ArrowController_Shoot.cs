@@ -50,6 +50,7 @@ public class ArrowController_Shoot : MonoBehaviour
             Debug.Log("Ground");
             arrow_r.velocity = Vector3.zero;
             arrow_r.isKinematic = true;
+            Destroy(gameObject, 3f);
         }
     } 
 }
