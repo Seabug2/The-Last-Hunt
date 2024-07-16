@@ -597,6 +597,10 @@ public class AnimalController_Shoot : MonoBehaviour
     // Update player alert levels
     private void UpdatePlayerAlert(bool isPlayerInRange)
     {
+        if (CurrentState == WanderState.Dead)
+        {
+            return;
+        }
         switch (playerAlertStage)
         {
             case PlayerAlertStage.Peaceful:
@@ -642,7 +646,11 @@ public class AnimalController_Shoot : MonoBehaviour
     // Method on if and when arrow hits animal
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.transform.CompareTag("Arrow"))
+        if (CurrentState == WanderState.Dead)
+        {
+            return;
+        }
+        else if (collision.transform.CompareTag("Arrow"))
         {
             StartCoroutine(FleeArrow_co());
         }
@@ -974,7 +982,8 @@ public class AnimalController_Shoot : MonoBehaviour
         {
             TrySetBool(deathStates[Random.Range(0, deathStates.Length)].animationBool, true);
         }
-        player.killCount++;
+        player.killValue += stats.value;
+        Debug.Log($"Player Kill Value : {player.killValue}");
         deathEvent.Invoke();
         if (navMeshAgent && navMeshAgent.isOnNavMesh)
         {

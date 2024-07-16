@@ -16,7 +16,7 @@ public class PlayerController_Shoot : MonoBehaviour
     private bool isKnock = false;
     public bool isDraw;
     public bool isAlive = true;
-    public int killCount = 0;
+    public int killValue = 0;
 
 
     private void Awake()

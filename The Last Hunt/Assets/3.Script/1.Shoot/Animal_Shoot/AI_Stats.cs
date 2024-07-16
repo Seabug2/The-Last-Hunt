@@ -13,4 +13,5 @@ public class AI_Stats : ScriptableObject
     [SerializeField] public bool isTerritorial = false;
     [SerializeField] public bool isStealthy = false;
     [SerializeField] public float sensitivity = 0f;
+    [SerializeField] public int value = 0;
 }

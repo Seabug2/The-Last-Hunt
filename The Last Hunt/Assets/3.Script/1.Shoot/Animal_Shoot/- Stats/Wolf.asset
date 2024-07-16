@@ -21,3 +21,4 @@ MonoBehaviour:
   isTerritorial: 0
   isStealthy: 0
   sensitivity: 10
+  value: 1000
