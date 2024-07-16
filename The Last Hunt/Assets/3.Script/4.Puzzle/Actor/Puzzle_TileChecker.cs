@@ -3,14 +3,28 @@ using UnityEngine.Events;
 
 public class Puzzle_TileChecker : MonoBehaviour
 {
-    //[SerializeField,Header("타일 레이어"), Space(10)]
     protected LayerMask tileLayer;
     float gridSize = 3;
+
+    /// <summary>
+    /// 캐릭터가 떨어지면 실행될 것들
+    /// </summary>
+    [Header("캐릭터가 떨어지면 실행될 이벤트")]
+    public UnityEvent FallingEvent = new UnityEvent();
 
     protected virtual void Start()
     {
         tileLayer = Puzzle_GameManager.instance.TileLayer;
         gridSize = Puzzle_GameManager.tileSize;
+
+        FallingEvent.AddListener(() =>
+        {
+            Rigidbody rb = GetComponent<Rigidbody>();
+            rb.constraints = RigidbodyConstraints.None;
+            rb.isKinematic = false;
+            rb.useGravity = true;
+            rb.AddForce(transform.forward, ForceMode.VelocityChange);
+        });
     }
 
     [SerializeField, Header("타일을 감지할 앞쪽 거리"), Space(10)]
@@ -69,22 +83,6 @@ public class Puzzle_TileChecker : MonoBehaviour
             return null;
         }
     }
-
-    //떨어저도 게임오버
-    public virtual void Falling()
-    {
-        Rigidbody rb = GetComponent<Rigidbody>();
-        rb.constraints = RigidbodyConstraints.None;
-        rb.isKinematic = false;
-        rb.useGravity = true;
-
-        FallingEvent?.Invoke();
-    }
-
-    /// <summary>
-    /// 캐릭터가 떨어지면 실행될 것들
-    /// </summary>
-    public UnityEvent FallingEvent;
 
 #if UNITY_EDITOR
     void OnDrawGizmos()

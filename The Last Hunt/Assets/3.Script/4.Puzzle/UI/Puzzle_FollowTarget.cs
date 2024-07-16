@@ -13,6 +13,11 @@ public class Puzzle_FollowTarget : MonoBehaviour
         rect = GetComponent<RectTransform>();
         cam = Camera.main;
     }
+    private void Start()
+    {
+        Vector3 screenPos = cam.WorldToScreenPoint(tileChecker.ForwardPosition);
+        rect.position = screenPos;
+    }
 
     private void Update()
     {

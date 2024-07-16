@@ -1,21 +1,23 @@
 using UnityEngine;
 
-[RequireComponent(typeof(Rigidbody), typeof(Puzzle_TileChecker))]
+[RequireComponent(typeof(Rigidbody), typeof(Puzzle_Hunter_TileAction))]
 public class Puzzle_Hunter_Movement : MonoBehaviour
 {
     Rigidbody rb;
-    Puzzle_TileChecker tileChecker;
+    Puzzle_Hunter_TileAction tileChecker;
 
     /// <summary>
     /// 이동속도
     /// </summary>
-    [SerializeField, Header("이동 속도와 회전 속도"), Space(10)]
+    [SerializeField, Header("이동 속도")]
     protected float moveSpeed = 1;
+    
     /// <summary>
     /// 회전속도
     /// </summary>
-    [SerializeField]
+    [SerializeField, Header("회전 속도")]
     protected float rotSpeed = 1;
+
     /// <summary>
     /// 이동할 방향
     /// </summary>
@@ -25,7 +27,7 @@ public class Puzzle_Hunter_Movement : MonoBehaviour
     void Awake()
     {
         rb = GetComponent<Rigidbody>();
-        tileChecker = GetComponent<Puzzle_TileChecker>();
+        tileChecker = GetComponent<Puzzle_Hunter_TileAction>();
     }
 
     private void FixedUpdate()
@@ -48,8 +50,7 @@ public class Puzzle_Hunter_Movement : MonoBehaviour
         if (!tileChecker.IsGrounded)
         {
             print("플레이어 떨어짐");
-            tileChecker.Falling();
-            GetComponent<Puzzle_Hunter>().GameOver();
+            tileChecker.FallingEvent?.Invoke();
         }
     }
 }

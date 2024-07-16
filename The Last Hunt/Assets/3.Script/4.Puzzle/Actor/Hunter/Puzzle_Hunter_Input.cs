@@ -2,13 +2,13 @@ using UnityEngine;
 
 public class Puzzle_Hunter_Input : MonoBehaviour
 {
+    Puzzle_Hunter_TileAction tileAction;
     Puzzle_Hunter_Movement movement;
-    Puzzle_Hunter_TileAction carrying;
     Animator anim;
 
     private void Awake()
     {
-        carrying = GetComponent<Puzzle_Hunter_TileAction>();
+        tileAction = GetComponent<Puzzle_Hunter_TileAction>();
         movement = GetComponent<Puzzle_Hunter_Movement>();
         anim = GetComponent<Animator>();
     }
@@ -37,7 +37,7 @@ public class Puzzle_Hunter_Input : MonoBehaviour
         //스페이스바를 눌렀을 때 
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            carrying.CarryingAction();
+            tileAction.CarryingAction();
         }
     }
 }

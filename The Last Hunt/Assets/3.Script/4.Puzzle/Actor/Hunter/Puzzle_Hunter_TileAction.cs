@@ -19,12 +19,9 @@ public class Puzzle_Hunter_TileAction : Puzzle_TileChecker
     [SerializeField, Header("플레이어의 시선을 표시할UI"), Space(10)]
     RectTransform guideUI;
 
-    Camera cam;
-
     void Awake()
     {
         guideTile = FindObjectOfType<Puzzle_Guide>();
-        cam = Camera.main;
         HoldingTile = null;
     }
 

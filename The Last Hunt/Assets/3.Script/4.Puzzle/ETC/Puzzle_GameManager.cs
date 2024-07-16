@@ -17,23 +17,21 @@ public class Puzzle_GameManager : MonoBehaviour
     {
         if (instance != null)
         {
-            Destroy(instance);
+            Destroy(gameObject);
+            return;
         }
         instance = this;
+
+        Init();
     }
 
     public const int tileSize = 3;
 
-    /// <summary>
-    /// 게임이 끝났는가?
-    /// </summary>
-    public bool IsGameOver { get; private set; }
-
-    [SerializeField, Header("캐릭터"), Space(10)]
+    [SerializeField, Header("사냥꾼")]
     GameObject hunter;
-    [SerializeField]
-    GameObject horse;
     public GameObject Hunter => hunter;
+    [SerializeField, Header("말"), Space(10)]
+    GameObject horse;
     public GameObject Horse => horse;
 
     [SerializeField, Header("타일 레이어"), Space(10)]
@@ -53,93 +51,143 @@ public class Puzzle_GameManager : MonoBehaviour
     private void Start()
     {
         StartCoroutine(StartEvent_co());
+
+        GameClearEvent.AddListener(() =>
+        {
+            LoadSceneAfterFadeOut(SceneManager.GetActiveScene().buildIndex);
+        });
+
+        GameOverEvent.AddListener(() =>
+        {
+            LoadSceneAfterFadeOut(SceneManager.GetActiveScene().buildIndex);
+        });
     }
 
-    public void GameStart()
-    {
-        GameStartEvent?.Invoke();
-    }
     public UnityEvent GameStartEvent;
-
     public UnityEvent GameClearEvent;
     public UnityEvent GameOverEvent;
 
     void Init()
     {
-        FadeBoard.rectTransform.sizeDelta = new Vector2(Screen.width, Screen.height);
+        text = message.GetComponentInChildren<Text>();
+        message.gameObject.SetActive(false);
+        fadeBoard.rectTransform.sizeDelta = new Vector2(Screen.width, Screen.height);
         brainCam = Camera.main.GetComponent<CinemachineBrain>();
     }
 
     IEnumerator StartEvent_co()
     {
         firstCam.Priority = 10;
-        FadeBoard.color = Color.black;
-        FadeBoard.gameObject.SetActive(true);
-        Init();
+        fadeBoard.color = Color.black;
+        fadeBoard.gameObject.SetActive(true);
 
         //페이드 인
-        FadeBoard.DOFade(0, 1);
+        fadeBoard.DOFade(0, 1);
 
         yield return new WaitForSeconds(1);
-        FadeBoard.gameObject.SetActive(false);
+        fadeBoard.gameObject.SetActive(false);
 
-        uiManager.ShowMessage("말이 집까지 갈 수 있게 타일을 옮겨주세요!", 5f);
+        ShowMessage("말이 집까지 갈 수 있게 타일을 옮겨주세요!", 5f);
 
-        bool isPassed = false;
-        float t = Time.time;
+        yield return new WaitForSeconds(0.8f);
 
-        while (Time.time - t < 5)
+        float waitTime = Time.time;
+
+        while (Time.time - waitTime < 4.2f)
         {
             if (Input.anyKeyDown)
             {
-                isPassed = true;
-
+                MessageCut();
                 break;
             }
 
             yield return null;
         }
 
-        if (!isPassed)
+        //중간에 메시지가 중단 되었다면 바로 사냥꾼을 추적하는 가상 카메라로 이동
+        if (IsNoMessage)
+            traceVCam.Priority = firstCam.Priority + 1;
+        else
         {
             HomeViewCam.Priority = firstCam.Priority + 1;
             yield return new WaitForSeconds(13);
             traceVCam.Priority = HomeViewCam.Priority + 1;
         }
 
-        else
-            traceVCam.Priority = firstCam.Priority + 1;
 
         yield return null;
         yield return new WaitWhile(() => brainCam.IsBlending);
 
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(1.8f);
 
-        GameStart();
+        GameStartEvent.Invoke();
     }
 
-    void GameClear()
+    public void LoadSceneAfterFadeOut(int _sceneNum)
     {
-        PuzzleGameClear();
+        fadeBoard.DOFade(1, 3).OnComplete(() =>
+        {
+            // 이 블록은 DoTween 애니메이션이 끝난 후에 실행됩니다.
+            SceneManager.LoadScene(_sceneNum);
+        });
     }
 
-    IEnumerator PuzzleGameClear()
+
+    [SerializeField, Header("페이드아웃"), Space(10)]
+    Image fadeBoard;
+    [SerializeField, Header("메세지")]
+    RectTransform message;
+    Text text;
+
+    public bool IsNoMessage
     {
-        FadeBoard.color = Vector4.zero;
-        FadeBoard.gameObject.SetActive(true);
-
-        //페이드 아웃
-        FadeBoard.DOFade(1, 3);
-
-        yield return new WaitForSeconds(1f);
-        // 다음 씬으로 수정해야함
-        SceneManager.LoadScene(0);
+        get { return currentTween == null || !currentTween.IsActive(); }
     }
 
-    [Header("UI"), Space(10)]
-    public Puzzle_UI_Manager uiManager;
-    [SerializeField, Header("페이드아웃")]
-    Image FadeBoard;
+    Tween currentTween = null;
+
+    public void ShowMessage(string _message, float _time = 1)
+    {
+        // 기존 애니메이션이 있으면 중단
+        if (currentTween != null && currentTween.IsActive())
+        {
+            currentTween.Kill();
+        }
+
+        text.text = _message;
+
+        // 애니메이션 설정
+        message.sizeDelta = new Vector2(1920, 0); // 시작 크기
+        message.gameObject.SetActive(true);
+        Sequence mySequence = DOTween.Sequence();
+
+        // 0.5초 동안 크기를 키우기
+        mySequence.Append(message.DOSizeDelta(new Vector2(1920, 126), 0.5f).SetEase(Ease.InOutQuad));
+
+        // _time 동안 대기
+        mySequence.AppendInterval(_time);
+
+        // 0.5초 동안 크기를 다시 줄이기
+        mySequence.Append(message.DOSizeDelta(new Vector2(1920, 0), 0.5f).SetEase(Ease.InOutQuad));
+
+        // 애니메이션이 끝난 후 비활성화
+        mySequence.OnComplete(() => message.gameObject.SetActive(false));
+
+        // 현재 애니메이션 저장
+        currentTween = mySequence;
+    }
+
+    public void MessageCut()
+    {
+        if (currentTween != null && currentTween.IsActive())
+        {
+            currentTween.Kill();
+        }
+
+        // 메세지 비활성화
+        message.gameObject.SetActive(false);
+    }
+
 
 }
 

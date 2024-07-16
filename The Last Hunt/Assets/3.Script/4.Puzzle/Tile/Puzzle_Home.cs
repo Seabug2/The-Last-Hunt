@@ -14,24 +14,4 @@ public class Puzzle_Home : Puzzle_Tile
         print("집에 도착했습니다!");
         Puzzle_GameManager.instance.GameClearEvent?.Invoke();
     }
-
-    void StartGameOver()
-    {
-        StopGameOver();
-        GameClear = StartCoroutine(GameClear_co());
-    }
-
-    void StopGameOver()
-    {
-        if (GameClear != null)
-        {
-            StopCoroutine(GameClear);
-        }
-    }
-
-    Coroutine GameClear;
-    IEnumerator GameClear_co()
-    {
-        yield break;
-    }
 }
