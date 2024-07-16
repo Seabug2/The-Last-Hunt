@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Rhythm_PlayerController : MonoBehaviour
 {
-    [SerializeField] private GameObject meatPrefab, HitParticle;
+    [SerializeField] private GameObject meatPrefab, HitSmoke, FullHitStar;
     private Animator Hunter_ani;
     Vector3 origin = new Vector3(-2, 1.5f, -7);
     private int inputArrow = -1;
@@ -20,41 +20,23 @@ public class Rhythm_PlayerController : MonoBehaviour
         if (inputArrow > -1)
         {
             Hunter_ani.SetTrigger("Swing");
-            // 키 입력시 판정 범위 내 있는지 확인
-            /*
-            if (Physics.SphereCast(origin, 1f, Vector3.right, out RaycastHit hit, 1f))
-            {
-                answer = Rhythm_AnimalPooling.instance.ReturnAnswer();
-                if (inputArrow.Equals(answer))
-                {
-                    print(Mathf.Abs(hit.transform.position.z + 7));
-                    // if (Mathf.Abs(hit.transform.position.z + 7) < 0.4f) print("Full");
-                    // else print("Half");
-                    PlaySFX("Hit_Correct");
-                    Rhythm_ChapterManager.instance.CountAdd(true);
-                    ChangeToMeat(hit.collider.gameObject, true);
-                }
-                else
-                {
-                    PlaySFX("Hit_Wrong");
-                }
-            }
-            else
-            {
-                PlaySFX("Swing");
-            }
-            */
 
             if (Physics.Raycast(origin, Vector3.right * 5, out RaycastHit hit)) 
             {
                 answer = Rhythm_AnimalPooling.instance.ReturnAnswer();
                 if (inputArrow.Equals(answer))
                 {
-                    print(Mathf.Abs(hit.transform.position.z + 7));
-                    // if (Mathf.Abs(hit.transform.position.z + 7) < 0.4f) print("Full");
-                    // else print("Half");
-                    PlaySFX("Hit_Correct");
-                    Rhythm_ChapterManager.instance.CountAdd(true);
+                    if (Mathf.Abs(hit.transform.position.z + 7) < 0.3f)
+                    {
+                        FullHitStar.GetComponent<ParticleSystem>().Play();
+                        Rhythm_ChapterManager.instance.CountAdd(2);
+                        PlaySFX("MaxHit");
+                    }
+                    else
+                    {
+                        Rhythm_ChapterManager.instance.CountAdd(1);
+                        PlaySFX("Hit");
+                    }
                     ChangeToMeat(hit.collider.gameObject, true);
                 }
                 else
@@ -87,7 +69,7 @@ public class Rhythm_PlayerController : MonoBehaviour
         meat_rb.angularVelocity = obj_rb.angularVelocity * 0.5f;
         meat_rb.velocity = obj_rb.velocity * 0.5f;
         // 이펙트 발생
-        HitParticle.GetComponent<ParticleSystem>().Play();
+        HitSmoke.GetComponent<ParticleSystem>().Play();
         // 동물 형태는 반납
         obj_rb.Sleep();
         Rhythm_AnimalPooling.instance.ReturnObjectToPool(obj);
@@ -95,9 +77,11 @@ public class Rhythm_PlayerController : MonoBehaviour
 
     private int IsArrowKeyInput()
     {
+        if (!Rhythm_ChapterManager.instance.BGMisPlaying) return -1;
         if (Input.GetKeyDown(KeyCode.LeftArrow)) return 0;
         if (Input.GetKeyDown(KeyCode.UpArrow)) return 1;
         if (Input.GetKeyDown(KeyCode.RightArrow)) return 2;
         return -1;
     }
+
 }
