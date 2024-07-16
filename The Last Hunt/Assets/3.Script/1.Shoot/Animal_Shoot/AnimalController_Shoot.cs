@@ -632,8 +632,8 @@ public class AnimalController_Shoot : MonoBehaviour
                 SetState(WanderState.Evade);
                 if (!isPlayerInRange)
                 {
-                    playerAlertLevel -= 0.01f;
-                    if (playerAlertLevel < 70)
+                    playerAlertLevel -= 0.02f;
+                    if (playerAlertLevel < 80)
                     {
                         playerAlertStage = PlayerAlertStage.Intrigued;
                         Debug.Log(string.Format("Player NOT sensed by {0} : Intrigued", gameObject.name));
@@ -643,16 +643,6 @@ public class AnimalController_Shoot : MonoBehaviour
             default:
                 break;
         }
-    }
-
-    // Coroutine for when arrow hits animal
-    private IEnumerator arrowHit_co()
-    {
-        playerAlertStage = PlayerAlertStage.Alerted;
-        Debug.Log(string.Format("{0} alerted by arrow : ALERTED", gameObject.name));
-        yield return new WaitForSeconds(3f);
-        playerAlertStage = PlayerAlertStage.Intrigued;
-        Debug.Log(string.Format("Intrigued"));
     }
 
     // Method to face animal in direction of action

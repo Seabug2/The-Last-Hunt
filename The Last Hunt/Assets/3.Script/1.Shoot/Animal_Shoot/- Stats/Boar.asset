@@ -18,6 +18,6 @@ MonoBehaviour:
   health: 100
   aggression: 99
   attackSpeed: 1.5
-  isTerritorial: 1
+  isTerritorial: 0
   isStealthy: 0
-  sensitivity: 15
+  sensitivity: 5

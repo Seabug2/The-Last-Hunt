@@ -4,28 +4,10 @@ using UnityEngine;
 
 public class PlayerController_Shoot : MonoBehaviour
 {
-    /*
-    [Stat]
-    HP
-
-    [Animation]
-    Movement -> 1.Forward 2.Backward 3.Strafe Left/Right
-    Combat -> 1.Knock 2.Draw bow 3.Fire
-    ETC -> 1.Get hit 2.Death
-
-    [SFX]
-    1. Footsteps
-    2. Running
-    3. Bush
-    4. Pull string
-    5. Fire
-    */
-
     [SerializeField] private float moveSpeed = 5f;
     [SerializeField] private PlayerInput_Shoot input;
     private Rigidbody player_r;
     [SerializeField] private Animator player_ani;
-    private Camera mouse;
     [SerializeField] private Archery_Data_Shoot Archery_Data;
     public int ammoRemain = 0;
 
@@ -43,7 +25,6 @@ public class PlayerController_Shoot : MonoBehaviour
         TryGetComponent(out input);
         TryGetComponent(out player_r);
         player_ani = GetComponentInChildren<Animator>();
-        mouse = FindObjectOfType<Camera>();
         ammoRemain = Archery_Data.QuiverCapacity;
         isDraw = false;
     }
@@ -121,7 +102,7 @@ public class PlayerController_Shoot : MonoBehaviour
 
     private void Rotate()
     {
-        Ray cameraRay = mouse.ScreenPointToRay(Input.mousePosition);
+        Ray cameraRay = Camera.main.ScreenPointToRay(Input.mousePosition);
         Plane groundPlane = new Plane(Vector3.up, Vector3.zero);
         float rayLength;
         if (groundPlane.Raycast(cameraRay, out rayLength))
