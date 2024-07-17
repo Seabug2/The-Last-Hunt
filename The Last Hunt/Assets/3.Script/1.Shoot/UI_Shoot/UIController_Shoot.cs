@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
+using UnityEngine.SceneManagement;
 
 public class UIController_Shoot : MonoBehaviour
 {
@@ -12,10 +13,14 @@ public class UIController_Shoot : MonoBehaviour
     [SerializeField] private Text WolfKill_Text;
     [SerializeField] private Text TotalKill_Text;
 
-    //[SerializeField] private GameObject Task_Header;
     [SerializeField] private Image HeaderBoard;
     [SerializeField] private RectTransform Message;
     [SerializeField] private Text Header_Text;
+
+    [SerializeField] private GameObject GameClear;
+    [SerializeField] private Text GameClearScore_Text;
+    [SerializeField] private GameObject GameOver;
+    [SerializeField] private Text GameOverScore_Text;
 
     public bool isNoMessage
     {
@@ -35,17 +40,13 @@ public class UIController_Shoot : MonoBehaviour
 
     private void Awake()
     {
-        //DeerKill_Text = GetComponentInChildren<Text>();
-        //ReindeerKill_Text = GetComponentInChildren<Text>();
-        //BoarKill_Text = GetComponentInChildren<Text>();
-        //WolfKill_Text = GetComponentInChildren<Text>();
-        //TotalKill_Text = GetComponentInChildren<Text>();
-
         DeerKill_Score = 0;
         ReindeerKill_Score = 0;
         BoarKill_Score = 0;
         WolfKill_Score = 0;
         TotalKill_Score = 0;
+        GameClear.SetActive(false);
+        GameOver.SetActive(false);
     }
 
     private void Start()
@@ -114,5 +115,34 @@ public class UIController_Shoot : MonoBehaviour
                 break;
         }
         TotalKill_Text.text = string.Format("Total : {0:#,##0}", TotalKill_Score);
+    }
+
+    public void ResultScreen()
+    {
+        if (TotalKill_Score >= 1000)
+        {
+            GameClear.SetActive(true);
+            GameClearScore_Text.text = string.Format("Score : {0}", TotalKill_Score);
+        }
+        else
+        {
+            GameOver.SetActive(true);
+            GameOverScore_Text.text = string.Format("Score : {0}", TotalKill_Score);
+        }
+    }
+
+    public void Restart()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    public void Continue()
+    {
+
+    }
+
+    public void MainMenu()
+    {
+
     }
 }
