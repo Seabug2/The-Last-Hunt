@@ -64,14 +64,15 @@ public class Rhythm_AnimalPooling : MonoBehaviour
     // 3단계: 오브젝트를 풀에 반납하는 메서드
     public void ReturnObjectToPool(GameObject obj)
     {
+        obj.GetComponent<Rigidbody>().Sleep();
         // 3-1. 넣을 땐 비활성화
         obj.SetActive(false);
         // 3-2. 다시 큐에 넣기
         AnimalPool[AnswerQueue.Dequeue()].Enqueue(obj);
     }
     
-    public int ReturnAnswer()
+    public bool isCorrectAnswer(int input)
     {
-        return AnswerQueue.Peek();
+        return AnswerQueue.Peek().Equals(input);
     }
 }

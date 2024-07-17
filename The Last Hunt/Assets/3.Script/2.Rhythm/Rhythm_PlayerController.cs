@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Rhythm_PlayerController : MonoBehaviour
 {
-    [SerializeField] private GameObject meatPrefab, HitSmoke, FullHitStar;
+    [SerializeField] private GameObject targetAnimal, HitSmoke, FullHitStar;
     private Animator Hunter_ani;
     Vector3 origin = new Vector3(-2, 1.5f, -7);
     private int inputArrow = -1;
@@ -20,13 +20,11 @@ public class Rhythm_PlayerController : MonoBehaviour
         if (inputArrow > -1)
         {
             Hunter_ani.SetTrigger("Swing");
-
-            if (Physics.Raycast(origin, Vector3.right * 5, out RaycastHit hit)) 
+            if (CheckOverlapBox(0.3f))
             {
-                answer = Rhythm_AnimalPooling.instance.ReturnAnswer();
-                if (inputArrow.Equals(answer))
+                if (Rhythm_AnimalPooling.instance.isCorrectAnswer(inputArrow))
                 {
-                    if (Mathf.Abs(hit.transform.position.z + 7) < 0.3f)
+                    if (CheckOverlapBox(0.2f))
                     {
                         FullHitStar.GetComponent<ParticleSystem>().Play();
                         Rhythm_ChapterManager.instance.CountAdd(2);
@@ -37,41 +35,44 @@ public class Rhythm_PlayerController : MonoBehaviour
                         Rhythm_ChapterManager.instance.CountAdd(1);
                         PlaySFX("Hit");
                     }
-                    ChangeToMeat(hit.collider.gameObject, true);
+                    ChangeToMeat(targetAnimal);
                 }
-                else
+                else // ¿À´ä
                 {
                     PlaySFX("Hit_Wrong");
                 }
             }
-            // Çê½ºÀ®
-            else
+            else // Çê½ºÀ®
             {
                 PlaySFX("Swing");
             }
         }
 
-        Debug.DrawRay(origin, Vector3.right * 5, Color.red);
+        // Debug.DrawRay(origin, Vector3.right * 5, Color.red);
     }
+
+    bool CheckOverlapBox(float size)
+    {
+        Collider[] cols = Physics.OverlapBox(HitSmoke.transform.position, Vector3.one * size);
+        if (cols.Length > 0)
+        {
+            targetAnimal = cols[0].gameObject;
+            return true;
+        }
+        return false;
+    }
+
 
     private void PlaySFX(string s)
     {
         Rhythm_SoundManager.instance.PlaySFX(s);
     }
 
-    private void ChangeToMeat(GameObject obj, bool isCorrect)
+    private void ChangeToMeat(GameObject obj)
     {
-        // °í±â ÇüÅÂ »ý¼º
-        GameObject obj_meat = Instantiate(meatPrefab, obj.transform.position, obj.transform.rotation);
-        Rigidbody meat_rb = obj_meat.GetComponent<Rigidbody>();
-        Rigidbody obj_rb = obj.GetComponent<Rigidbody>();
-
-        meat_rb.angularVelocity = obj_rb.angularVelocity * 0.5f;
-        meat_rb.velocity = obj_rb.velocity * 0.5f;
         // ÀÌÆåÆ® ¹ß»ý
         HitSmoke.GetComponent<ParticleSystem>().Play();
         // µ¿¹° ÇüÅÂ´Â ¹Ý³³
-        obj_rb.Sleep();
         Rhythm_AnimalPooling.instance.ReturnObjectToPool(obj);
     }
 
