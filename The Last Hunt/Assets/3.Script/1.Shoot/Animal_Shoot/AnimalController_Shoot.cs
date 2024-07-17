@@ -107,6 +107,9 @@ public class AnimalController_Shoot : MonoBehaviour
     [SerializeField] private bool drawScentRange = true;
     [SerializeField] private bool drawAwarenessRange = true;
 
+    // UI Controller
+    [SerializeField] private UIController_Shoot ui;
+
     public UnityEvent deathEvent;
     public UnityEvent attackEvent;
     public UnityEvent idleEvent;
@@ -662,8 +665,13 @@ public class AnimalController_Shoot : MonoBehaviour
         Run();
         var position = transform.position;
         var targetPosition = position;
-        targetPosition = position + transform.forward * 30;
+        targetPosition = position + transform.forward * 100;
+        if (!IsValidLocation(targetPosition))
+        {
+            targetPosition = position - transform.forward * 100;
+        }
         FaceDirection((targetPosition - position).normalized);
+        ValidatePosition(ref targetPosition);
         stamina -= Time.deltaTime;
         if (stamina <= 0)
         {
@@ -984,6 +992,7 @@ public class AnimalController_Shoot : MonoBehaviour
         }
         player.killValue += stats.value;
         Debug.Log($"Player Kill Value : {player.killValue}");
+        ui.AddKill(species, stats.value);
         deathEvent.Invoke();
         if (navMeshAgent && navMeshAgent.isOnNavMesh)
         {

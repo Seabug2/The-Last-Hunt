@@ -355,7 +355,6 @@ MonoBehaviour:
   scent: 40
   originalScent: 0
   isAnimalInRange: 0
-  arrow: {fileID: 0}
   player: {fileID: 0}
   fovAngle: 360
   playerAlertStage: 0
@@ -378,6 +377,7 @@ MonoBehaviour:
   drawWanderRange: 1
   drawScentRange: 1
   drawAwarenessRange: 1
+  ui: {fileID: 0}
   deathEvent:
     m_PersistentCalls:
       m_Calls: []
