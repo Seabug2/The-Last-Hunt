@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 6788620233171353690}
   - component: {fileID: 6483446594057803404}
   - component: {fileID: 7869292502186812820}
-  m_Layer: 4
+  m_Layer: 6
   m_Name: Vertical
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -59,6 +59,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5211763cbe60aed4da270cb0c38f2cb1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ignoreLayer:
+    serializedVersion: 2
+    m_Bits: 0
   showGizmo: 1
   gate: 00000101
 --- !u!33 &6483446594057803404

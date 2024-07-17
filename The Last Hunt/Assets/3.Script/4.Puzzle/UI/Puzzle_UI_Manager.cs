@@ -14,7 +14,7 @@ public class Puzzle_UI_Manager : MonoBehaviour
     [SerializeField, Header("조작키 안내 UI"), Space(10)]
     RectTransform[] buttonRect;
     Image[] buttonImg;
-    [SerializeField, Header("Space Bar 설명"), Space(10)]
+    [SerializeField, Header("Guide UI"), Space(10)]
     Text guideState;
 
     [Header("키를 누르고 있지 않은 상태"), Space(10)]
@@ -28,13 +28,12 @@ public class Puzzle_UI_Manager : MonoBehaviour
     private void Awake()
     {
         tileChecker = FindObjectOfType<Puzzle_Hunter_TileAction>();
+        
         buttonImg = new Image[buttonRect.Length];
         for (int i = 0; i < buttonRect.Length; i++)
         {
             buttonImg[i] = buttonRect[i].transform.GetComponent<Image>();
         }
-
-        //guideState.transform.parent.gameObject.SetActive(false);
 
         foreach (Transform child in transform)
         {
@@ -58,9 +57,8 @@ public class Puzzle_UI_Manager : MonoBehaviour
             Vector2 size = rect.sizeDelta;
             rect.sizeDelta = Vector2.zero;
             rect.gameObject.SetActive(true);
-            rect.DOSizeDelta(size, .5f).SetEase(Ease.OutBack).SetDelay(rects.Count * .125f);
+            rect.DOSizeDelta(size, .75f).SetEase(Ease.OutBack).SetDelay(rects.Count * .125f);
         }
-        //guideState.transform.parent.gameObject.SetActive(true);
     }
 
     private void Update()
@@ -79,7 +77,6 @@ public class Puzzle_UI_Manager : MonoBehaviour
                 buttonImg[i].color = normalColor;
             }
         }
-
         //타일을 들고 있다
         if (tileChecker.HoldingTile)
         {

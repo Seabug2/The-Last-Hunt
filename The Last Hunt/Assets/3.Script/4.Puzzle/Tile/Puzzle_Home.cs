@@ -9,9 +9,9 @@ public class Puzzle_Home : Puzzle_Tile
     {
         ignoreLayer = 0;
     }
+
     public override void TileEvent(Puzzle_Horse target)
     {
-        print("집에 도착했습니다!");
-        Puzzle_GameManager.instance.GameClearEvent?.Invoke();
+        Puzzle_GameManager.instance.GameClear();
     }
 }

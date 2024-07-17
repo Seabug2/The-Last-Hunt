@@ -1,1 +1,0 @@
-public class Puzzle_Block : Puzzle_Obstacle{}

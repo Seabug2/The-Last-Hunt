@@ -13,7 +13,7 @@ public class Puzzle_Item : MonoBehaviour
             }
             else
             {
-                print("현재 장착 중인 아이템이 있습니다");
+                Puzzle_GameManager.instance.SendMessage("현재 장착 중인 아이템이 있습니다");
             }
         }
     }

@@ -2,16 +2,13 @@ using UnityEngine;
 
 public class Puzzle_Hunter : MonoBehaviour
 {
-    public Puzzle_Hunter_TileAction TileChecker { get; private set; }
+    //아이템을 사용하고 공격하는 모션은 Hunter 클래스에서 관리
     public Puzzle_Hunter_Movement Movement { get; private set; }
     public Puzzle_Hunter_Input Input { get; private set; }
     public Animator Anim { get; private set; }
 
-
-
     void Awake()
     {
-        TileChecker = GetComponent<Puzzle_Hunter_TileAction>();
         Movement = GetComponent<Puzzle_Hunter_Movement>();
         Input = GetComponent<Puzzle_Hunter_Input>();
         Anim = GetComponent<Animator>();
@@ -26,24 +23,56 @@ public class Puzzle_Hunter : MonoBehaviour
         }
         EquippedItem = null;
 
-        LockControl();
+        Freeze();
 
-        Puzzle_GameManager.instance.GameStartEvent.AddListener(() =>
-        {
-            UnlockControl();
-        });
-        Puzzle_GameManager.instance.GameClearEvent.AddListener(() =>
+        Puzzle_GameManager.instance.GameStartEvent.AddListener(Unfreeze);
+
+        Puzzle_GameManager.instance.EndGame.AddListener(() =>
         {
             UnequipItem();
-            LockControl();
-            Anim.SetTrigger("Clear");
+            Freeze();
         });
-        TileChecker.FallingEvent.AddListener(() =>
+
+        GetComponent<Puzzle_Hunter_TileAction>().FallingEvent.AddListener(() =>
         {
-            UnequipItem();
-            LockControl();
             Anim.SetTrigger("Falling");
         });
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        //장애물과 부딪혔을 때
+        if (other.CompareTag("Obstacle"))
+        {
+            //아이템을 장착 중이고
+            if (EquippedItem)
+            {
+                //아이템이 알맞은 아이템인 경우
+                if (EquippedItem.name == other.GetComponent<Puzzle_Obstacle>().RequiredName
+                    || other.TryGetComponent(out Puzzle_Wolf _))
+                {
+                    Destroy(other.GetComponent<Collider>());
+                    target = other.gameObject;
+                    Attack();
+                    Vector3 dir = other.transform.position;
+                    transform.LookAt(new Vector3(dir.x, 0, dir.z), Vector3.up);
+                    return;
+                }
+            }
+        }
+        //아이템과 충돌시
+        if (other.CompareTag("Item"))
+        {
+            if (EquippedItem)
+            {
+                Puzzle_GameManager.instance.ShowMessage("현재 장착한 장비가 남아있습니다", .25f);
+            }
+            else
+            {
+                EquipItem(other.name);
+                Destroy(other.gameObject);
+            }
+        }
     }
 
     /// <summary>
@@ -90,6 +119,7 @@ public class Puzzle_Hunter : MonoBehaviour
         pickUpItem.SetActive(true);
         EquippedItem = pickUpItem;
     }
+
     /// <summary>
     /// 아이템을 사용하고 착용 해제합니다
     /// </summary>
@@ -104,23 +134,45 @@ public class Puzzle_Hunter : MonoBehaviour
     {
         Anim.SetTrigger("Attack");
         //플레이어 입력과 이동을 비활성화
-        LockControl();
+        Freeze();
     }
 
+    GameObject target = null;
     //플레이어가 장애물을 제거하는 것이므로 사냥꾼 쪽에서 제거 코드를 실행
-    void RemoveObstacle(GameObject _obstacle)
+    public void RemoveObstacle()
     {
-        Destroy(_obstacle);
-        //파티클 재생 가능
-        //파티클 위치는 제거 대상의 위치
+        if (target == null)
+        {
+            return;
+        }
+
+        if (target.TryGetComponent(out Puzzle_Wolf wolf))
+        {
+            wolf.GetComponent<Animator>().SetTrigger("Dead");
+        }
+        else
+        {
+            Destroy(target);
+        }
+
+        UnequipItem();
+        target = null;
     }
 
-    void LockControl()
+    /// <summary>
+    /// 게임 초기화
+    /// </summary>
+    public void Freeze()
     {
         Movement.enabled = false;
         Input.enabled = false;
+        Anim.SetBool("isMoving", false);
     }
-    void UnlockControl()
+
+    /// <summary>
+    /// 게임 시작시, 공격을 마쳤을 때 실행
+    /// </summary>
+    public void Unfreeze()
     {
         Movement.enabled = true;
         Input.enabled = true;

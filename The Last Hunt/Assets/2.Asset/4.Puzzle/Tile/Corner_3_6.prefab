@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 7779364691729907604}
   - component: {fileID: 3956631363413449247}
   - component: {fileID: 6744727541756419652}
-  m_Layer: 4
+  m_Layer: 6
   m_Name: Corner_3_6
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -59,6 +59,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5211763cbe60aed4da270cb0c38f2cb1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ignoreLayer:
+    serializedVersion: 2
+    m_Bits: 0
   showGizmo: 1
   gate: 01000100
 --- !u!33 &3956631363413449247

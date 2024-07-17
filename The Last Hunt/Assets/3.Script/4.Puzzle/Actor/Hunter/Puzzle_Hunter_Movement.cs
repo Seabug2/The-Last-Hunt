@@ -50,7 +50,7 @@ public class Puzzle_Hunter_Movement : MonoBehaviour
         if (!tileChecker.IsGrounded)
         {
             print("ÇÃ·¹ÀÌ¾î ¶³¾îÁü");
-            tileChecker.FallingEvent?.Invoke();
+            tileChecker.FallingEvent.Invoke();
         }
     }
 }

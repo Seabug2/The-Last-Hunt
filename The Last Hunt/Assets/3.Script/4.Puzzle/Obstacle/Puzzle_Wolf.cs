@@ -1,0 +1,59 @@
+using UnityEngine;
+
+public class Puzzle_Wolf : Puzzle_Obstacle
+{
+    GameObject target = null;
+
+    //공격을 시작하면 플레이어 조작 중단
+    void Attack(GameObject target)
+    {
+        this.target = target;
+        //게임이 IsGameOver 상태라면 공격을 하지 않는다.
+        if (Puzzle_GameManager.instance.IsGameOver) return;
+
+        Puzzle_GameManager.instance.EndGame?.Invoke();
+        GetComponent<Animator>().SetTrigger("Attack");
+        StartCoroutine(Puzzle_GameManager.instance.GameOver_Horse_co());
+    }
+
+    public void RemoveTarget()
+    {
+        if (target.TryGetComponent(out Puzzle_Horse horse))
+        {
+
+        }
+        else if (target.TryGetComponent(out Puzzle_Hunter hunter))
+        {
+            hunter.Anim.SetTrigger("Dead");
+        }
+        target = null;
+    }
+
+    public void Dead()
+    {
+        //파티클
+
+        Destroy(gameObject);
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        //영역에 닿은 객체를 바라본다
+        Vector3 dir = other.transform.position;
+        transform.LookAt(new Vector3(dir.x, 0, dir.z), Vector3.up);
+
+        if (other.TryGetComponent(out Puzzle_Horse horse))
+        {
+            Attack(other.gameObject);
+        }
+        else if (other.TryGetComponent(out Puzzle_Hunter hunter))
+        {
+            //장비를 장착하고 있지 않은 경우
+            if (!hunter.EquippedItem)
+            {
+                Attack(other.gameObject);
+            }
+        }
+    }
+
+}

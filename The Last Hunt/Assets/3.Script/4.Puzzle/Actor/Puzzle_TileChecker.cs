@@ -19,11 +19,16 @@ public class Puzzle_TileChecker : MonoBehaviour
 
         FallingEvent.AddListener(() =>
         {
+            //게임이 끝난 상태가 아니라면 EndGame를 실행
+            if (!Puzzle_GameManager.instance.IsGameOver)
+            {
+                Puzzle_GameManager.instance.EndGame?.Invoke();
+
+            }
             Rigidbody rb = GetComponent<Rigidbody>();
             rb.constraints = RigidbodyConstraints.None;
             rb.isKinematic = false;
             rb.useGravity = true;
-            rb.AddForce(transform.forward, ForceMode.VelocityChange);
         });
     }
 
@@ -86,11 +91,11 @@ public class Puzzle_TileChecker : MonoBehaviour
 
 #if UNITY_EDITOR
     void OnDrawGizmos()
-    {        
+    {
         //앞의 타일 검사
         Gizmos.color = Color.red;
         Gizmos.DrawRay(FrontRay);
-        
+
         //바닥 검사
         Gizmos.color = Color.red;
         Gizmos.DrawWireCube(transform.position, floorCheckerSize);

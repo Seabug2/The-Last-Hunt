@@ -13,10 +13,10 @@ public class Puzzle_Dead : Puzzle_Tile
 
     public override void TileEvent(Puzzle_Horse target)
     {
-        print("말이 잘못된 타일을 밟았습니다.");
-
-        Rigidbody hRb = target.GetComponent<Rigidbody>();
-        hRb.AddForce((-target.transform.forward + Vector3.up) * 10f, ForceMode.VelocityChange);
-        hRb.AddTorque(-transform.right * 180f, ForceMode.VelocityChange);
+        //게임이 이미 끝난 상태라면 작동하지 않습니다.
+        if (Puzzle_GameManager.instance.IsGameOver) return;
+        
+        Puzzle_GameManager.instance.ShowMessage("말이 잘못된 길로 들어섰습니다");
+        Puzzle_GameManager.instance.EndGame?.Invoke();
     }
 }

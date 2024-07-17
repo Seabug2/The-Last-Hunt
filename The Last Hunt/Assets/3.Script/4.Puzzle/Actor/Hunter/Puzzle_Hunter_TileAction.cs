@@ -24,7 +24,13 @@ public class Puzzle_Hunter_TileAction : Puzzle_TileChecker
         guideTile = FindObjectOfType<Puzzle_Guide>();
         HoldingTile = null;
     }
+    protected override void Start()
+    {
+        base.Start();
 
+        FallingEvent.AddListener(() =>
+        StartCoroutine(Puzzle_GameManager.instance.GameOver_Hunter_co()));
+    }
     public void CarryingAction()
     {
         //들고 있지 않을 때
@@ -47,7 +53,7 @@ public class Puzzle_Hunter_TileAction : Puzzle_TileChecker
             //사냥꾼이랑 말이 그 타일 위에 없는 경우 타일을 이동 시킬 수 있다.
             if (ViewingTile.IsOverlapping())
             {
-                print("현재 들 수 없는 타일입니다!");
+                Puzzle_GameManager.instance.ShowMessage("타일 위에 무언가 있습니다!");
                 return;
             }
             else if (ViewingTile.TryGetComponent(out Puzzle_Road _))
@@ -62,12 +68,20 @@ public class Puzzle_Hunter_TileAction : Puzzle_TileChecker
 
     void SetTile()
     {
-        if (ViewingTile != null) return;
+        if (ViewingTile != null)
+        {
+            Puzzle_GameManager.instance.ShowMessage("그곳에 이미 타일이 있습니다!");
+            return;
+        }
 
         //나중에 맵 전체 테두리에 Dead Tile을 설치하여 생략할 예정
         else if (ForwardPosition.x < -3 ||
             ForwardPosition.z < -9 ||
-            ForwardPosition.z > 9) return;
+            ForwardPosition.z > 9)
+        {
+            Puzzle_GameManager.instance.ShowMessage("그곳에는 타일을 설치할 수 없습니다!");
+            return;
+        }
 
         //지금 검사하고 있는 위치에 타일이 없으면 설치 가능
         else
@@ -77,6 +91,7 @@ public class Puzzle_Hunter_TileAction : Puzzle_TileChecker
             HoldingTile = null;
             guideTile.enabled = true;
             guideTile.SetInvisible(true);
+            return;
         }
     }
 
