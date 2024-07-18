@@ -73,6 +73,8 @@ public class Rhythm_AnimalPooling : MonoBehaviour
     
     public bool isCorrectAnswer(int input)
     {
-        return AnswerQueue.Peek().Equals(input);
+        int ans = AnswerQueue.Peek();
+        if (ans > 2) ans = 1;
+        return ans.Equals(input);
     }
 }

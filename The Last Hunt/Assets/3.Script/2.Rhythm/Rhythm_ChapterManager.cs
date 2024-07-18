@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using DG.Tweening;
 
 public class Rhythm_ChapterManager : MonoBehaviour
 {
@@ -23,6 +24,57 @@ public class Rhythm_ChapterManager : MonoBehaviour
         else { Destroy(gameObject); }
     }
 
+    // 메시지 출력 부분
+    Tween currentTween = null;
+    // [SerializeField] private Image HeaderBoard;
+    [SerializeField] private RectTransform message;
+    [SerializeField] private Text text;
+    public bool isNoMessage
+    {
+        get { return currentTween == null || !currentTween.IsActive(); }
+    }
+    public void ShowMessage(string _message, float _time = 1)
+    {
+        // 기존 애니메이션이 있으면 중단
+        if (currentTween != null && currentTween.IsActive())
+        {
+            currentTween.Kill();
+        }
+
+        text.text = _message;
+
+        // 애니메이션 설정
+        message.sizeDelta = new Vector2(1920, 0); // 시작 크기
+        message.gameObject.SetActive(true);
+        Sequence mySequence = DOTween.Sequence();
+
+        // 0.5초 동안 크기를 키우기
+        mySequence.Append(message.DOSizeDelta(new Vector2(1920, 126), 0.35f).SetEase(Ease.InOutQuad));
+
+        // _time 동안 대기
+        mySequence.AppendInterval(_time);
+
+        // 0.5초 동안 크기를 다시 줄이기
+        mySequence.Append(message.DOSizeDelta(new Vector2(1920, 0), 0.35f).SetEase(Ease.InOutQuad));
+
+        // 애니메이션이 끝난 후 비활성화
+        mySequence.OnComplete(() => message.gameObject.SetActive(false));
+
+        // 현재 애니메이션 저장
+        currentTween = mySequence;
+    }
+
+    public void MessageCut()
+    {
+        if (currentTween != null && currentTween.IsActive())
+        {
+            currentTween.Kill();
+        }
+        message.gameObject.SetActive(false);
+    }
+
+
+
     public int Maxcount = 0;
     public int Hitcount = 0;
     public int Misscount = 0;
@@ -31,12 +83,14 @@ public class Rhythm_ChapterManager : MonoBehaviour
 
     private void Start()
     {
-        introUI.SetActive(true);
         StartCoroutine("Intro_co");
+        // introUI.SetActive(true);
     }
     private IEnumerator Intro_co()
     {
-        yield return introUI.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).length;
+        // yield return introUI.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).length;
+        yield return 2;
+        ShowMessage(text.text);
         Rhythm_SoundManager.instance.PlayBGM("BGM");
         BGMisPlaying = true;
     }
