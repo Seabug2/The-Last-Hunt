@@ -74,7 +74,8 @@ public class Puzzle_Road : Puzzle_Tile
             if (!Puzzle_GameManager.instance.IsGameOver)
             {
                 Puzzle_GameManager.instance.EndGame?.Invoke();
-                StartCoroutine(Puzzle_GameManager.instance.GameOver_Horse_co());
+                Puzzle_GameManager.instance.VCamFollowHorse();
+                target.Explosion();
             }
             yield break;
         }

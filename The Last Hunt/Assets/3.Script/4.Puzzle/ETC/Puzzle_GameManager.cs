@@ -28,16 +28,26 @@ public class Puzzle_GameManager : MonoBehaviour
     LayerMask tileLayer;
     public LayerMask TileLayer => tileLayer;
 
+    /// <summary>
+    /// 게임 시작시 시네머신 카메라
+    /// </summary>
     [SerializeField, Header("시네머신 카메라"), Space(10)]
-    CinemachineVirtualCamera firstCam; //시작 카메라 위치
-    [SerializeField]
-    CinemachineBlendListCamera HomeViewCam; //시작 카메라 위치
+    CinemachineBlendListCamera HomeViewCam;
+    /// <summary>
+    /// 본 게임이 실행되면 전환되는 시네머신 카메라
+    /// follow는 사냥꾼이 기본
+    /// 말이 죽는 이벤트라면 말로 변경
+    /// </summary>
     [SerializeField]
     CinemachineVirtualCamera traceVCam;
+    /// <summary>
+    /// 
+    /// </summary>
     [SerializeField]
     CinemachineVirtualCamera lookAtHunterVCam;
-    [SerializeField]
-    CinemachineVirtualCamera lookAtHorseVCam;
+    /// <summary>
+    /// 메인 카메라
+    /// </summary>
     CinemachineBrain brainCam;
 
     /// <summary>
@@ -49,10 +59,12 @@ public class Puzzle_GameManager : MonoBehaviour
     /// (성공, 실패 상관없이)게임이 끝나는 순간
     /// </summary>
     public UnityEvent EndGame;
-    // 플레이어 조작 중단
-    // 말 이동 중단
-    // BGM 중단
-    // 타이머 정지
+
+    /// <summary>
+    /// 본 게임이 실행되는 순간
+    /// </summary>
+    public UnityEvent GameClearEvent;
+
 
     public bool IsGameOver { get; private set; }
 
@@ -65,16 +77,15 @@ public class Puzzle_GameManager : MonoBehaviour
         message.gameObject.SetActive(false);
         fadeBoard.rectTransform.sizeDelta = new Vector2(Screen.width, Screen.height);
         brainCam = Camera.main.GetComponent<CinemachineBrain>();
-        
+
         HomeViewCam.m_Instructions[0].m_Hold = Mathf.Infinity;
     }
 
     IEnumerator Start()
     {
-        firstCam.Priority = 10;
         yield return StartCoroutine(Fade_co(false, 3.5f));
 
-        ShowMessage("말이 집까지 갈 수 있게 타일을 옮겨주세요!", 3f);
+        ShowMessage("타일을 옮겨 말이 집까지 갈 수 있게 만드세요", 3f);
         yield return new WaitForSeconds(0.8f);
 
         float waitTime = Time.time;
@@ -89,20 +100,46 @@ public class Puzzle_GameManager : MonoBehaviour
             yield return null;
         }
 
+        HomeViewCam.m_Instructions[0].m_Hold = 0;
+
         //중간에 메시지가 중단 되었다면 바로 사냥꾼을 추적하는 가상 카메라로 이동
         if (IsNoMessage)
-            traceVCam.Priority = firstCam.Priority + 1;
+            traceVCam.Priority = HomeViewCam.Priority + 1;
         else
         {
-            HomeViewCam.Priority = firstCam.Priority + 1;
-            yield return new WaitForSeconds(9);
+            float blendTime = 0;
+            for (int i = 0; i < HomeViewCam.m_Instructions.Length; i++)
+            {
+                blendTime += HomeViewCam.m_Instructions[i].m_Hold;
+                if (i > 0)
+                {
+                    blendTime += HomeViewCam.m_Instructions[i].m_Blend.BlendTime;
+                }
+            }
+
+            yield return new WaitForSeconds(blendTime);
             traceVCam.Priority = HomeViewCam.Priority + 1;
         }
 
         yield return null;
         yield return new WaitWhile(() => brainCam.IsBlending);
-
         GameStartEvent.Invoke();
+    }
+
+    /// <summary>
+    /// 시네머신의 추적 대상을 말로 바꾼다
+    /// </summary>
+    public void VCamFollowHorse()
+    {
+        traceVCam.Follow = FindObjectOfType<Puzzle_Horse>().transform;
+    }
+    /// <summary>
+    /// 사냥꾼을 더 가까이에서 봅니다.
+    /// </summary>
+    public void LookAtHunter()
+    {
+        //플레이어 시네 뷰
+        lookAtHunterVCam.Priority = brainCam.ActiveVirtualCamera.Priority + 1;
     }
 
     /// <summary>
@@ -110,7 +147,11 @@ public class Puzzle_GameManager : MonoBehaviour
     /// </summary>
     public IEnumerator GameOver_Horse_co()
     {
-        lookAtHunterVCam.Priority = traceVCam.Priority + 1;
+        yield return new WaitForSeconds(1f);
+        Destroy(traceVCam.GetCinemachineComponent<CinemachineTransposer>());
+        yield return new WaitForSeconds(1.3f);
+
+        lookAtHunterVCam.Priority = brainCam.ActiveVirtualCamera.Priority + 1;
         yield return null;
         yield return new WaitWhile(() => brainCam.IsBlending);
 
@@ -123,10 +164,7 @@ public class Puzzle_GameManager : MonoBehaviour
         ShowMessage("이런 멍청한 말 같으니...!", 3.5f);
 
         yield return new WaitForSeconds(3.5f);
-
         yield return StartCoroutine(Fade_co(true, 3f));
-
-        //currentTween = null;
 
         //현재 활성화된 씬을 다시 실행
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
@@ -134,11 +172,12 @@ public class Puzzle_GameManager : MonoBehaviour
 
     public IEnumerator GameOver_Hunter_co()
     {
+        yield return new WaitForSeconds(2.3f);
         yield return StartCoroutine(Fade_co(true, 3f));
 
         //메세지 출력
         ShowMessage("젠장... 다시 한 번 해보자...", 5f);
-        yield return new WaitForSeconds(7);
+        yield return new WaitForSeconds(6);
 
         currentTween = null;
 
@@ -151,7 +190,7 @@ public class Puzzle_GameManager : MonoBehaviour
         fadeBoard.color = new Color(0, 0, 0, isFadeOut ? 0 : 1);
         fadeBoard.gameObject.SetActive(true);
 
-        fadeBoard.DOFade(isFadeOut ? 1 : 0, fadeTime);
+        fadeBoard.DOFade(isFadeOut ? 1 : 0, fadeTime).SetEase(Ease.InQuad);
         yield return new WaitForSeconds(fadeTime);
 
         if (!isFadeOut)
@@ -163,21 +202,22 @@ public class Puzzle_GameManager : MonoBehaviour
     [SerializeField, Header("다음 씬"), Space(10)]
     string nextSceneName;
 
-    public void GameClear()
+    public IEnumerator GameClear_co()
     {
-        StartCoroutine(GameClear_co());
-    }
-
-    IEnumerator GameClear_co()
-    {
-        IsGameOver = true;
-
-        yield return StartCoroutine(Fade_co(false, 3f));
+        EndGame?.Invoke();
+        VCamFollowHorse();
 
         ShowMessage("게임 클리어!", 5f);
         yield return new WaitForSeconds(5);
 
-        SceneManager.LoadScene(nextSceneName);
+        LookAtHunter();
+        GameClearEvent?.Invoke();
+        yield return new WaitForSeconds(1f);
+
+        yield return StartCoroutine(Fade_co(true, 3f));
+
+        SceneManager.LoadScene(0);
+        //SceneManager.LoadScene(nextSceneName);
     }
 
 

@@ -33,6 +33,11 @@ public class Puzzle_Hunter : MonoBehaviour
             Freeze();
         });
 
+        Puzzle_GameManager.instance.GameClearEvent.AddListener(() =>
+        {
+            Anim.SetTrigger("Clear");
+        });
+
         GetComponent<Puzzle_Hunter_TileAction>().FallingEvent.AddListener(() =>
         {
             Anim.SetTrigger("Falling");

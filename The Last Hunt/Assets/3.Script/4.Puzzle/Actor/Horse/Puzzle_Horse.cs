@@ -1,4 +1,5 @@
 using System;
+using UnityEngine;
 
 public class Puzzle_Horse : Puzzle_TileChecker
 {
@@ -9,9 +10,6 @@ public class Puzzle_Horse : Puzzle_TileChecker
         {
             Canlced?.Invoke();
         });
-
-        FallingEvent.AddListener(()=> 
-        StartCoroutine(Puzzle_GameManager.instance.GameOver_Horse_co()));
     }
 
     public Action Canlced = null;
@@ -22,13 +20,28 @@ public class Puzzle_Horse : Puzzle_TileChecker
         if (ViewingTile == null)
         {
             FallingEvent.Invoke();
-
-            //사냥꾼 화내는 애니메이션 재생
-            //사냥꾼 조작 차단
-            //게임 오버 이벤트
-
-            return;
+            Puzzle_GameManager.instance.VCamFollowHorse();
+            StartCoroutine(Puzzle_GameManager.instance.GameOver_Horse_co());
         }
-        ViewingTile.TileEvent(this);
+        else
+        {
+            ViewingTile.TileEvent(this);
+        }
+    }
+
+    [SerializeField, Header("말이 폭발하는 파티클"), Space(10)]
+    GameObject horseExplosionParticle;
+
+    public void Explosion()
+    {
+        if (horseExplosionParticle)
+        {
+            horseExplosionParticle.SetActive(true);
+            horseExplosionParticle.transform.SetParent(null);
+        }
+
+        StartCoroutine(Puzzle_GameManager.instance.GameOver_Horse_co());
+
+        Destroy(gameObject);
     }
 }

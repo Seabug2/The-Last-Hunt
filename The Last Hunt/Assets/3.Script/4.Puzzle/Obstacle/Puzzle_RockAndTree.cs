@@ -8,8 +8,11 @@ public class Puzzle_RockAndTree : Puzzle_Obstacle
     {
         if (other.TryGetComponent(out Puzzle_Horse horse))
         {
+            //한 번 게임오버 판정을 받으면 실행되지 않음
             if (Puzzle_GameManager.instance.IsGameOver) return;
+
             Puzzle_GameManager.instance.EndGame?.Invoke();
+            Puzzle_GameManager.instance.VCamFollowHorse();
             StartCoroutine(Puzzle_GameManager.instance.GameOver_Horse_co());
         }
     }

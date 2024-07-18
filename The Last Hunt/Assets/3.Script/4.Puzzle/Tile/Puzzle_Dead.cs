@@ -15,8 +15,9 @@ public class Puzzle_Dead : Puzzle_Tile
     {
         //게임이 이미 끝난 상태라면 작동하지 않습니다.
         if (Puzzle_GameManager.instance.IsGameOver) return;
-        
-        Puzzle_GameManager.instance.ShowMessage("말이 잘못된 길로 들어섰습니다");
+
         Puzzle_GameManager.instance.EndGame?.Invoke();
+        Puzzle_GameManager.instance.VCamFollowHorse();
+        target.Explosion();
     }
 }

@@ -29,7 +29,8 @@ public class Puzzle_Hunter_TileAction : Puzzle_TileChecker
         base.Start();
 
         FallingEvent.AddListener(() =>
-        StartCoroutine(Puzzle_GameManager.instance.GameOver_Hunter_co()));
+        StartCoroutine(Puzzle_GameManager.instance.GameOver_Hunter_co())
+        );
     }
     public void CarryingAction()
     {

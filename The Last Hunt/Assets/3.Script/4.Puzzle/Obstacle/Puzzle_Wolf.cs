@@ -11,20 +11,22 @@ public class Puzzle_Wolf : Puzzle_Obstacle
         //게임이 IsGameOver 상태라면 공격을 하지 않는다.
         if (Puzzle_GameManager.instance.IsGameOver) return;
 
+        //공격이 발동되면 플레이어 조작을 중단
         Puzzle_GameManager.instance.EndGame?.Invoke();
         GetComponent<Animator>().SetTrigger("Attack");
-        StartCoroutine(Puzzle_GameManager.instance.GameOver_Horse_co());
     }
 
     public void RemoveTarget()
     {
         if (target.TryGetComponent(out Puzzle_Horse horse))
         {
-
+            //말 폭발
+            horse.Explosion();
         }
         else if (target.TryGetComponent(out Puzzle_Hunter hunter))
         {
             hunter.Anim.SetTrigger("Dead");
+            StartCoroutine(Puzzle_GameManager.instance.GameOver_Hunter_co());
         }
         target = null;
     }
@@ -44,6 +46,8 @@ public class Puzzle_Wolf : Puzzle_Obstacle
 
         if (other.TryGetComponent(out Puzzle_Horse horse))
         {
+            //말을 공격
+            Puzzle_GameManager.instance.VCamFollowHorse();
             Attack(other.gameObject);
         }
         else if (other.TryGetComponent(out Puzzle_Hunter hunter))
@@ -51,6 +55,8 @@ public class Puzzle_Wolf : Puzzle_Obstacle
             //장비를 장착하고 있지 않은 경우
             if (!hunter.EquippedItem)
             {
+                //플레이어를 공격
+                Puzzle_GameManager.instance.LookAtHunter();
                 Attack(other.gameObject);
             }
         }

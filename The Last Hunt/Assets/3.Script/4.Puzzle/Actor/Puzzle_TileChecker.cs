@@ -23,7 +23,6 @@ public class Puzzle_TileChecker : MonoBehaviour
             if (!Puzzle_GameManager.instance.IsGameOver)
             {
                 Puzzle_GameManager.instance.EndGame?.Invoke();
-
             }
             Rigidbody rb = GetComponent<Rigidbody>();
             rb.constraints = RigidbodyConstraints.None;

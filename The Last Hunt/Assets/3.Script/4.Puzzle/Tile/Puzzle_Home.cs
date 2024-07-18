@@ -12,6 +12,9 @@ public class Puzzle_Home : Puzzle_Tile
 
     public override void TileEvent(Puzzle_Horse target)
     {
-        Puzzle_GameManager.instance.GameClear();
+        //게임이 끝났으면 타일 이벤트 발생 안 함
+        if (Puzzle_GameManager.instance.IsGameOver) return;
+
+        StartCoroutine(Puzzle_GameManager.instance.GameClear_co());
     }
 }
