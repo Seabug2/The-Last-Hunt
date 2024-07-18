@@ -5,8 +5,6 @@ using UnityEngine;
 public class ArrowController_Shoot : MonoBehaviour
 {
     public float arrow_damage;
-    public bool isHit;
-    //public LineRenderer lineRenderer;
 
     [SerializeField] private AudioSource audio_s;
     [SerializeField] private Rigidbody arrow_r;
@@ -14,18 +12,9 @@ public class ArrowController_Shoot : MonoBehaviour
 
     private void Start()
     {
-        //TryGetComponent(out lineRenderer);
         //TryGetComponent(out audio_s);
         TryGetComponent(out arrow_r);
-        //lineRenderer
-        //lineRenderer.enabled = false;
         arrow_damage = 25f;
-        isHit = false;
-    }
-
-    private void OnEnable()
-    {
-        //UIController
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -38,7 +27,6 @@ public class ArrowController_Shoot : MonoBehaviour
             arrow_r.velocity = Vector3.zero;
             arrow_r.isKinematic = true;
             animal.TakeDamage(arrow_damage);
-            isHit = true;
             Destroy(gameObject);
         }
         else

@@ -59,6 +59,7 @@ public class AnimalController_Shoot : MonoBehaviour
     [SerializeField] private PlayerAlertStage playerAlertStage;
     [SerializeField] [Range(0, 100)] private float playerAlertLevel;
     [SerializeField] private bool isPlayerInRange;
+    private bool isHitByArrow;
 
     // Basic stats
     [SerializeField] private float stamina = 10f;
@@ -227,6 +228,7 @@ public class AnimalController_Shoot : MonoBehaviour
 
     private void Awake()
     {
+        isHitByArrow = false;
         // Error if no stat to script
         if (!stats)
         {
@@ -655,6 +657,7 @@ public class AnimalController_Shoot : MonoBehaviour
         }
         else if (collision.transform.CompareTag("Arrow"))
         {
+            isHitByArrow = true;
             StartCoroutine(FleeArrow_co());
         }
     }
@@ -990,9 +993,10 @@ public class AnimalController_Shoot : MonoBehaviour
         {
             TrySetBool(deathStates[Random.Range(0, deathStates.Length)].animationBool, true);
         }
-        player.killValue += stats.value;
-        Debug.Log($"Player Kill Value : {player.killValue}");
-        ui.AddKill(species, stats.value);
+        if (isHitByArrow)
+        {
+            ui.AddKill(species, stats.value);
+        }
         deathEvent.Invoke();
         if (navMeshAgent && navMeshAgent.isOnNavMesh)
         {
