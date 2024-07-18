@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Archery_Data
   m_EditorClassIdentifier: 
   Damage_shoot: 25
-  QuiverCapacity: 50
+  QuiverCapacity: 100
   LooseClip: {fileID: 0}

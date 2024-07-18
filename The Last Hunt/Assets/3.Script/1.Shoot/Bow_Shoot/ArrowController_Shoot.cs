@@ -39,11 +39,7 @@ public class ArrowController_Shoot : MonoBehaviour
             arrow_r.isKinematic = true;
             animal.TakeDamage(arrow_damage);
             isHit = true;
-            if (animal.CurrentState == AnimalController_Shoot.WanderState.Dead)
-            {
-                Destroy(gameObject);
-            }
-            Destroy(gameObject, 3f);
+            Destroy(gameObject);
         }
         else
         {
