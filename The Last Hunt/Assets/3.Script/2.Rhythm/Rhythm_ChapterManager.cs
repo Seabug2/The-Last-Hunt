@@ -26,6 +26,7 @@ public class Rhythm_ChapterManager : MonoBehaviour
     public int Maxcount = 0;
     public int Hitcount = 0;
     public int Misscount = 0;
+    public int percent = 0;
     public bool BGMisPlaying;
 
     private void Start()
@@ -50,7 +51,7 @@ public class Rhythm_ChapterManager : MonoBehaviour
     public void ResultAppear()
     {
         BGMisPlaying = false;
-        int percent = (100 * Maxcount + 70 * Hitcount) / (Maxcount + Hitcount + Misscount);
+        percent = (100 * Maxcount + 70 * Hitcount) / (Maxcount + Hitcount + Misscount);
         resultUI.SetActive(true);
 
         maxT.text = Maxcount.ToString();
@@ -58,13 +59,13 @@ public class Rhythm_ChapterManager : MonoBehaviour
         missT.text = Misscount.ToString();
         scoreT.text = percent.ToString();
         scoreSlider.value = percent * 0.01f;
-        RecordT.rectTransform.position = new Vector3(125, -150, 0);
+        RecordT.rectTransform.anchoredPosition = new Vector3(125, -150, 0);
         RecordT.rectTransform.eulerAngles = new Vector3(0, 0, 15);
 
         // 실패
         if (percent < 60)
         {
-            NextButton.color = new Color(255, 255, 255, 64);
+            NextButton.color = new Color(1, 1, 1, 0.25f);
             scoreBarFillImage.color = new Color(120, 0, 0);
             Hunter_ani.SetInteger("GameResult", -1);
             RecordT.text = "";
@@ -72,7 +73,7 @@ public class Rhythm_ChapterManager : MonoBehaviour
         // 성공
         else
         {
-            NextButton.color = new Color(255, 255, 255, 255);
+            NextButton.color = new Color(1, 1, 1, 1);
             int BestScore = PlayerPrefs.GetInt("Ch2_BestScore");
             if (BestScore < percent)
             {
@@ -81,7 +82,7 @@ public class Rhythm_ChapterManager : MonoBehaviour
             }
             else if (percent < 100)
             {
-                RecordT.rectTransform.position = new Vector3(125, -175, 0);
+                RecordT.rectTransform.anchoredPosition = new Vector3(125, -175, 0);
                 RecordT.rectTransform.eulerAngles = new Vector3(0, 0, 0);
                 RecordT.text = $"Best: {BestScore}" ;
             }

@@ -82,6 +82,7 @@ public class Rhythm_PlayerController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.LeftArrow)) return 0;
         if (Input.GetKeyDown(KeyCode.UpArrow)) return 1;
         if (Input.GetKeyDown(KeyCode.RightArrow)) return 2;
+        if (Input.GetKeyDown(KeyCode.DownArrow)) return 3;
         return -1;
     }
 
