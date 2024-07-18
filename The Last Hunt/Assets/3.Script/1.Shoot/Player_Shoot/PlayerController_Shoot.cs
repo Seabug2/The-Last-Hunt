@@ -25,7 +25,7 @@ public class PlayerController_Shoot : MonoBehaviour
         player_ani = GetComponentInChildren<Animator>();
         ammoRemain = Archery_Data.QuiverCapacity;
         isDraw = false;
-        moveSpeed = 10f;
+        moveSpeed = 8f;
     }
 
     private void Update()

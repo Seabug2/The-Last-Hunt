@@ -7,7 +7,7 @@ public class PlayerInput_Shoot : MonoBehaviour
     [SerializeField] private string MoveFB_name = "Vertical";
     [SerializeField] private string MoveLR_name = "Horizontal";
     [SerializeField] private string Draw_name = "Fire1";
-    [SerializeField] private string Knock_name = "Fire2";
+    [SerializeField] private string Knock_name = "Fire3";
 
 
     public float MoveFBValue { get; private set; }

@@ -13,7 +13,7 @@ public class ArrowSpawner : MonoBehaviour
     [SerializeField] private Archery_Data_Shoot archery_Data;
     private int ammoRemain = 0;
     private bool isKnock = false;
-    private float arrowForce = 10f;
+    private float arrowForce = 20f;
     private float drawTime = 0f;
 
     private void Start()

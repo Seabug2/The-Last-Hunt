@@ -2787,7 +2787,7 @@ LineRenderer:
   m_SortingOrder: 0
   m_Positions:
   - {x: 0, y: 0, z: 0}
-  - {x: 0, y: 0, z: 0}
+  - {x: 0, y: 0, z: 1}
   m_Parameters:
     serializedVersion: 3
     widthMultiplier: 0.05
@@ -2855,10 +2855,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 690ca4fc30bb15a42a2d1a39a437c2b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  laserOrigin: {fileID: 0}
-  laserRange: 10
-  laserDuration: 0.05
-  input: {fileID: 0}
 --- !u!1 &4911019869045389763
 GameObject:
   m_ObjectHideFlags: 0
