@@ -5,16 +5,8 @@ using UnityEngine.SceneManagement;
 
 public class Rhythm_ButtonController : MonoBehaviour
 {
-    // 임시용 버튼 매니저
-    public static void RestartButton()
+    public void SceneLoader(string scene_name)
     {
-        Destroy(Rhythm_ChapterManager.instance);
-        SceneManager.LoadScene("SampleScene");
+        SceneManager.LoadScene(scene_name);
     }
-
-    public static void NextButton()
-    {
-        print("다음 씬으로");
-    }
-
 }

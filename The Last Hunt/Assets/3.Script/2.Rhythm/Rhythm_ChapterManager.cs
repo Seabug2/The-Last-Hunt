@@ -58,7 +58,10 @@ public class Rhythm_ChapterManager : MonoBehaviour
         missT.text = Misscount.ToString();
         scoreT.text = percent.ToString();
         scoreSlider.value = percent * 0.01f;
+        RecordT.rectTransform.position = new Vector3(125, -150, 0);
+        RecordT.rectTransform.eulerAngles = new Vector3(0, 0, 15);
 
+        // 실패
         if (percent < 60)
         {
             NextButton.color = new Color(255, 255, 255, 64);
@@ -66,24 +69,39 @@ public class Rhythm_ChapterManager : MonoBehaviour
             Hunter_ani.SetInteger("GameResult", -1);
             RecordT.text = "";
         }
-        else if (percent > 99)
-        {
-            PlayerPrefs.SetInt("Ch2_BestScore", 100);
-            RecordT.text = "Perfect!";
-        }
+        // 성공
         else
         {
+            NextButton.color = new Color(255, 255, 255, 255);
             int BestScore = PlayerPrefs.GetInt("Ch2_BestScore");
-            
+            if (BestScore < percent)
+            {
+                PlayerPrefs.SetInt("Ch2_BestScore", percent);
+                RecordT.text = "New Record!";
+            }
+            else if (percent < 100)
+            {
+                RecordT.rectTransform.position = new Vector3(125, -175, 0);
+                RecordT.rectTransform.eulerAngles = new Vector3(0, 0, 0);
+                RecordT.text = $"Best: {BestScore}" ;
+            }
+
+            // 60~79
             if (percent < 80)
             {
                 scoreBarFillImage.color = new Color(120, 120, 0);
                 Hunter_ani.SetInteger("GameResult", 1);
             }
+            // 80~100
             else
             {
                 scoreBarFillImage.color = new Color(0, 120, 0);
                 Hunter_ani.SetInteger("GameResult", 2);
+                // 100
+                if (percent > 99)
+                {
+                    RecordT.text = "Perfect!";
+                }
             }
         }
     }
