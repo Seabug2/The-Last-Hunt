@@ -39,6 +39,7 @@ public class TimeController_Shoot : MonoBehaviour
         {
             Time.timeScale = 0;
             ui.ResultScreen();
+            // Save result
         }
     }
 
