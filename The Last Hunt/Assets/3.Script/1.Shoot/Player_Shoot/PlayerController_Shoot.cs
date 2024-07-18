@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerController_Shoot : MonoBehaviour
 {
-    [SerializeField] private float moveSpeed = 5f;
+    [SerializeField] private float moveSpeed;
     [SerializeField] private PlayerInput_Shoot input;
     private Rigidbody player_r;
     [SerializeField] private Animator player_ani;
@@ -26,6 +26,7 @@ public class PlayerController_Shoot : MonoBehaviour
         player_ani = GetComponentInChildren<Animator>();
         ammoRemain = Archery_Data.QuiverCapacity;
         isDraw = false;
+        moveSpeed = 10f;
     }
 
     private void Update()
@@ -52,22 +53,26 @@ public class PlayerController_Shoot : MonoBehaviour
         {
             if (input.isKnock)
             {
+                moveSpeed = moveSpeed * 0.5f;
                 player_ani.SetBool("isKnock", true);
                 isKnock = true;
             }
             else if (input.isKnockCancel)
             {
+                moveSpeed = 10f;
                 player_ani.SetBool("isKnock", false);
                 isKnock = false;
             }
             if (input.isDraw && !isDraw)
             {
+                moveSpeed = moveSpeed * 0.5f;
                 player_ani.SetBool("isDraw", true);
                 drawTime = Time.time;
                 isDraw = true;
             }
             if (input.isFire && isKnock)
             {
+                moveSpeed = 10f;
                 ammoRemain--;
                 player_ani.SetTrigger("Fire");
                 player_ani.SetBool("isDraw", false);
