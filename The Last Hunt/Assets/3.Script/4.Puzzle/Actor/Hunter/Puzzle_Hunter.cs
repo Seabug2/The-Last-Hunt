@@ -33,23 +33,10 @@ public class Puzzle_Hunter : MonoBehaviour
 
         Freeze();
 
-        Puzzle_GameManager.instance.GameStartEvent.AddListener(Unfreeze);
-
         Puzzle_GameManager.instance.EndGame.AddListener(() =>
         {
             UnequipItem();
             Freeze();
-        });
-
-        Puzzle_GameManager.instance.GameClearEvent.AddListener(() =>
-        {
-            Anim.SetTrigger("Clear");
-        });
-
-        GetComponent<Puzzle_Hunter_TileAction>().FallingEvent.AddListener(() =>
-        {
-            Anim.SetTrigger("Falling");
-            GetComponent<BoxCollider>().enabled = false;
         });
     }
 
@@ -79,11 +66,16 @@ public class Puzzle_Hunter : MonoBehaviour
         {
             if (EquippedItem)
             {
-                Puzzle_GameManager.instance.ShowMessage("현재 장착한 장비가 남아있습니다", out float _,.25f);
+                Puzzle_GameManager.instance.ShowMessage("현재 장착한 장비가 남아있습니다", out float _, .25f);
             }
             else
             {
                 EquipItem(other.name);
+                if (other.transform.childCount > 0)
+                {
+                    other.transform.GetChild(0).gameObject.SetActive(true);
+                    other.transform.GetChild(0).parent = null;
+                }
                 Destroy(other.gameObject);
             }
         }

@@ -20,15 +20,12 @@ public class Puzzle_Wolf : Puzzle_Obstacle
     {
         if (target.TryGetComponent(out Puzzle_Horse horse))
         {
-            //¸» Æø¹ß
-            horse.Explosion();
+            Puzzle_GameManager.instance.GameOver_Horse(horse);
         }
-        else if (target.TryGetComponent(out Puzzle_Hunter hunter))
+        else if (target.TryGetComponent(out Puzzle_Hunter_Movement hunter))
         {
-            hunter.Anim.SetTrigger("Dead");
-            StartCoroutine(Puzzle_GameManager.instance.GameOver_Hunter_co());
+            Puzzle_GameManager.instance.GameOver_Hunter();
         }
-        target = null;
     }
 
     public void Dead()

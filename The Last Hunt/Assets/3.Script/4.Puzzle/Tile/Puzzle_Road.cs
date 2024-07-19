@@ -60,8 +60,7 @@ public class Puzzle_Road : Puzzle_Tile
 
     IEnumerator MoveHorse_co(Puzzle_Horse target)
     {
-        target.Canlced = null;
-        target.Canlced = () => StopMoveHorse();
+        target.currentTile = this;
         Transform horse = target.transform;
         Vector3 endPos = Vector3.zero;
 
@@ -75,7 +74,7 @@ public class Puzzle_Road : Puzzle_Tile
             {
                 Puzzle_GameManager.instance.EndGame?.Invoke();
                 Puzzle_GameManager.instance.VCamFollowHorse();
-                target.Explosion();
+                Puzzle_GameManager.instance.GameOver_Horse(target);
             }
             yield break;
         }

@@ -12,7 +12,7 @@ public class Puzzle_TileChecker : MonoBehaviour
     [Header("캐릭터가 떨어지면 실행될 이벤트")]
     public UnityEvent FallingEvent = new UnityEvent();
 
-    protected virtual void Start()
+    void Start()
     {
         tileLayer = Puzzle_GameManager.instance.TileLayer;
         gridSize = Puzzle_GameManager.tileSize;

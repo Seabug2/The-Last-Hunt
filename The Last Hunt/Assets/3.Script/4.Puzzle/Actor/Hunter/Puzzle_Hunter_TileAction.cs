@@ -24,14 +24,7 @@ public class Puzzle_Hunter_TileAction : Puzzle_TileChecker
         guideTile = FindObjectOfType<Puzzle_Guide>();
         HoldingTile = null;
     }
-    protected override void Start()
-    {
-        base.Start();
 
-        FallingEvent.AddListener(() =>
-        StartCoroutine(Puzzle_GameManager.instance.GameOver_Hunter_co())
-        );
-    }
     public void CarryingAction()
     {
         //들고 있지 않을 때

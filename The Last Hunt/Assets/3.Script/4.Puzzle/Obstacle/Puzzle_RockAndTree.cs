@@ -12,8 +12,7 @@ public class Puzzle_RockAndTree : Puzzle_Obstacle
             if (Puzzle_GameManager.instance.IsGameOver) return;
 
             Puzzle_GameManager.instance.EndGame?.Invoke();
-            Puzzle_GameManager.instance.VCamFollowHorse();
-            Puzzle_GameManager.instance.GameOver_Horse();
+            Puzzle_GameManager.instance.VCamFollowHorse();;
         }
     }
 }

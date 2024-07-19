@@ -18,6 +18,6 @@ public class Puzzle_Dead : Puzzle_Tile
 
         Puzzle_GameManager.instance.EndGame?.Invoke();
         Puzzle_GameManager.instance.VCamFollowHorse();
-        target.Explosion();
+        Puzzle_GameManager.instance.GameOver_Horse(target);
     }
 }

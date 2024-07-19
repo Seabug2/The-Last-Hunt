@@ -52,6 +52,12 @@ public class Puzzle_Hunter_Movement : MonoBehaviour
         {
             print("ÇÃ·¹ÀÌ¾î ¶³¾îÁü");
             tileChecker.FallingEvent.Invoke();
+            rb.AddForce(dir.normalized,ForceMode.VelocityChange);
         }
+    }
+
+    private void OnDisable()
+    {
+        dir = Vector3.zero;
     }
 }

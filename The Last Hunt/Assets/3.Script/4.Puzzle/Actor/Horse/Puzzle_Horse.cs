@@ -3,16 +3,8 @@ using UnityEngine;
 
 public class Puzzle_Horse : Puzzle_TileChecker
 {
-    protected override void Start()
-    {
-        base.Start();
-        Puzzle_GameManager.instance.EndGame.AddListener(() =>
-        {
-            Canlced?.Invoke();
-        });
-    }
-
-    public Action Canlced = null;
+    [HideInInspector]
+    public Puzzle_Road currentTile = null;
 
     //말이 자기 앞의 타일을 검사하여 그 타일의 코루틴을 실행
     public void MoveToNextTile()
@@ -21,12 +13,18 @@ public class Puzzle_Horse : Puzzle_TileChecker
         {
             FallingEvent.Invoke();
             Puzzle_GameManager.instance.VCamFollowHorse();
-            Puzzle_GameManager.instance.GameOver_Horse();
+            Puzzle_GameManager.instance.GameOver_Horse(this);
         }
         else
         {
             ViewingTile.TileEvent(this);
         }
+    }
+
+    public void TileMoveCancle()
+    {
+        if (!currentTile) return;
+        currentTile.StopMoveHorse();
     }
 
     [SerializeField, Header("말이 폭발하는 파티클"), Space(10)]
@@ -40,7 +38,6 @@ public class Puzzle_Horse : Puzzle_TileChecker
             horseExplosionParticle.transform.SetParent(null);
         }
 
-        Puzzle_GameManager.instance.GameOver_Horse();
         Destroy(gameObject);
     }
 }
