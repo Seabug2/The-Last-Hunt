@@ -6,9 +6,6 @@ public class Rhythm_PlayerController : MonoBehaviour
 {
     [SerializeField] private GameObject targetAnimal, HitSmoke, FullHitStar;
     private Animator Hunter_ani;
-    Vector3 origin = new Vector3(-2, 1.5f, -7);
-    private int inputArrow = -1;
-    private int answer;
     private void Start()
     {
         Hunter_ani = GetComponent<Animator>();
@@ -16,69 +13,132 @@ public class Rhythm_PlayerController : MonoBehaviour
 
     private void Update()
     {
-        inputArrow = IsArrowKeyInput();
-        if (inputArrow > -1)
+        // 3개 화살표 외 입력 시 -> 무시
+        if (!Input.GetKeyDown(KeyCode.UpArrow) && !Input.GetKeyDown(KeyCode.RightArrow) && !Input.GetKeyDown(KeyCode.LeftArrow))
         {
-            Hunter_ani.SetTrigger("Swing");
-            if (CheckOverlapBox(0.3f))
-            {
-                if (Rhythm_AnimalPooling.instance.isCorrectAnswer(inputArrow))
-                {
-                    if (CheckOverlapBox(0.2f))
-                    {
-                        FullHitStar.GetComponent<ParticleSystem>().Play();
-                        Rhythm_ChapterManager.instance.CountAdd(2);
-                        PlaySFX("MaxHit");
-                    }
-                    else
-                    {
-                        Rhythm_ChapterManager.instance.CountAdd(1);
-                        PlaySFX("Hit");
-                    }
-                    ChangeToMeat(targetAnimal);
-                }
-                else // 오답
-                {
-                    PlaySFX("Hit_Wrong");
-                }
-            }
-            else // 헛스윙
-            {
-                PlaySFX("Swing");
-            }
+            return;
         }
 
-    }
-    bool CheckOverlapBox(float size)
-    {
-        Collider[] cols = Physics.OverlapBox(HitSmoke.transform.position, Vector3.one * size);
-        if (cols.Length > 0)
+        Hunter_ani.SetTrigger("Swing");
+        // 입력한 키를 변수에 담기
+        KeyCode inputKey;
+        if (Input.GetKeyDown(KeyCode.UpArrow))
         {
-            targetAnimal = cols[0].gameObject;
-            return true;
+            inputKey = KeyCode.UpArrow;
         }
-        return false;
+        else if (Input.GetKeyDown(KeyCode.RightArrow))
+        {
+            inputKey = KeyCode.RightArrow;
+        }
+        else
+        {
+            inputKey = KeyCode.LeftArrow;
+        }
+        
+        // 동물의 위치(0~1)를 가져오기 - 단, 없다면 헛스윙
+        float animalTime;
+        Rhythm_AnimalController animal;
+        if (Rhythm_AnimalPooling.instance.ActiveQueue.Count > 0)
+        {
+            animal = Rhythm_AnimalPooling.instance.ActiveQueue[0];
+            animalTime = animal.t;
+        }
+        else
+        {
+            PlaySFX("Swing");
+            return;
+        }
+
+        // 범위 안에 동물이 없다면 헛스윙
+        if (animalTime < GoodRange.x || animalTime > GoodRange.y)
+        {
+            PlaySFX("Swing");
+            return;
+        }
+
+        // 다른 방향키를 입력했다면 틀림 효과
+        KeyCode correctKey = animal.CorrectKeyCode;
+        if (inputKey != correctKey)
+        {
+            PlaySFX("Hit_Wrong");
+            return;
+        }
+
+        // 여기까지 왔으면 일단 정답
+        // 퍼펙트 범위 안
+        if (animalTime > PerfectRange.x && animalTime < PerfectRange.y)
+        {
+            PlaySFX("MaxHit");
+            Rhythm_ChapterManager.instance.CountAdd(2);
+            ChangeToMeat(animal);
+        }
+        // 굿 범위
+        else
+        {
+            PlaySFX("Hit");
+            Rhythm_ChapterManager.instance.CountAdd(1);
+            ChangeToMeat(animal);
+        }
     }
+
 
     private void PlaySFX(string s)
     {
         Rhythm_SoundManager.instance.PlaySFX(s);
     }
 
-    private void ChangeToMeat(GameObject obj)
+    private void ChangeToMeat(Rhythm_AnimalController animal)
     {
         // 이펙트 발생
         HitSmoke.GetComponent<ParticleSystem>().Play();
         // 동물 형태는 반납
-        Rhythm_AnimalPooling.instance.ReturnObjectToPool(obj);
+        animal.Inactive();
     }
 
-    private int IsArrowKeyInput()
+
+
+
+
+
+    public Transform startPosition;
+    public Transform endPosition;
+
+    public Transform ParticlePos;
+    public float ParticlePosOffset;
+    public Vector2 PerfectRange;
+    public Vector2 GoodRange;
+    public Vector2 BadRange;
+
+    private void OnDrawGizmos()
     {
-        if (!Rhythm_ChapterManager.instance.BGMisPlaying) return -1;
-        if (Input.GetKeyDown(KeyCode.LeftArrow)) return 0;
-        if (Input.GetKeyDown(KeyCode.UpArrow)) return 1;
-        if (Input.GetKeyDown(KeyCode.RightArrow)) return 2;
-        return -1;
+        Vector3 start = startPosition.position;
+        Vector3 end = endPosition.position;
+
+        //동물이 날아가는 경로
+        Gizmos.color = Color.white;
+        Gizmos.DrawLine(start, end);
+
+        //bad 판정 영역
+        Gizmos.color = Color.red;
+        Gizmos.DrawLine(Vector3.Lerp(start, end, BadRange.x),
+                        Vector3.Lerp(start, end, BadRange.y));
+
+        //good 판정 영역
+        Gizmos.color = Color.green;
+        Gizmos.DrawLine(Vector3.Lerp(start, end, GoodRange.x),
+                        Vector3.Lerp(start, end, GoodRange.y));
+
+        //퍼펙트 판정 영역
+        Gizmos.color = Color.blue;
+        Gizmos.DrawLine(Vector3.Lerp(start, end, PerfectRange.x),
+                        Vector3.Lerp(start, end, PerfectRange.y));
     }
+
+    private void OnValidate()
+    {
+        ParticlePos.position = Vector3.Lerp(startPosition.position,
+            endPosition.position,
+            ParticlePosOffset);
+    }
+
 }

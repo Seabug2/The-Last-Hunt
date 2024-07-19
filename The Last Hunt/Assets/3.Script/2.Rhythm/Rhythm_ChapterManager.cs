@@ -19,7 +19,6 @@ public class Rhythm_ChapterManager : MonoBehaviour
         if (instance == null)
         {
             instance = this;
-            DontDestroyOnLoad(gameObject);
         }
         else { Destroy(gameObject); }
     }
@@ -49,7 +48,7 @@ public class Rhythm_ChapterManager : MonoBehaviour
         Sequence mySequence = DOTween.Sequence();
 
         // 0.5초 동안 크기를 키우기
-        mySequence.Append(message.DOSizeDelta(new Vector2(1920, 126), 0.35f).SetEase(Ease.InOutQuad));
+        mySequence.Append(message.DOSizeDelta(new Vector2(1920, 126), 1f).SetEase(Ease.InOutQuad));
 
         // _time 동안 대기
         mySequence.AppendInterval(_time);

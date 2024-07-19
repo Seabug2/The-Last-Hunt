@@ -35,35 +35,27 @@ public class Rhythm_AnimalSpawner : MonoBehaviour
         };
     }
 
-    private void FixedUpdate()
+    private void Update()
     {
         if (count > 126) return;
         if (!Rhythm_SoundManager.instance.BGMisPlaying()) return;
         current_time += Time.deltaTime;
         if (current_time > 60d / BPM)
         {
-            if(animal_appear[count] < 1)
+            if (animal_appear[count] < 1)
             {
                 // 안 나오는 박자
             }
             else
             {
-                SpawnAnimal();
+                Rhythm_AnimalPooling.instance.GetObjectFromPool();
             }
             count++;
-            if(count > 126)
+            if (count > 126)
             {
                 Rhythm_ChapterManager.instance.ResultAppear();
             }
             current_time -= (60d / BPM);
         }
-    }
-
-    private void SpawnAnimal()
-    {
-        Rhythm_SoundManager.instance.PlaySFX("Cue");
-        // 동물 생성하는 부분
-        // 1. 동물을 풀에서 꺼내온다.
-        obj = Rhythm_AnimalPooling.instance.GetObjectFromPool();
     }
 }

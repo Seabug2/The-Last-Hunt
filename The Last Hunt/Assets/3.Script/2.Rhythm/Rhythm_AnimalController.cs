@@ -4,35 +4,42 @@ using UnityEngine;
 
 public class Rhythm_AnimalController : MonoBehaviour
 {
-    public Vector3 startMarker;   // 시작 위치
-    public Vector3 endMarker;     // 끝 위치
+    [SerializeField]
+    KeyCode correctKeyCode;
+    public KeyCode CorrectKeyCode => correctKeyCode;
 
-    private float startTime;
-    private float reachTime;
-    float fracJourney = 0;
+    public float t { get; private set; }
+
+    Vector3 startPosition;
+    Vector3 endPosition;
+
+    private void Awake()
+    {
+        startPosition = Rhythm_AnimalPooling.instance.Spawner.position;
+        endPosition = Rhythm_AnimalPooling.instance.targetPoint.position;
+    }
 
     private void OnEnable()
     {
-        startMarker = Rhythm_AnimalPooling.instance.Spawner.position;
-        endMarker = Rhythm_AnimalPooling.instance.targetPoint.position;
-        Vector3 length = endMarker - startMarker;
-        endMarker = startMarker + length * 1.25f;
-
-        startTime = Time.time;
-        reachTime = 60f / 130 * 2 * 1.25f;
+        t = 0;
     }
 
     private void Update()
     {
-        float distCovered = Time.time - startTime;
-        fracJourney = distCovered / reachTime;
-        transform.position = Vector3.Lerp(startMarker, endMarker, fracJourney);
-        if (fracJourney > 0.99f)
+        t += Time.deltaTime;
+
+        transform.position = Vector3.Lerp(startPosition, endPosition, t);
+        if (t > 0.99f)
         {
             Rhythm_SoundManager.instance.PlaySFX("Miss");
             Rhythm_ChapterManager.instance.CountAdd(0);
-            Rhythm_AnimalPooling.instance.ReturnObjectToPool(gameObject);
+            Inactive();
         }
     }
 
+    public void Inactive()
+    {
+        Rhythm_AnimalPooling.instance.ReturnObjectToPool(this);
+        gameObject.SetActive(false);
+    }
 }
