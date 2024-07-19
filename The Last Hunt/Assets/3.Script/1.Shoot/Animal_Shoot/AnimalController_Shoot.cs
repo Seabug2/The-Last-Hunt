@@ -561,7 +561,7 @@ public class AnimalController_Shoot : MonoBehaviour
                 {
                     targetPosition = position + Vector3.ProjectOnPlane(position - player.transform.position, Vector3.up);
                 }
-                if(isAnimalInRange)
+                else if (isAnimalInRange)
                 {
                     targetPosition = position + Vector3.ProjectOnPlane(position - primaryPredator.transform.position, Vector3.up);
                 }
@@ -684,6 +684,8 @@ public class AnimalController_Shoot : MonoBehaviour
     // Method on if and when arrow hits animal
     private void OnCollisionEnter(Collision collision)
     {
+        var position = transform.position;
+        var targetPosition = position;
         if (CurrentState == WanderState.Dead)
         {
             return;
@@ -691,20 +693,21 @@ public class AnimalController_Shoot : MonoBehaviour
         else if (collision.transform.CompareTag("Arrow"))
         {
             isHitByArrow = true;
-            StartCoroutine(FleeArrow_co());
+            StartCoroutine(FleeArrow_co(isPlayerLocated, position, targetPosition));
         }
     }
 
     // Coroutine to flee arrow
-    private IEnumerator FleeArrow_co()
+    private IEnumerator FleeArrow_co(bool isPlayerLocated, Vector3 position, Vector3 targetPosition)
     {
-        Run();
-        var position = transform.position;
-        var targetPosition = position;
-        targetPosition = position + transform.forward * 100;
+        if (isPlayerLocated)
+        {
+            Run();
+            targetPosition = position + Vector3.ProjectOnPlane(position - player.transform.position, Vector3.up);
+        }
         if (!IsValidLocation(targetPosition))
         {
-            targetPosition = position - transform.forward * 100;
+            targetPosition = startPosition;
         }
         FaceDirection((targetPosition - position).normalized);
         ValidatePosition(ref targetPosition);
@@ -713,7 +716,7 @@ public class AnimalController_Shoot : MonoBehaviour
         {
             UpdateAI();
         }
-        yield return new WaitForSeconds(5f);
+        yield return new WaitForSeconds(10f);
     }
 
     // Method to face animal in direction of action

@@ -8,7 +8,6 @@ public class PlayerController_Shoot : MonoBehaviour
     [SerializeField] private PlayerInput_Shoot input;
     private Rigidbody player_r;
     [SerializeField] private Animator player_ani;
-    [SerializeField] private MapData_Shoot mapData;
 
     [SerializeField] private Archery_Data_Shoot Archery_Data;
     public int ammoRemain = 0;
@@ -86,11 +85,6 @@ public class PlayerController_Shoot : MonoBehaviour
                 Debug.Log($"Remaining (Player) : {ammoRemain}");
             }
         }
-    }
-
-    private void LateUpdate()
-    {
-        transform.position = new Vector3(Mathf.Clamp(transform.position.x, mapData.LimitMin.x, mapData.LimitMax.x), Mathf.Clamp(transform.position.y, mapData.LimitMin.y, mapData.LimitMax.y), Mathf.Clamp(transform.position.z, mapData.LimitMin.z, mapData.LimitMax.z));
     }
 
     private void MoveFB()
