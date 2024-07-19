@@ -9,7 +9,8 @@ using Random = UnityEngine.Random;
 using Vector3 = UnityEngine.Vector3;
 using UnityEngine.Events;
 using UnityEngine.Assertions;
-using UnityEditor;
+using UnityEngine.UI;
+//using UnityEditor;
 
 public enum PlayerAlertStage
 {
@@ -66,6 +67,8 @@ public class AnimalController_Shoot : MonoBehaviour
     [SerializeField] private float attack = 10f;
     [SerializeField] private float attackSpeed = 0.5f;
     [SerializeField] private float health = 5f;
+    [SerializeField] private float maxHealth = 5f;
+    [SerializeField] private Slider healthUI;
 
     // Chance of attack (0~100)
     [SerializeField] private float aggression = 0f;
@@ -354,9 +357,11 @@ public class AnimalController_Shoot : MonoBehaviour
         animator.applyRootMotion = false;
         TryGetComponent(out characterController);
         TryGetComponent(out navMeshAgent);
+        healthUI = GetComponentInChildren<Slider>();
 
         // Assign stats to variables
-        health = stats.health;
+        maxHealth = stats.health;
+        health = maxHealth;
         stamina = stats.stamina;
         attackSpeed = stats.attackSpeed;
         originalDominance = stats.dominance;
@@ -498,6 +503,8 @@ public class AnimalController_Shoot : MonoBehaviour
         }
         UpdatePlayerAlert(isPlayerInRange);
 
+        UpdateHealth();
+
         var position = transform.position;
         var targetPosition = position;
         // Switch case for all AI states
@@ -597,6 +604,12 @@ public class AnimalController_Shoot : MonoBehaviour
         {
             characterController.SimpleMove(moveSpeed * Vector3.ProjectOnPlane(targetPosition - position, Vector3.up).normalized);
         }
+    }
+
+    private void UpdateHealth()
+    {
+        healthUI.maxValue = maxHealth;
+        healthUI.value = health;
     }
 
     // Update player alert levels
@@ -988,6 +1001,7 @@ public class AnimalController_Shoot : MonoBehaviour
     // Death method : Clear bools -> Set death animation -> Invoke death event -> Finish navMeshAgent (destination = current location) -> Disable 
     private void Dead()
     {
+        healthUI.value = 0;
         ClearAnimatorBools();
         if (deathStates.Length > 0)
         {
