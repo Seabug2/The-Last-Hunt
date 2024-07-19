@@ -53,7 +53,7 @@ public class Puzzle_Hunter : MonoBehaviour
                     || other.TryGetComponent(out Puzzle_Wolf _))
                 {
                     Destroy(other.GetComponent<Collider>());
-                    target = other.gameObject;
+                    target = other.GetComponent<Puzzle_Obstacle>();
                     Attack();
                     Vector3 dir = other.transform.position;
                     transform.LookAt(new Vector3(dir.x, 0, dir.z), Vector3.up);
@@ -146,7 +146,7 @@ public class Puzzle_Hunter : MonoBehaviour
         Freeze();
     }
 
-    GameObject target = null;
+    Puzzle_Obstacle target = null;
     //플레이어가 장애물을 제거하는 것이므로 사냥꾼 쪽에서 제거 코드를 실행
     public void RemoveObstacle()
     {
@@ -161,7 +161,7 @@ public class Puzzle_Hunter : MonoBehaviour
         }
         else
         {
-            Destroy(target);
+            target.Dead();
         }
 
         UnequipItem();

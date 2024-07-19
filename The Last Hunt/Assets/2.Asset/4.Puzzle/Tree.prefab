@@ -4675,7 +4675,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &4203450136505743448
 Transform:
   m_ObjectHideFlags: 0
@@ -9400,7 +9400,7 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 2.8, y: 2, z: 2.8}
+  m_Size: {x: 2.2, y: 2, z: 2.2}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &3885864523879036848
 MonoBehaviour:
@@ -9415,7 +9415,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   RequiredName: Axe
-  prtc: {fileID: 0}
+  prtc: {fileID: 1872087215912500396}
 --- !u!1 &6395196443690866438
 GameObject:
   m_ObjectHideFlags: 0

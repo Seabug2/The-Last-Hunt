@@ -51,8 +51,13 @@ public class Puzzle_Hunter_Movement : MonoBehaviour
         if (!tileChecker.IsGrounded)
         {
             print("플레이어 떨어짐");
-            tileChecker.FallingEvent.Invoke();
-            rb.AddForce(dir.normalized,ForceMode.VelocityChange);
+            //게임이 끝난 상태가 아니라면 EndGame를 실행
+            if (!Puzzle_GameManager.instance.IsGameOver)
+            {
+                tileChecker.isFallen = true;
+                Puzzle_GameManager.instance.EndGame?.Invoke();
+                Puzzle_GameManager.instance.GameOver_Hunter(tileChecker);
+            }
         }
     }
 

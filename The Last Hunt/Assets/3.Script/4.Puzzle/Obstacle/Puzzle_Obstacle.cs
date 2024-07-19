@@ -8,12 +8,13 @@ public class Puzzle_Obstacle : MonoBehaviour
     [SerializeField]
     GameObject prtc;
 
-    private void OnDestroy()
+    public void Dead()
     {
         if (prtc)
         {
             prtc.transform.parent = null;
             prtc.SetActive(true);
         }
+        Destroy(gameObject);
     }
 }

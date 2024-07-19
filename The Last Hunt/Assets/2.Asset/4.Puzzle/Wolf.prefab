@@ -27,7 +27,7 @@ Transform:
   m_GameObject: {fileID: 755036565689026526}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 1, z: 0}
-  m_LocalScale: {x: 3, y: 3, z: 3}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_Children:
   - {fileID: 755036565689273574}
   m_Father: {fileID: 7249060989404240147}
@@ -9713,7 +9713,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   RequiredName: Anything
-  prtc: {fileID: 0}
+  prtc: {fileID: 755036565689026526}
 --- !u!1 &7296348107307058384
 GameObject:
   m_ObjectHideFlags: 0

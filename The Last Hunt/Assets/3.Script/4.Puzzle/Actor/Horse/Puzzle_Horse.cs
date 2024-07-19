@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 public class Puzzle_Horse : Puzzle_TileChecker
@@ -11,9 +10,14 @@ public class Puzzle_Horse : Puzzle_TileChecker
     {
         if (ViewingTile == null)
         {
-            FallingEvent.Invoke();
-            Puzzle_GameManager.instance.VCamFollowHorse();
-            Puzzle_GameManager.instance.GameOver_Horse(this);
+            //게임이 끝난 상태가 아니라면 EndGame를 실행
+            if (!Puzzle_GameManager.instance.IsGameOver)
+            {
+                isFallen = true;
+                Puzzle_GameManager.instance.EndGame?.Invoke();
+                Puzzle_GameManager.instance.VCamFollowHorse();
+                Puzzle_GameManager.instance.GameOver_Horse(this);
+            }
         }
         else
         {

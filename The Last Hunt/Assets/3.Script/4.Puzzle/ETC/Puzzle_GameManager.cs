@@ -73,7 +73,6 @@ public class Puzzle_GameManager : MonoBehaviour
         EndGame.AddListener(() => IsGameOver = true);
 
         ScreenSize = new Vector2(Screen.width, Screen.height);
-        print(ScreenSize);
         text = message.GetComponentInChildren<Text>();
         message.gameObject.SetActive(false);
         messageBoxHeight = message.sizeDelta.y;
@@ -155,13 +154,17 @@ public class Puzzle_GameManager : MonoBehaviour
         Destroy(lookAtHorseVCam.GetCinemachineComponent<CinemachineTransposer>());
         yield return new WaitUntil(() => brainCam.ActiveVirtualCamera.Equals(lookAtHorseVCam));
         yield return new WaitWhile(() => brainCam.IsBlending);
-        print(brainCam.ActiveVirtualCamera.Name);
 
         //떨어진게 아니라면 폭발
-        if (!horse.GetComponent<Rigidbody>().useGravity)
+        if (!horse.isFallen)
         {
             horse.Explosion();
         }
+        else
+        {
+            horse.FallingEvent?.Invoke();
+        }
+
         yield return new WaitForSeconds(1.2f);
 
         lookAtHunterVCam.Priority = brainCam.ActiveVirtualCamera.Priority + 1;
@@ -195,14 +198,24 @@ public class Puzzle_GameManager : MonoBehaviour
         //현재 활성화된 씬을 다시 실행
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
-    public void GameOver_Hunter()
+    public void GameOver_Hunter(Puzzle_Hunter_TileAction hunter)
     {
-        StartCoroutine(GameOver_Hunter_co());
+        StartCoroutine(GameOver_Hunter_co(hunter));
     }
 
-    IEnumerator GameOver_Hunter_co()
+    IEnumerator GameOver_Hunter_co(Puzzle_Hunter_TileAction hunter)
     {
+        if(hunter.isFallen)
+        {
+            hunter.FallingEvent?.Invoke();
+        }
+        else
+        {
+            hunter.GetComponent<Animator>().SetTrigger("Dead");
+        }
+
         yield return new WaitForSeconds(.5f);
+
         yield return StartCoroutine(Fade_co(true, 3f));
 
         //메세지 출력

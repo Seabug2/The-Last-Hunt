@@ -1,16 +1,12 @@
 using UnityEngine;
 
-public class Puzzle_Wolf : Puzzle_Obstacle
+public class Puzzle_Bear : MonoBehaviour
 {
     GameObject target = null;
 
     //공격을 시작하면 플레이어 조작 중단
-    void Attack(GameObject target)
+    void Attack()
     {
-        this.target = target;
-        //게임이 IsGameOver 상태라면 공격을 하지 않는다.
-        if (Puzzle_GameManager.instance.IsGameOver) return;
-
         //공격이 발동되면 플레이어 조작을 중단
         Puzzle_GameManager.instance.EndGame?.Invoke();
         GetComponent<Animator>().SetTrigger("Attack");
@@ -30,6 +26,11 @@ public class Puzzle_Wolf : Puzzle_Obstacle
 
     private void OnTriggerEnter(Collider other)
     {
+        //게임이 IsGameOver 상태라면 공격을 하지 않는다.
+        if (Puzzle_GameManager.instance.IsGameOver) return;
+
+        target = other.gameObject;
+
         //영역에 닿은 객체를 바라본다
         Vector3 dir = other.transform.position;
         transform.LookAt(new Vector3(dir.x, 0, dir.z), Vector3.up);
@@ -38,7 +39,7 @@ public class Puzzle_Wolf : Puzzle_Obstacle
         {
             //말을 공격
             Puzzle_GameManager.instance.VCamFollowHorse();
-            Attack(other.gameObject);
+            Attack();
         }
         else if (other.TryGetComponent(out Puzzle_Hunter hunter))
         {
@@ -47,9 +48,8 @@ public class Puzzle_Wolf : Puzzle_Obstacle
             {
                 //플레이어를 공격
                 Puzzle_GameManager.instance.LookAtHunter();
-                Attack(other.gameObject);
+                Attack();
             }
         }
     }
-
 }
