@@ -48,9 +48,7 @@ public class Rhythm_PlayerController : MonoBehaviour
             }
         }
 
-        // Debug.DrawRay(origin, Vector3.right * 5, Color.red);
     }
-
     bool CheckOverlapBox(float size)
     {
         Collider[] cols = Physics.OverlapBox(HitSmoke.transform.position, Vector3.one * size);
@@ -61,7 +59,6 @@ public class Rhythm_PlayerController : MonoBehaviour
         }
         return false;
     }
-
 
     private void PlaySFX(string s)
     {
@@ -84,5 +81,4 @@ public class Rhythm_PlayerController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.RightArrow)) return 2;
         return -1;
     }
-
 }

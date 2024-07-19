@@ -81,16 +81,10 @@ public class Rhythm_ChapterManager : MonoBehaviour
     public int percent = 0;
     public bool BGMisPlaying;
 
-    private void Start()
+    private IEnumerator Start()
     {
-        StartCoroutine("Intro_co");
-        // introUI.SetActive(true);
-    }
-    private IEnumerator Intro_co()
-    {
-        // yield return introUI.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).length;
-        yield return 2;
         ShowMessage(text.text);
+        yield return new WaitForSeconds(1f);
         Rhythm_SoundManager.instance.PlayBGM("BGM");
         BGMisPlaying = true;
     }

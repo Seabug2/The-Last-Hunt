@@ -511,6 +511,7 @@ GameObject:
   - component: {fileID: 4376963308825914426}
   - component: {fileID: 5944771851303448484}
   - component: {fileID: 2045670208231852413}
+  - component: {fileID: -6553560131675009838}
   m_Layer: 0
   m_Name: Boar
   m_TagString: Animal
@@ -563,6 +564,21 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.3, y: 0.525, z: 0.7}
   m_Center: {x: 0, y: 0.4, z: 0.1}
+--- !u!114 &-6553560131675009838
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4376963308825817114}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0a0df185e6b08194aa1d369f648ef1e5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startMarker: {fileID: 0}
+  endMarker: {fileID: 0}
+  speed: 1
 --- !u!1 &4376963308825817116
 GameObject:
   m_ObjectHideFlags: 0

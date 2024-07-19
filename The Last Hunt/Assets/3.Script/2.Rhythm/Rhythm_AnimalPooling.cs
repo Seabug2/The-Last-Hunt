@@ -15,6 +15,7 @@ public class Rhythm_AnimalPooling : MonoBehaviour
         }
         else { Destroy(gameObject); }
     }
+    public Transform Spawner, targetPoint;
     // 1단계: 풀 생성
     // 1-1. 풀링할 오브젝트의 프리팹을 지정
     public GameObject[] AnimalPrefab;
@@ -77,4 +78,27 @@ public class Rhythm_AnimalPooling : MonoBehaviour
         if (ans > 2) ans = 1;
         return ans.Equals(input);
     }
+    /*
+    public Transform ParticlePos;
+    public float ParticlePosOffset;
+    public Vector2 PerfectRange;
+    public Vector2 GoodRange;
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawLine(Vector3.Lerp(Spawner.position, targetPoint.position, GoodRange.x),
+                        Vector3.Lerp(Spawner.position, targetPoint.position, GoodRange.y));
+        Gizmos.color = Color.blue;
+        Gizmos.DrawLine(Vector3.Lerp(Spawner.position, targetPoint.position, PerfectRange.x),
+                        Vector3.Lerp(Spawner.position, targetPoint.position, PerfectRange.y));
+
+
+    }
+
+    private void OnValidate()
+    {
+        ParticlePos.position = Vector3.Lerp(Spawner.position, targetPoint.position, ParticlePosOffset);
+    }
+    */
 }
