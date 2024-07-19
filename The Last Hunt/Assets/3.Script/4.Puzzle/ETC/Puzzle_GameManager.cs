@@ -73,8 +73,11 @@ public class Puzzle_GameManager : MonoBehaviour
         IsGameOver = false;
         EndGame.AddListener(() => IsGameOver = true);
 
+        ScreenSize = new Vector2(Screen.width, Screen.height);
+        print(ScreenSize);
         text = message.GetComponentInChildren<Text>();
         message.gameObject.SetActive(false);
+        messageBoxHeight = message.sizeDelta.y;
         fadeBoard.rectTransform.sizeDelta = new Vector2(Screen.width, Screen.height);
         brainCam = Camera.main.GetComponent<CinemachineBrain>();
 
@@ -85,11 +88,11 @@ public class Puzzle_GameManager : MonoBehaviour
     {
         yield return StartCoroutine(Fade_co(false, 3.5f));
 
-        ShowMessage("타일을 옮겨 말이 집까지 갈 수 있게 만드세요", 3f);
+        ShowMessage("타일을 옮겨 말이 집까지 갈 수 있게 만드세요", out float tt, 3f);
         yield return new WaitForSeconds(0.8f);
 
         float waitTime = Time.time;
-        while (Time.time - waitTime < 2.2f)
+        while (Time.time - waitTime < tt - .8f)
         {
             if (Input.anyKeyDown)
             {
@@ -142,10 +145,15 @@ public class Puzzle_GameManager : MonoBehaviour
         lookAtHunterVCam.Priority = brainCam.ActiveVirtualCamera.Priority + 1;
     }
 
+    public void GameOver_Horse()
+    {
+        StartCoroutine(GameOver_Horse_co());
+    }
+
     /// <summary>
     /// 말이 죽거나 떨어질 때 실행
     /// </summary>
-    public IEnumerator GameOver_Horse_co()
+    IEnumerator GameOver_Horse_co()
     {
         yield return new WaitForSeconds(1f);
         Destroy(traceVCam.GetCinemachineComponent<CinemachineTransposer>());
@@ -161,11 +169,24 @@ public class Puzzle_GameManager : MonoBehaviour
         yield return new WaitForSeconds(1.2f);
 
         //메세지 출력
-        ShowMessage("이런 멍청한 말 같으니...!", 3.5f);
+        ShowMessage("이런 멍청한 말 같으니...!", out float tt, 3.5f);
 
-        yield return new WaitForSeconds(3.5f);
+        yield return new WaitForSeconds(1f);
+
+        float waitTime = Time.time;
+        while (Time.time - waitTime < tt - 1)
+        {
+            if (Input.anyKeyDown)
+            {
+                MessageCut();
+                break;
+            }
+            yield return null;
+        }
+
         yield return StartCoroutine(Fade_co(true, 3f));
 
+        yield return null;
         //현재 활성화된 씬을 다시 실행
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
@@ -176,10 +197,18 @@ public class Puzzle_GameManager : MonoBehaviour
         yield return StartCoroutine(Fade_co(true, 3f));
 
         //메세지 출력
-        ShowMessage("젠장... 다시 한 번 해보자...", 5f);
-        yield return new WaitForSeconds(6);
-
-        currentTween = null;
+        ShowMessage("젠장... 다시 한 번 해보자...", out float tt, 3.5f);
+        yield return new WaitForSeconds(1f);
+        float waitTime = Time.time;
+        while (Time.time - waitTime < tt - 1)
+        {
+            if (Input.anyKeyDown)
+            {
+                MessageCut();
+                break;
+            }
+            yield return null;
+        }
 
         //현재 활성화된 씬을 다시 실행
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
@@ -207,8 +236,8 @@ public class Puzzle_GameManager : MonoBehaviour
         EndGame?.Invoke();
         VCamFollowHorse();
 
-        ShowMessage("게임 클리어!", 5f);
-        yield return new WaitForSeconds(5);
+        ShowMessage("게임 클리어!", out float tt, 5f);
+        yield return new WaitForSeconds(tt);
 
         LookAtHunter();
         GameClearEvent?.Invoke();
@@ -220,13 +249,15 @@ public class Puzzle_GameManager : MonoBehaviour
         //SceneManager.LoadScene(nextSceneName);
     }
 
-
     #region 메시지 출력
     [SerializeField, Header("페이드아웃"), Space(10)]
     Image fadeBoard;
     [SerializeField, Header("메세지")]
     RectTransform message;
     Text text;
+
+    public Vector2 ScreenSize { get; private set; }
+    float messageBoxHeight;
 
     public bool IsNoMessage
     {
@@ -235,8 +266,9 @@ public class Puzzle_GameManager : MonoBehaviour
 
     Tween currentTween = null;
 
-    public void ShowMessage(string _message, float _time = 1)
+    public void ShowMessage(string _message, out float totalTime, float _time = 1)
     {
+        totalTime = _time + .44f;
         // 기존 애니메이션이 있으면 중단
         if (currentTween != null && currentTween.IsActive())
         {
@@ -246,18 +278,17 @@ public class Puzzle_GameManager : MonoBehaviour
         text.text = _message;
 
         // 애니메이션 설정
-        message.sizeDelta = new Vector2(1920, 0); // 시작 크기
+        message.sizeDelta = new Vector2(ScreenSize.x, 0); // 시작 크기
         message.gameObject.SetActive(true);
         Sequence mySequence = DOTween.Sequence();
 
         // 0.5초 동안 크기를 키우기
-        mySequence.Append(message.DOSizeDelta(new Vector2(1920, 126), 0.35f).SetEase(Ease.InOutQuad));
-
+        mySequence.Append(message.DOSizeDelta(new Vector2(ScreenSize.x, messageBoxHeight), 0.22f).SetEase(Ease.InOutQuad));
         // _time 동안 대기
         mySequence.AppendInterval(_time);
 
         // 0.5초 동안 크기를 다시 줄이기
-        mySequence.Append(message.DOSizeDelta(new Vector2(1920, 0), 0.35f).SetEase(Ease.InOutQuad));
+        mySequence.Append(message.DOSizeDelta(new Vector2(1920, 0), 0.22f).SetEase(Ease.InOutQuad));
 
         // 애니메이션이 끝난 후 비활성화
         mySequence.OnComplete(() => message.gameObject.SetActive(false));
@@ -277,22 +308,4 @@ public class Puzzle_GameManager : MonoBehaviour
         message.gameObject.SetActive(false);
     }
     #endregion
-}
-
-public class Puzzle_Score
-{
-    /// <summary>
-    /// 클리어까지 걸린 시간
-    /// </summary>
-    double time = 0;
-    /// <summary>
-    /// 클리어까지 타일을 옮긴 횟수 (Set Tile 할 때마다)
-    /// </summary>
-    int count = 0;
-
-    public Puzzle_Score(float _time, int _count)
-    {
-        time = _time;
-        count = _count;
-    }
 }

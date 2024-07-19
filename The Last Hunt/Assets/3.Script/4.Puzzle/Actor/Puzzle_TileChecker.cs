@@ -88,6 +88,7 @@ public class Puzzle_TileChecker : MonoBehaviour
         }
     }
 
+   
 #if UNITY_EDITOR
     void OnDrawGizmos()
     {

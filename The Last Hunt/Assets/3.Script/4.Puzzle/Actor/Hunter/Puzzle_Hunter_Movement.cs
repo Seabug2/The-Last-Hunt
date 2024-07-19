@@ -37,7 +37,8 @@ public class Puzzle_Hunter_Movement : MonoBehaviour
         if (dir != Vector3.zero)
         {
             Vector3 newPosition = rb.position + Time.fixedDeltaTime * moveSpeed * dir;
-            rb.MovePosition(newPosition);
+            Vector3 fixedPosition = new Vector3(Mathf.Clamp(newPosition.x, -4.4f, 73.4f), 0, Mathf.Clamp(newPosition.z, -10.4f, 10.4f));
+            rb.MovePosition(fixedPosition);
 
             Quaternion targetRotation = Quaternion.LookRotation(dir, Vector3.up);
             Quaternion newRotation = Quaternion.Slerp(rb.rotation, targetRotation, Time.fixedDeltaTime * rotSpeed);

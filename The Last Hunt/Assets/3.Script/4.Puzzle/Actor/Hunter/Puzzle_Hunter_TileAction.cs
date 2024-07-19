@@ -54,7 +54,7 @@ public class Puzzle_Hunter_TileAction : Puzzle_TileChecker
             //사냥꾼이랑 말이 그 타일 위에 없는 경우 타일을 이동 시킬 수 있다.
             if (ViewingTile.IsOverlapping())
             {
-                Puzzle_GameManager.instance.ShowMessage("타일 위에 무언가 있습니다!");
+                Puzzle_GameManager.instance.ShowMessage("타일 위에 무언가 있습니다!", out float _);
                 return;
             }
             else if (ViewingTile.TryGetComponent(out Puzzle_Road _))
@@ -71,7 +71,7 @@ public class Puzzle_Hunter_TileAction : Puzzle_TileChecker
     {
         if (ViewingTile != null)
         {
-            Puzzle_GameManager.instance.ShowMessage("그곳에 이미 타일이 있습니다!");
+            Puzzle_GameManager.instance.ShowMessage("그곳에 이미 타일이 있습니다!", out float _);
             return;
         }
 
@@ -80,7 +80,7 @@ public class Puzzle_Hunter_TileAction : Puzzle_TileChecker
             ForwardPosition.z < -9 ||
             ForwardPosition.z > 9)
         {
-            Puzzle_GameManager.instance.ShowMessage("그곳에는 타일을 설치할 수 없습니다!");
+            Puzzle_GameManager.instance.ShowMessage("그곳에는 타일을 설치할 수 없습니다!", out float _);
             return;
         }
 

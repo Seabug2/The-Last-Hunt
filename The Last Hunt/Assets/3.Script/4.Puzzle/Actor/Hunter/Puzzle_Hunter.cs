@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Puzzle_Hunter : MonoBehaviour
 {
@@ -6,6 +7,9 @@ public class Puzzle_Hunter : MonoBehaviour
     public Puzzle_Hunter_Movement Movement { get; private set; }
     public Puzzle_Hunter_Input Input { get; private set; }
     public Animator Anim { get; private set; }
+
+    [SerializeField]
+    Transform itemIconRoot;
 
     void Awake()
     {
@@ -18,6 +22,10 @@ public class Puzzle_Hunter : MonoBehaviour
     {
         //게임 시작시 hand에 준비한 아이템들을 비활성화하여 보이지 않게 합니다.
         foreach (Transform child in hand)
+        {
+            child.gameObject.SetActive(false);
+        }
+        foreach (Transform child in itemIconRoot)
         {
             child.gameObject.SetActive(false);
         }
@@ -41,6 +49,7 @@ public class Puzzle_Hunter : MonoBehaviour
         GetComponent<Puzzle_Hunter_TileAction>().FallingEvent.AddListener(() =>
         {
             Anim.SetTrigger("Falling");
+            GetComponent<BoxCollider>().enabled = false;
         });
     }
 
@@ -70,7 +79,7 @@ public class Puzzle_Hunter : MonoBehaviour
         {
             if (EquippedItem)
             {
-                Puzzle_GameManager.instance.ShowMessage("현재 장착한 장비가 남아있습니다", .25f);
+                Puzzle_GameManager.instance.ShowMessage("현재 장착한 장비가 남아있습니다", out float _,.25f);
             }
             else
             {
@@ -87,7 +96,6 @@ public class Puzzle_Hunter : MonoBehaviour
 
     [SerializeField, Header("무기를 장착할 피벗 위치")]
     Transform hand;
-    public Transform EquippedHand => hand;
 
     //DFS 재귀함수
     void FindTargetTransform(Transform _root, string _name)
@@ -118,11 +126,12 @@ public class Puzzle_Hunter : MonoBehaviour
     /// 지정한 이름의 장비를 찾아 장착합니다.
     /// </summary>
     /// <param name="_PickUpItemName"></param>
-    public void EquipItem(string _PickUpItemName)
+    public void EquipItem(string itemName)
     {
-        GameObject pickUpItem = hand.Find(_PickUpItemName).gameObject;
-        pickUpItem.SetActive(true);
-        EquippedItem = pickUpItem;
+        GameObject rootingItem = hand.Find(itemName).gameObject;
+        rootingItem.SetActive(true);
+        EquippedItem = rootingItem;
+        itemIconRoot.Find(itemName).gameObject.SetActive(true);
     }
 
     /// <summary>
@@ -131,7 +140,10 @@ public class Puzzle_Hunter : MonoBehaviour
     public void UnequipItem()
     {
         if (EquippedItem)
+        {
             EquippedItem.SetActive(false);
+            itemIconRoot.Find(EquippedItem.name).gameObject.SetActive(false);
+        }
         EquippedItem = null;
     }
 
@@ -165,7 +177,7 @@ public class Puzzle_Hunter : MonoBehaviour
     }
 
     /// <summary>
-    /// 게임 초기화
+    /// 조작 중단
     /// </summary>
     public void Freeze()
     {

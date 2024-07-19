@@ -21,7 +21,7 @@ public class Puzzle_Horse : Puzzle_TileChecker
         {
             FallingEvent.Invoke();
             Puzzle_GameManager.instance.VCamFollowHorse();
-            StartCoroutine(Puzzle_GameManager.instance.GameOver_Horse_co());
+            Puzzle_GameManager.instance.GameOver_Horse();
         }
         else
         {
@@ -40,8 +40,7 @@ public class Puzzle_Horse : Puzzle_TileChecker
             horseExplosionParticle.transform.SetParent(null);
         }
 
-        StartCoroutine(Puzzle_GameManager.instance.GameOver_Horse_co());
-
+        Puzzle_GameManager.instance.GameOver_Horse();
         Destroy(gameObject);
     }
 }
