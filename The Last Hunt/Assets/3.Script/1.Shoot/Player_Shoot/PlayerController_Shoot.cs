@@ -58,13 +58,15 @@ public class PlayerController_Shoot : MonoBehaviour
                 player_ani.SetBool("isKnock", true);
                 isKnock = true;
             }
-            else if (input.isKnockCancel)
+            if (input.isKnockCancel)
             {
                 moveSpeed = 8f;
                 player_ani.SetBool("isKnock", false);
                 isKnock = false;
+                isDraw = false;
+                drawTime = 0;
             }
-            if (input.isDraw && !isDraw)
+            if (input.isDraw && !isDraw && isKnock)
             {
                 moveSpeed = moveSpeed * 0.5f;
                 player_ani.SetBool("isDraw", true);

@@ -231,7 +231,7 @@ MonoBehaviour:
   wanderDistance: 30
   dominance: 1
   originalDominance: 0
-  awareness: 10
+  awareness: 20
   scent: 25
   originalScent: 0
   isAnimalInRange: 0
@@ -244,6 +244,8 @@ MonoBehaviour:
   attack: 10
   attackSpeed: 0.5
   health: 5
+  maxHealth: 5
+  healthUI: {fileID: 0}
   aggression: 0
   originalAggression: 0
   isTerritoral: 0

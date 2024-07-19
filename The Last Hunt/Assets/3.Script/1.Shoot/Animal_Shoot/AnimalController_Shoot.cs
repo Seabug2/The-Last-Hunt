@@ -56,10 +56,12 @@ public class AnimalController_Shoot : MonoBehaviour
     [SerializeField] private bool isAnimalInRange;
 
     [SerializeField] private PlayerController_Shoot player;
+    private float playerAwareness = 200f;
     [SerializeField] [Range(0, 360)] private float fovAngle;
     [SerializeField] private PlayerAlertStage playerAlertStage;
     [SerializeField] [Range(0, 100)] private float playerAlertLevel;
     [SerializeField] private bool isPlayerInRange;
+    [SerializeField] private bool isPlayerLocated;
     private bool isHitByArrow;
 
     // Basic stats
@@ -488,8 +490,8 @@ public class AnimalController_Shoot : MonoBehaviour
 
         // If player is within animal detection range -> Update player alert state
         isPlayerInRange = false;
-        Collider[] targetsInRange = Physics.OverlapSphere(transform.position, awareness);
-        foreach (Collider c in targetsInRange)
+        Collider[] playersInRange = Physics.OverlapSphere(transform.position, awareness);
+        foreach (Collider c in playersInRange)
         {
             if (c.CompareTag("Player"))
             {
@@ -501,12 +503,22 @@ public class AnimalController_Shoot : MonoBehaviour
                 break;
             }
         }
-        UpdatePlayerAlert(isPlayerInRange);
-
-        UpdateHealth();
+        // If player location is detected -> Update evasion route
+        isPlayerLocated = false;
+        Collider[] playerLocations = Physics.OverlapSphere(transform.position, playerAwareness);
+        foreach (Collider c in playerLocations)
+        {
+            if (c.CompareTag("Player"))
+            {
+                isPlayerLocated = true;
+                break;
+            }
+        }
 
         var position = transform.position;
         var targetPosition = position;
+        UpdatePlayerAlert(isPlayerInRange, isPlayerLocated, position, targetPosition);
+        UpdateHealth();
         // Switch case for all AI states
         switch (CurrentState)
         {
@@ -545,11 +557,11 @@ public class AnimalController_Shoot : MonoBehaviour
             // Evade : See below
             case WanderState.Evade:
                 // Target position is current position + projection of current position from primaryPredator/player position normal to y-axis (on to the xz plane)
-                if (isPlayerInRange)
+                if (isPlayerLocated)
                 {
                     targetPosition = position + Vector3.ProjectOnPlane(position - player.transform.position, Vector3.up);
                 }
-                else if(isAnimalInRange)
+                if(isAnimalInRange)
                 {
                     targetPosition = position + Vector3.ProjectOnPlane(position - primaryPredator.transform.position, Vector3.up);
                 }
@@ -606,6 +618,7 @@ public class AnimalController_Shoot : MonoBehaviour
         }
     }
 
+    // Method to update health bar
     private void UpdateHealth()
     {
         healthUI.maxValue = maxHealth;
@@ -613,7 +626,7 @@ public class AnimalController_Shoot : MonoBehaviour
     }
 
     // Update player alert levels
-    private void UpdatePlayerAlert(bool isPlayerInRange)
+    private void UpdatePlayerAlert(bool isPlayerInRange, bool isPlayerLocated, Vector3 position, Vector3 targetPosition)
     {
         if (CurrentState == WanderState.Dead)
         {
@@ -649,11 +662,18 @@ public class AnimalController_Shoot : MonoBehaviour
                 }
                 break;
             case PlayerAlertStage.Alerted:
-                SetState(WanderState.Evade);
-                if (!isPlayerInRange)
+                if (isPlayerLocated)
                 {
-                    playerAlertStage = PlayerAlertStage.Intrigued;
-                    Debug.Log(string.Format("Player NOT sensed by {0} : Intrigued", gameObject.name));
+                    SetState(WanderState.Evade);
+                    if (!isPlayerInRange)
+                    {
+                        playerAlertLevel -= 0.02f;
+                        if (playerAlertLevel <= 90)
+                        {
+                            playerAlertStage = PlayerAlertStage.Intrigued;
+                            Debug.Log(string.Format("Player NOT sensed by {0} : Intrigued", gameObject.name));
+                        }
+                    }
                 }
                 break;
             default:
