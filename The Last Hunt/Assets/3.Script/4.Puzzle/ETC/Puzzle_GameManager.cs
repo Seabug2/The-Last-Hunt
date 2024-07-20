@@ -250,9 +250,6 @@ public class Puzzle_GameManager : MonoBehaviour
         yield break;
     }
 
-    [SerializeField, Header("¥Ÿ¿Ω æ¿"), Space(10)]
-    string nextSceneName;
-
     public IEnumerator GameClear_co()
     {
         EndGame?.Invoke();
