@@ -6,6 +6,7 @@ public class Puzzle_TileSpawner : MonoBehaviour
 {
     //타일의 크기는?
     int tileSize = 3;
+
     //맵 크기를 알아야함
     [SerializeField, Header("목적지(집)")]
     Transform home;
@@ -19,7 +20,7 @@ public class Puzzle_TileSpawner : MonoBehaviour
     GameObject dead;
 
     [Header("아이템과 장애물"), Space(10)]
-    [SerializeField, Header("2 : 칼"), Header("1 : 곡괭이"), Header("0 : 도끼")]
+    [SerializeField, Header("1 : 곡괭이"), Header("0 : 도끼")]
     GameObject[] items;
     [SerializeField, Header("2 : 늑대"), Header("1 : 바위"), Header("0 : 나무")]
     GameObject[] obstacle;
@@ -27,6 +28,7 @@ public class Puzzle_TileSpawner : MonoBehaviour
     private void Start()
     {
         tileSize = Puzzle_GameManager.tileSize;
+        print(tileSize);
     }
 
     public void LevelSetUp()

@@ -165,10 +165,10 @@ public class Puzzle_GameManager : MonoBehaviour
             horse.FallingEvent?.Invoke();
         }
 
-        yield return new WaitForSeconds(1.2f);
+        yield return new WaitForSeconds(2.5f);
 
         lookAtHunterVCam.Priority = brainCam.ActiveVirtualCamera.Priority + 1;
-        yield return new WaitForFixedUpdate();
+        yield return new WaitUntil(()=> brainCam.ActiveVirtualCamera.Equals(lookAtHunterVCam));
         yield return new WaitWhile(() => brainCam.IsBlending);
 
         //플레이어 애니메이션 재생
