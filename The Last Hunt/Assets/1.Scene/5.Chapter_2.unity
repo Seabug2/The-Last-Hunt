@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.36296657, g: 0.5661912, b: 0.84370816, a: 1}
+  m_IndirectSpecularColor: {r: 0.3483449, g: 0.58418083, b: 0.884079, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -5783,7 +5783,7 @@ MonoBehaviour:
   - name: 
     clip: {fileID: 0}
   - name: BGM
-    clip: {fileID: 8300000, guid: 14e90b145872c444a984c7bda12bac1e, type: 3}
+    clip: {fileID: 8300000, guid: 5fb4f7b425d263a458c4a25466e6c6fe, type: 3}
   SFX:
   - name: 
     clip: {fileID: 0}
@@ -10110,7 +10110,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2010864472
 Transform:
   m_ObjectHideFlags: 0
@@ -10141,7 +10141,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &2027517393
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11693,7 +11693,7 @@ GameObject:
   - component: {fileID: 421849777270924216}
   - component: {fileID: 421849777270924217}
   m_Layer: 0
-  m_Name: rpgpp_lt_wagon_01
+  m_Name: Result_Wagon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

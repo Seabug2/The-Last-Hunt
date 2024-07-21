@@ -26,7 +26,7 @@ public class Rhythm_AnimalController : MonoBehaviour
 
     private void Update()
     {
-        t += Time.deltaTime;
+        t += Time.deltaTime * 0.9f;
 
         transform.position = Vector3.Lerp(startPosition, endPosition, t);
         if (t > 0.99f)

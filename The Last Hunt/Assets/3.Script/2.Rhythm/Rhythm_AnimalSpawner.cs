@@ -8,9 +8,9 @@ public class Rhythm_AnimalSpawner : MonoBehaviour
 {
     // public Rhythm_AnimalPooling animalPool;
     private GameObject obj;
-    private double current_time = -0.07f;
+    private double current_time = 0;
     private int BPM = 130;
-    private int count = 1;
+    private int count = 5;
     private int[] animal_appear;
 
     private void Start()
