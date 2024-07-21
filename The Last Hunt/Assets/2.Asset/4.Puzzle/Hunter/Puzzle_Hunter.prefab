@@ -3878,6 +3878,7 @@ MonoBehaviour:
   FallingEvent:
     m_PersistentCalls:
       m_Calls: []
+  isFallen: 0
   forwardRange: 2
   floorCheckerSize: {x: 0.5, y: 0.2, z: 0.2}
   guideUI: {fileID: 0}
@@ -3921,6 +3922,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dbbad979cb1c9bb4c9bfcba1c600add6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  itemIconRoot: {fileID: 0}
   hand: {fileID: 2620623342293677974}
 --- !u!82 &1465019383
 AudioSource:
@@ -3932,7 +3934,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: 7df3d27fe2c321649956d94f5638ba06, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1

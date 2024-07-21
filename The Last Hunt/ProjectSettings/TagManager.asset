@@ -9,6 +9,7 @@ TagManager:
   - Item
   - Ground
   - Obstacle
+  - FxTemporaire
   layers:
   - Default
   - TransparentFX
@@ -17,10 +18,10 @@ TagManager:
   - Water
   - UI
   - Tile
-  - 
-  - 
-  - 
-  - 
+  - Scene_1
+  - Scene_2
+  - Scene_3
+  - Scene_4
   - 
   - 
   - 

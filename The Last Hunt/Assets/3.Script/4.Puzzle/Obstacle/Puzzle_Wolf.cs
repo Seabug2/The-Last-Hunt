@@ -26,6 +26,8 @@ public class Puzzle_Wolf : Puzzle_Obstacle
         {
             Puzzle_GameManager.instance.GameOver_Hunter(hunter);
         }
+
+        GetComponent<AudioSource>().Play();
     }
 
     private void OnTriggerEnter(Collider other)

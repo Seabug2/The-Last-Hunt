@@ -24,10 +24,13 @@ public class Puzzle_Hunter_Movement : MonoBehaviour
     [HideInInspector]
     public Vector3 dir = Vector3.zero;
 
+    float leftEnd = 99;
+
     void Awake()
     {
         rb = GetComponent<Rigidbody>();
         tileChecker = GetComponent<Puzzle_Hunter_TileAction>();
+        leftEnd = GameObject.Find("+++++Home+++++").transform.position.x;
     }
 
     private void FixedUpdate()
@@ -37,7 +40,7 @@ public class Puzzle_Hunter_Movement : MonoBehaviour
         if (dir != Vector3.zero)
         {
             Vector3 newPosition = rb.position + Time.fixedDeltaTime * moveSpeed * dir;
-            Vector3 fixedPosition = new Vector3(Mathf.Clamp(newPosition.x, -4.4f, 73.4f), 0, Mathf.Clamp(newPosition.z, -10.4f, 10.4f));
+            Vector3 fixedPosition = new Vector3(Mathf.Clamp(newPosition.x, -4.4f, leftEnd), 0, Mathf.Clamp(newPosition.z, -10.4f, 10.4f));
             rb.MovePosition(fixedPosition);
 
             Quaternion targetRotation = Quaternion.LookRotation(dir, Vector3.up);
