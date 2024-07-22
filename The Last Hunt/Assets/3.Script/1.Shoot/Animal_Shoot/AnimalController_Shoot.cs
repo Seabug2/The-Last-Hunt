@@ -9,7 +9,8 @@ using Random = UnityEngine.Random;
 using Vector3 = UnityEngine.Vector3;
 using UnityEngine.Events;
 using UnityEngine.Assertions;
-using UnityEditor;
+using UnityEngine.UI;
+//using UnityEditor;
 
 public enum PlayerAlertStage
 {
@@ -55,16 +56,21 @@ public class AnimalController_Shoot : MonoBehaviour
     [SerializeField] private bool isAnimalInRange;
 
     [SerializeField] private PlayerController_Shoot player;
+    private float playerAwareness = 200f;
     [SerializeField] [Range(0, 360)] private float fovAngle;
     [SerializeField] private PlayerAlertStage playerAlertStage;
     [SerializeField] [Range(0, 100)] private float playerAlertLevel;
     [SerializeField] private bool isPlayerInRange;
+    [SerializeField] private bool isPlayerLocated;
+    private bool isHitByArrow;
 
     // Basic stats
     [SerializeField] private float stamina = 10f;
     [SerializeField] private float attack = 10f;
     [SerializeField] private float attackSpeed = 0.5f;
     [SerializeField] private float health = 5f;
+    [SerializeField] private float maxHealth = 5f;
+    [SerializeField] private Slider healthUI;
 
     // Chance of attack (0~100)
     [SerializeField] private float aggression = 0f;
@@ -227,6 +233,7 @@ public class AnimalController_Shoot : MonoBehaviour
 
     private void Awake()
     {
+        isHitByArrow = false;
         // Error if no stat to script
         if (!stats)
         {
@@ -352,9 +359,11 @@ public class AnimalController_Shoot : MonoBehaviour
         animator.applyRootMotion = false;
         TryGetComponent(out characterController);
         TryGetComponent(out navMeshAgent);
+        healthUI = GetComponentInChildren<Slider>();
 
         // Assign stats to variables
-        health = stats.health;
+        maxHealth = stats.health;
+        health = maxHealth;
         stamina = stats.stamina;
         attackSpeed = stats.attackSpeed;
         originalDominance = stats.dominance;
@@ -481,8 +490,8 @@ public class AnimalController_Shoot : MonoBehaviour
 
         // If player is within animal detection range -> Update player alert state
         isPlayerInRange = false;
-        Collider[] targetsInRange = Physics.OverlapSphere(transform.position, awareness);
-        foreach (Collider c in targetsInRange)
+        Collider[] playersInRange = Physics.OverlapSphere(transform.position, awareness);
+        foreach (Collider c in playersInRange)
         {
             if (c.CompareTag("Player"))
             {
@@ -494,10 +503,22 @@ public class AnimalController_Shoot : MonoBehaviour
                 break;
             }
         }
-        UpdatePlayerAlert(isPlayerInRange);
+        // If player location is detected -> Update evasion route
+        isPlayerLocated = false;
+        Collider[] playerLocations = Physics.OverlapSphere(transform.position, playerAwareness);
+        foreach (Collider c in playerLocations)
+        {
+            if (c.CompareTag("Player"))
+            {
+                isPlayerLocated = true;
+                break;
+            }
+        }
 
         var position = transform.position;
         var targetPosition = position;
+        UpdatePlayerAlert(isPlayerInRange, isPlayerLocated, position, targetPosition);
+        UpdateHealth();
         // Switch case for all AI states
         switch (CurrentState)
         {
@@ -536,11 +557,11 @@ public class AnimalController_Shoot : MonoBehaviour
             // Evade : See below
             case WanderState.Evade:
                 // Target position is current position + projection of current position from primaryPredator/player position normal to y-axis (on to the xz plane)
-                if (isPlayerInRange)
+                if (isPlayerLocated)
                 {
                     targetPosition = position + Vector3.ProjectOnPlane(position - player.transform.position, Vector3.up);
                 }
-                else if(isAnimalInRange)
+                else if (isAnimalInRange)
                 {
                     targetPosition = position + Vector3.ProjectOnPlane(position - primaryPredator.transform.position, Vector3.up);
                 }
@@ -597,8 +618,15 @@ public class AnimalController_Shoot : MonoBehaviour
         }
     }
 
+    // Method to update health bar
+    private void UpdateHealth()
+    {
+        healthUI.maxValue = maxHealth;
+        healthUI.value = health;
+    }
+
     // Update player alert levels
-    private void UpdatePlayerAlert(bool isPlayerInRange)
+    private void UpdatePlayerAlert(bool isPlayerInRange, bool isPlayerLocated, Vector3 position, Vector3 targetPosition)
     {
         if (CurrentState == WanderState.Dead)
         {
@@ -634,11 +662,18 @@ public class AnimalController_Shoot : MonoBehaviour
                 }
                 break;
             case PlayerAlertStage.Alerted:
-                SetState(WanderState.Evade);
-                if (!isPlayerInRange)
+                if (isPlayerLocated)
                 {
-                    playerAlertStage = PlayerAlertStage.Intrigued;
-                    Debug.Log(string.Format("Player NOT sensed by {0} : Intrigued", gameObject.name));
+                    SetState(WanderState.Evade);
+                    if (!isPlayerInRange)
+                    {
+                        playerAlertLevel -= 0.02f;
+                        if (playerAlertLevel <= 90)
+                        {
+                            playerAlertStage = PlayerAlertStage.Intrigued;
+                            Debug.Log(string.Format("Player NOT sensed by {0} : Intrigued", gameObject.name));
+                        }
+                    }
                 }
                 break;
             default:
@@ -649,26 +684,30 @@ public class AnimalController_Shoot : MonoBehaviour
     // Method on if and when arrow hits animal
     private void OnCollisionEnter(Collision collision)
     {
+        var position = transform.position;
+        var targetPosition = position;
         if (CurrentState == WanderState.Dead)
         {
             return;
         }
         else if (collision.transform.CompareTag("Arrow"))
         {
-            StartCoroutine(FleeArrow_co());
+            isHitByArrow = true;
+            StartCoroutine(FleeArrow_co(isPlayerLocated, position, targetPosition));
         }
     }
 
     // Coroutine to flee arrow
-    private IEnumerator FleeArrow_co()
+    private IEnumerator FleeArrow_co(bool isPlayerLocated, Vector3 position, Vector3 targetPosition)
     {
-        Run();
-        var position = transform.position;
-        var targetPosition = position;
-        targetPosition = position + transform.forward * 100;
+        if (isPlayerLocated)
+        {
+            Run();
+            targetPosition = position + Vector3.ProjectOnPlane(position - player.transform.position, Vector3.up);
+        }
         if (!IsValidLocation(targetPosition))
         {
-            targetPosition = position - transform.forward * 100;
+            targetPosition = startPosition;
         }
         FaceDirection((targetPosition - position).normalized);
         ValidatePosition(ref targetPosition);
@@ -677,7 +716,7 @@ public class AnimalController_Shoot : MonoBehaviour
         {
             UpdateAI();
         }
-        yield return new WaitForSeconds(5f);
+        yield return new WaitForSeconds(10f);
     }
 
     // Method to face animal in direction of action
@@ -985,14 +1024,16 @@ public class AnimalController_Shoot : MonoBehaviour
     // Death method : Clear bools -> Set death animation -> Invoke death event -> Finish navMeshAgent (destination = current location) -> Disable 
     private void Dead()
     {
+        healthUI.value = 0;
         ClearAnimatorBools();
         if (deathStates.Length > 0)
         {
             TrySetBool(deathStates[Random.Range(0, deathStates.Length)].animationBool, true);
         }
-        player.killValue += stats.value;
-        Debug.Log($"Player Kill Value : {player.killValue}");
-        ui.AddKill(species, stats.value);
+        if (isHitByArrow)
+        {
+            ui.AddKill(species, stats.value);
+        }
         deathEvent.Invoke();
         if (navMeshAgent && navMeshAgent.isOnNavMesh)
         {

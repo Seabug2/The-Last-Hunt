@@ -13,7 +13,6 @@ public class UIController_Shoot : MonoBehaviour
     [SerializeField] private Text WolfKill_Text;
     [SerializeField] private Text TotalKill_Text;
 
-    [SerializeField] private Image HeaderBoard;
     [SerializeField] private RectTransform Message;
     [SerializeField] private Text Header_Text;
 
@@ -21,6 +20,10 @@ public class UIController_Shoot : MonoBehaviour
     [SerializeField] private Text GameClearScore_Text;
     [SerializeField] private GameObject GameOver;
     [SerializeField] private Text GameOverScore_Text;
+    [SerializeField] private GameObject Pause;
+
+    [SerializeField] private Slider BowCharge;
+    [SerializeField] private PlayerController_Shoot player;
 
     public bool isNoMessage
     {
@@ -36,7 +39,7 @@ public class UIController_Shoot : MonoBehaviour
     private int ReindeerKill_Score;
     private int BoarKill_Score;
     private int WolfKill_Score;
-    private int TotalKill_Score;
+    private int TotalKill_Score; // Remember to change to Float
 
     private void Awake()
     {
@@ -47,11 +50,25 @@ public class UIController_Shoot : MonoBehaviour
         TotalKill_Score = 0;
         GameClear.SetActive(false);
         GameOver.SetActive(false);
+        Pause.SetActive(false);
     }
 
     private void Start()
     {
         ShowMessage(Header_Text.text);
+    }
+
+    private void Update()
+    {
+        BowCharge.maxValue = 5f;
+        if (player.isDraw)
+        {
+            BowCharge.value = Time.time - player.drawTime;
+        }
+        else
+        {
+            BowCharge.value = 0;
+        }
     }
 
     public void ShowMessage(string message, float time = 1)
@@ -119,6 +136,7 @@ public class UIController_Shoot : MonoBehaviour
 
     public void ResultScreen()
     {
+        // Save result to JSON
         if (TotalKill_Score >= 1000)
         {
             GameClear.SetActive(true);
@@ -131,18 +149,32 @@ public class UIController_Shoot : MonoBehaviour
         }
     }
 
+    public void PauseMenu()
+    {
+        if (Pause.activeSelf == false)
+        {
+            Time.timeScale = 0;
+            Pause.SetActive(true);
+        }
+        else
+        {
+            Time.timeScale = 1;
+            Pause.SetActive(false);
+        }
+    }
+
     public void Restart()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
-    public void Continue()
-    {
-
-    }
-
     public void MainMenu()
     {
+        SceneManager.LoadScene("1.Title");
+    }
 
+    public void Exit()
+    {
+        Application.Quit();
     }
 }

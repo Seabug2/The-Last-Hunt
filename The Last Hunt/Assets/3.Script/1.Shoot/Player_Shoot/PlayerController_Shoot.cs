@@ -8,6 +8,7 @@ public class PlayerController_Shoot : MonoBehaviour
     [SerializeField] private PlayerInput_Shoot input;
     private Rigidbody player_r;
     [SerializeField] private Animator player_ani;
+
     [SerializeField] private Archery_Data_Shoot Archery_Data;
     public int ammoRemain = 0;
 
@@ -16,7 +17,6 @@ public class PlayerController_Shoot : MonoBehaviour
     private bool isKnock = false;
     public bool isDraw;
     public bool isAlive = true;
-    public int killValue = 0;
 
 
     private void Awake()
@@ -26,7 +26,7 @@ public class PlayerController_Shoot : MonoBehaviour
         player_ani = GetComponentInChildren<Animator>();
         ammoRemain = Archery_Data.QuiverCapacity;
         isDraw = false;
-        moveSpeed = 10f;
+        moveSpeed = 8f;
     }
 
     private void Update()
@@ -57,13 +57,15 @@ public class PlayerController_Shoot : MonoBehaviour
                 player_ani.SetBool("isKnock", true);
                 isKnock = true;
             }
-            else if (input.isKnockCancel)
+            if (input.isKnockCancel)
             {
-                moveSpeed = 10f;
+                moveSpeed = 8f;
                 player_ani.SetBool("isKnock", false);
                 isKnock = false;
+                isDraw = false;
+                drawTime = 0;
             }
-            if (input.isDraw && !isDraw)
+            if (input.isDraw && !isDraw && isKnock)
             {
                 moveSpeed = moveSpeed * 0.5f;
                 player_ani.SetBool("isDraw", true);
@@ -72,7 +74,7 @@ public class PlayerController_Shoot : MonoBehaviour
             }
             if (input.isFire && isKnock)
             {
-                moveSpeed = 10f;
+                moveSpeed = 8f;
                 ammoRemain--;
                 player_ani.SetTrigger("Fire");
                 player_ani.SetBool("isDraw", false);
