@@ -27,6 +27,8 @@ public class RoadSpawner : MonoBehaviour
 
     private void Start()
     {
+        
+
         Queue<GameObject> road_q = new Queue<GameObject>(roadPreFabs);
         for(int i = 0; i<roadPreFabs.Length;i++)
         {
