@@ -78,7 +78,7 @@ public class Rhythm_ChapterManager : MonoBehaviour
     public int Hitcount = 0;
     public int Misscount = 0;
     public int percent = 0;
-    public bool BGMisPlaying;
+    public bool BGMisPlaying, BGMisPausing;
 
     private IEnumerator Start()
     {
@@ -86,6 +86,7 @@ public class Rhythm_ChapterManager : MonoBehaviour
         yield return new WaitForSeconds(1f);
         Rhythm_SoundManager.instance.PlayBGM("BGM");
         BGMisPlaying = true;
+        BGMisPausing = false;
     }
 
     public void CountAdd(int hit)

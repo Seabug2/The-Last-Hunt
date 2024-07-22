@@ -13,6 +13,11 @@ public class Rhythm_PlayerController : MonoBehaviour
 
     private void Update()
     {
+        // BGM 재생 중 아닐 때 -> 무시
+        if (!Rhythm_ChapterManager.instance.BGMisPlaying || Rhythm_ChapterManager.instance.BGMisPausing)
+        {
+            return;
+        }
         // 3개 화살표 외 입력 시 -> 무시
         if (!Input.GetKeyDown(KeyCode.UpArrow) && !Input.GetKeyDown(KeyCode.RightArrow) && !Input.GetKeyDown(KeyCode.LeftArrow))
         {
