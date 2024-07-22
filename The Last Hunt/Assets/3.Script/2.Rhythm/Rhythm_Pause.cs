@@ -9,7 +9,6 @@ public class Rhythm_Pause : MonoBehaviour
     public void RhythmPause()
     {
         isPause = !isPause;
-        Rhythm_ChapterManager.instance.BGMisPausing = isPause;
         if (isPause)
         {
             Rhythm_SoundManager.instance.BGMPlayer.Pause();
@@ -18,5 +17,6 @@ public class Rhythm_Pause : MonoBehaviour
         {
             Rhythm_SoundManager.instance.BGMPlayer.UnPause();
         }
+        Rhythm_ChapterManager.instance.BGMisPausing = isPause;
     }
 }

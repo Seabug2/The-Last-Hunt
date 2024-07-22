@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class Rhythm_PlayerController : MonoBehaviour
 {
-    [SerializeField] private GameObject targetAnimal, HitSmoke, FullHitStar;
+    [SerializeField] private GameObject MeatParticle, HitSmoke, FullHitStar;
+    [SerializeField] private Mesh[] MeatMesh;
     private Animator Hunter_ani;
     private void Start()
     {
@@ -41,7 +42,7 @@ public class Rhythm_PlayerController : MonoBehaviour
         }
         
         // 동물의 위치(0~1)를 가져오기 - 단, 없다면 헛스윙
-        float animalTime;
+        double animalTime;
         Rhythm_AnimalController animal;
         if (Rhythm_AnimalPooling.instance.ActiveQueue.Count > 0)
         {
@@ -69,20 +70,25 @@ public class Rhythm_PlayerController : MonoBehaviour
             return;
         }
 
-        // 여기까지 왔으면 일단 정답
-        // 퍼펙트 범위 안
-        if (animalTime > PerfectRange.x && animalTime < PerfectRange.y)
-        {
-            PlaySFX("MaxHit");
-            Rhythm_ChapterManager.instance.CountAdd(2);
-            ChangeToMeat(animal);
-        }
-        // 굿 범위
+        // 여기까지 왔으면 정답
         else
         {
-            PlaySFX("Hit");
-            Rhythm_ChapterManager.instance.CountAdd(1);
-            ChangeToMeat(animal);
+            // 퍼펙트 범위 안
+            if (animalTime > PerfectRange.x && animalTime < PerfectRange.y)
+            {
+                PlaySFX("MaxHit");
+                Rhythm_ChapterManager.instance.CountAdd(2);
+                FullHitStar.GetComponent<ParticleSystem>().Play();
+            }
+            // 굿 범위
+            else
+            {
+                PlaySFX("Hit");
+                Rhythm_ChapterManager.instance.CountAdd(1);
+            }
+            MeatParticle.GetComponent<ParticleSystemRenderer>().mesh = MeatMesh[animal.animalIndex];
+            HitSmoke.GetComponent<ParticleSystem>().Play();
+            animal.Inactive();
         }
     }
 
@@ -92,13 +98,6 @@ public class Rhythm_PlayerController : MonoBehaviour
         Rhythm_SoundManager.instance.PlaySFX(s);
     }
 
-    private void ChangeToMeat(Rhythm_AnimalController animal)
-    {
-        // 이펙트 발생
-        HitSmoke.GetComponent<ParticleSystem>().Play();
-        // 동물 형태는 반납
-        animal.Inactive();
-    }
 
 
 

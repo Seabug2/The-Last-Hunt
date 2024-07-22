@@ -7,7 +7,7 @@ using UnityEngine;
 public class Rhythm_AnimalSpawner : MonoBehaviour
 {
     // public Rhythm_AnimalPooling animalPool;
-    private GameObject obj;
+    private double checkTime;
     private double current_time = 0;
     private int BPM = 130;
     private int count = 5;
@@ -33,13 +33,20 @@ public class Rhythm_AnimalSpawner : MonoBehaviour
             0,0,1,1,0,0,1,0,0,0,
             1,1,0,0,0,0,0
         };
+        checkTime = AudioSettings.dspTime;
     }
 
     private void Update()
     {
-        if (count > 126) return;
-        if (!Rhythm_SoundManager.instance.BGMisPlaying()) return;
-        current_time += Time.deltaTime;
+        if (count > 126 || !Rhythm_SoundManager.instance.BGMisPlaying() || Rhythm_ChapterManager.instance.BGMisPausing)
+        {
+            checkTime = AudioSettings.dspTime;
+            return;
+        }
+
+        current_time += AudioSettings.dspTime - checkTime;
+        checkTime = AudioSettings.dspTime;
+
         if (current_time > 60d / BPM)
         {
             if (animal_appear[count] < 1)
