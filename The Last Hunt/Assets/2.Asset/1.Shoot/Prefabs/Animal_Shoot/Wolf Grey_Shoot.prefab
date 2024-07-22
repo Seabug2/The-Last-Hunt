@@ -309,7 +309,7 @@ AudioSource:
   m_GameObject: {fileID: 1555847620765010}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 7063044450789205771, guid: 14af5919092fdc048ac56cb7940ed04c, type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
   m_Volume: 1
@@ -408,10 +408,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48055acb08f3a3841a5ef8c3e31f7639, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  audio_s: {fileID: 0}
   animalSound: {fileID: 8300000, guid: a6549dfe2a40b514e8c4642defc66723, type: 3}
   walking: {fileID: 0}
+  running: {fileID: 0}
   death: {fileID: 8300000, guid: a6549dfe2a40b514e8c4642defc66723, type: 3}
+  audio_s: {fileID: 0}
   animal: {fileID: 0}
 --- !u!1 &132445533187324529
 GameObject:
