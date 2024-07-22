@@ -17,6 +17,14 @@ public class ArrowController_Shoot : MonoBehaviour
         arrow_damage = 25f;
     }
 
+    private void Update()
+    {
+        if(!GetComponent<Rigidbody>().isKinematic)
+        {
+            transform.up = GetComponent<Rigidbody>().velocity.normalized;
+        }
+    }
+
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag("Animal"))

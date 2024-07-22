@@ -20,7 +20,6 @@ public class UIController_Shoot : MonoBehaviour
     [SerializeField] private Text GameClearScore_Text;
     [SerializeField] private GameObject GameOver;
     [SerializeField] private Text GameOverScore_Text;
-    [SerializeField] private GameObject Pause;
 
     [SerializeField] private Slider BowCharge;
     [SerializeField] private PlayerController_Shoot player;
@@ -50,7 +49,6 @@ public class UIController_Shoot : MonoBehaviour
         TotalKill_Score = 0;
         GameClear.SetActive(false);
         GameOver.SetActive(false);
-        Pause.SetActive(false);
     }
 
     private void Start()
@@ -146,20 +144,6 @@ public class UIController_Shoot : MonoBehaviour
         {
             GameOver.SetActive(true);
             GameOverScore_Text.text = string.Format("Score : {0}", TotalKill_Score);
-        }
-    }
-
-    public void PauseMenu()
-    {
-        if (Pause.activeSelf == false)
-        {
-            Time.timeScale = 0;
-            Pause.SetActive(true);
-        }
-        else
-        {
-            Time.timeScale = 1;
-            Pause.SetActive(false);
         }
     }
 
