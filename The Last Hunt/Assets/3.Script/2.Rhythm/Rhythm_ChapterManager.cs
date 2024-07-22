@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using DG.Tweening;
 
 public class Rhythm_ChapterManager : MonoBehaviour
 {
@@ -18,24 +19,71 @@ public class Rhythm_ChapterManager : MonoBehaviour
         if (instance == null)
         {
             instance = this;
-            DontDestroyOnLoad(gameObject);
         }
         else { Destroy(gameObject); }
     }
 
+    // 메시지 출력 부분
+    Tween currentTween = null;
+    // [SerializeField] private Image HeaderBoard;
+    [SerializeField] private RectTransform message;
+    [SerializeField] private Text text;
+    public bool isNoMessage
+    {
+        get { return currentTween == null || !currentTween.IsActive(); }
+    }
+    public void ShowMessage(string _message, float _time = 1)
+    {
+        // 기존 애니메이션이 있으면 중단
+        if (currentTween != null && currentTween.IsActive())
+        {
+            currentTween.Kill();
+        }
+
+        text.text = _message;
+
+        // 애니메이션 설정
+        message.sizeDelta = new Vector2(1920, 0); // 시작 크기
+        message.gameObject.SetActive(true);
+        Sequence mySequence = DOTween.Sequence();
+
+        // 0.5초 동안 크기를 키우기
+        mySequence.Append(message.DOSizeDelta(new Vector2(1920, 126), 1f).SetEase(Ease.InOutQuad));
+
+        // _time 동안 대기
+        mySequence.AppendInterval(_time);
+
+        // 0.5초 동안 크기를 다시 줄이기
+        mySequence.Append(message.DOSizeDelta(new Vector2(1920, 0), 0.35f).SetEase(Ease.InOutQuad));
+
+        // 애니메이션이 끝난 후 비활성화
+        mySequence.OnComplete(() => message.gameObject.SetActive(false));
+
+        // 현재 애니메이션 저장
+        currentTween = mySequence;
+    }
+
+    public void MessageCut()
+    {
+        if (currentTween != null && currentTween.IsActive())
+        {
+            currentTween.Kill();
+        }
+        message.gameObject.SetActive(false);
+    }
+
+
+
     public int Maxcount = 0;
     public int Hitcount = 0;
     public int Misscount = 0;
+    public int percent = 0;
     public bool BGMisPlaying;
 
-    private void Start()
+    private IEnumerator Start()
     {
-        introUI.SetActive(true);
-        StartCoroutine("Intro_co");
-    }
-    private IEnumerator Intro_co()
-    {
-        yield return introUI.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).length;
+        ShowMessage(text.text);
+        yield return new WaitForSeconds(1f);
         Rhythm_SoundManager.instance.PlayBGM("BGM");
         BGMisPlaying = true;
     }
@@ -50,7 +98,7 @@ public class Rhythm_ChapterManager : MonoBehaviour
     public void ResultAppear()
     {
         BGMisPlaying = false;
-        int percent = (100 * Maxcount + 70 * Hitcount) / (Maxcount + Hitcount + Misscount);
+        percent = (100 * Maxcount + 70 * Hitcount) / (Maxcount + Hitcount + Misscount);
         resultUI.SetActive(true);
 
         maxT.text = Maxcount.ToString();
@@ -58,13 +106,13 @@ public class Rhythm_ChapterManager : MonoBehaviour
         missT.text = Misscount.ToString();
         scoreT.text = percent.ToString();
         scoreSlider.value = percent * 0.01f;
-        RecordT.rectTransform.position = new Vector3(125, -150, 0);
+        RecordT.rectTransform.anchoredPosition = new Vector3(125, -150, 0);
         RecordT.rectTransform.eulerAngles = new Vector3(0, 0, 15);
 
         // 실패
         if (percent < 60)
         {
-            NextButton.color = new Color(255, 255, 255, 64);
+            NextButton.color = new Color(1, 1, 1, 0.25f);
             scoreBarFillImage.color = new Color(120, 0, 0);
             Hunter_ani.SetInteger("GameResult", -1);
             RecordT.text = "";
@@ -72,7 +120,7 @@ public class Rhythm_ChapterManager : MonoBehaviour
         // 성공
         else
         {
-            NextButton.color = new Color(255, 255, 255, 255);
+            NextButton.color = new Color(1, 1, 1, 1);
             int BestScore = PlayerPrefs.GetInt("Ch2_BestScore");
             if (BestScore < percent)
             {
@@ -81,7 +129,7 @@ public class Rhythm_ChapterManager : MonoBehaviour
             }
             else if (percent < 100)
             {
-                RecordT.rectTransform.position = new Vector3(125, -175, 0);
+                RecordT.rectTransform.anchoredPosition = new Vector3(125, -175, 0);
                 RecordT.rectTransform.eulerAngles = new Vector3(0, 0, 0);
                 RecordT.text = $"Best: {BestScore}" ;
             }
