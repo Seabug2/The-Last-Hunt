@@ -58,17 +58,7 @@ public class AnimalSound_Shoot : MonoBehaviour
     }
     private IEnumerator PlaySound_co(AudioClip clip)
     {
-        audio_s.Stop();
-        audio_s.clip = clip;
-        audio_s.Play();
+        audio_s.PlayOneShot(clip);
         yield return new WaitForSeconds(clip.length);
-    }
-
-    public void PlayDeathSound()
-    {
-        if (death != null)
-        {
-            StartCoroutine(PlaySound_co(death));
-        }
     }
 }

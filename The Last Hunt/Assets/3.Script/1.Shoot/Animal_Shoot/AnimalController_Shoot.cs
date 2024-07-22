@@ -72,9 +72,6 @@ public class AnimalController_Shoot : MonoBehaviour
     [SerializeField] private float maxHealth = 5f;
     [SerializeField] private Slider healthUI;
 
-    // Sound
-    [SerializeField] private AnimalSound_Shoot sound;
-
     // Chance of attack (0~100)
     [SerializeField] private float aggression = 0f;
     [SerializeField] private float originalAggression = 0f;
@@ -245,7 +242,6 @@ public class AnimalController_Shoot : MonoBehaviour
             return;
         }
 
-        TryGetComponent(out sound);
         TryGetComponent(out animator);
         var runtimeController = animator.runtimeAnimatorController;
 
@@ -1043,7 +1039,6 @@ public class AnimalController_Shoot : MonoBehaviour
         {
             navMeshAgent.destination = transform.position;
         }
-        sound.PlayDeathSound();
         enabled = false;
         Destroy(gameObject, 5f);
     }

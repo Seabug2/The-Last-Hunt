@@ -11644,7 +11644,6 @@ MonoBehaviour:
   health: 5
   maxHealth: 5
   healthUI: {fileID: 0}
-  sound: {fileID: 0}
   aggression: 0
   originalAggression: 0
   isTerritoral: 0
@@ -11782,7 +11781,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   animalSound: {fileID: 8300000, guid: 6c228b3543f0cf641a4fe92b6eee1b64, type: 3}
   walking: {fileID: 8300000, guid: b7e8c1627b4936748afc30a834b1563e, type: 3}
-  running: {fileID: 0}
+  running: {fileID: 8300000, guid: f426b30e1cd15d24d9fee024f1eb1e93, type: 3}
   death: {fileID: 8300000, guid: b639151563b11bd46914fa736b5d3f28, type: 3}
   audio_s: {fileID: 0}
   animal: {fileID: 0}

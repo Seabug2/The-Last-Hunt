@@ -17,7 +17,6 @@ public class PlayerController_Shoot : MonoBehaviour
     public float releaseTime = 0.0f;
     private bool isKnock = false;
     public bool isDraw;
-    private bool isMoving;
     public bool isAlive = true;
 
 
@@ -29,7 +28,6 @@ public class PlayerController_Shoot : MonoBehaviour
         player_ani = GetComponentInChildren<Animator>();
         ammoRemain = Archery_Data.QuiverCapacity;
         isDraw = false;
-        isMoving = false;
         moveSpeed = 8f;
     }
 
@@ -42,25 +40,12 @@ public class PlayerController_Shoot : MonoBehaviour
         if (input.MoveFBValue > 0.1 || input.MoveFBValue < -0.1)
         {
             player_ani.SetFloat("MoveFB", input.MoveFBValue);
-            isMoving = true;
+            audio_s.PlayOneShot(audio_s.clip);
         }
-        else if (input.MoveLRValue > 0.1 || input.MoveLRValue < -0.1)
+        if (input.MoveLRValue > 0.1 || input.MoveLRValue < -0.1)
         {
             player_ani.SetFloat("MoveLR", input.MoveLRValue);
-            isMoving = true;
-        }
-        else
-        {
-            isMoving = false;
-        }
-
-        if (!isMoving)
-        {
-            audio_s.Stop();
-        }
-        else
-        {
-            audio_s.Play();
+            audio_s.PlayOneShot(audio_s.clip);
         }
 
         if (ammoRemain <= 0)
