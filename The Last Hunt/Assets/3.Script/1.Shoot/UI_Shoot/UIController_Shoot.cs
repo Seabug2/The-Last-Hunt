@@ -24,6 +24,9 @@ public class UIController_Shoot : MonoBehaviour
     [SerializeField] private Slider BowCharge;
     [SerializeField] private PlayerController_Shoot player;
 
+    [SerializeField] private GameObject wind;
+    [SerializeField] private Text windText;
+
     public bool isNoMessage
     {
         get
@@ -67,6 +70,11 @@ public class UIController_Shoot : MonoBehaviour
         {
             BowCharge.value = 0;
         }
+
+        Vector3 windDelta = new Vector3(0, 0, Wind_Shoot.windDir.z);
+
+        wind.transform.localEulerAngles = windDelta;
+        windText.text = string.Format("{0:#.0} m/s", Wind_Shoot.windStr * 100);
     }
 
     public void ShowMessage(string message, float time = 1)

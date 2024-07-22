@@ -17,10 +17,11 @@ public class ArrowController_Shoot : MonoBehaviour
 
     private void Update()
     {
-        if(!arrow_r.isKinematic)
+        if (!arrow_r.isKinematic)
         {
             transform.up = arrow_r.velocity.normalized;
         }
+        arrow_r.AddForce(Wind_Shoot.windDir * Wind_Shoot.windStr, ForceMode.Acceleration);
     }
 
     private void OnCollisionEnter(Collision collision)
