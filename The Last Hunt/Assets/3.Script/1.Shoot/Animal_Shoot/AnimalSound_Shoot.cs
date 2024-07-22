@@ -20,6 +20,11 @@ public class AnimalSound_Shoot : MonoBehaviour
 
     private void Update()
     {
+        if (audio_s.isPlaying)
+        {
+            return;
+        }
+
         switch (animal.CurrentState)
         {
             case AnimalController_Shoot.WanderState.Idle:

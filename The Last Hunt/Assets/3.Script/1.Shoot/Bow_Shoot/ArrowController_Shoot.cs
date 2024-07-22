@@ -6,22 +6,20 @@ public class ArrowController_Shoot : MonoBehaviour
 {
     public float arrow_damage;
 
-    [SerializeField] private AudioSource audio_s;
     [SerializeField] private Rigidbody arrow_r;
     [SerializeField] private AnimalController_Shoot animal;
 
     private void Start()
     {
-        //TryGetComponent(out audio_s);
         TryGetComponent(out arrow_r);
         arrow_damage = 25f;
     }
 
     private void Update()
     {
-        if(!GetComponent<Rigidbody>().isKinematic)
+        if(!arrow_r.isKinematic)
         {
-            transform.up = GetComponent<Rigidbody>().velocity.normalized;
+            transform.up = arrow_r.velocity.normalized;
         }
     }
 
