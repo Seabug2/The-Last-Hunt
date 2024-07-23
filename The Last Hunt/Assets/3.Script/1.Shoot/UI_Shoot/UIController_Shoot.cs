@@ -71,10 +71,10 @@ public class UIController_Shoot : MonoBehaviour
             BowCharge.value = 0;
         }
 
-        Vector3 windDelta = new Vector3(0, 0, Wind_Shoot.windDir.z);
-
-        wind.transform.localEulerAngles = windDelta;
-        windText.text = string.Format("{0:#.0} m/s", Wind_Shoot.windStr * 100);
+        float windDelta = Vector3.SignedAngle(player.transform.forward, Wind_Shoot.windDir, player.transform.up);
+        Quaternion windSpin = Quaternion.Euler(0, 0, -windDelta);
+        wind.transform.rotation = windSpin;
+        windText.text = string.Format("{0:#.0} m/s", Wind_Shoot.windStr * 200);
     }
 
     public void ShowMessage(string message, float time = 1)

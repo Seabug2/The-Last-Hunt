@@ -10,8 +10,8 @@ public class Wind_Shoot : MonoBehaviour
     private float startTime;
     private float endTime;
 
-    [SerializeField] private float minTerm = 10f;
-    [SerializeField] private float maxTerm = 20f;
+    [SerializeField] private float minTerm = 20f;
+    [SerializeField] private float maxTerm = 40f;
     [SerializeField] private float minAcc = 0f;
     [SerializeField] private float maxAcc = 0.05f;
 
