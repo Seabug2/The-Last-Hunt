@@ -1,11 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Rhythm_PlayerController : MonoBehaviour
 {
+    [SerializeField] private Image[] judgeArrow;
     [SerializeField] private GameObject MeatParticle, HitSmoke, FullHitStar;
     [SerializeField] private Mesh[] MeatMesh;
+
     private Animator Hunter_ani;
     private void Start()
     {
@@ -51,6 +54,7 @@ public class Rhythm_PlayerController : MonoBehaviour
         }
         else
         {
+            StartCoroutine(ArrowEffect(inputKey, 0));
             PlaySFX("Swing");
             return;
         }
@@ -58,6 +62,7 @@ public class Rhythm_PlayerController : MonoBehaviour
         // 범위 안에 동물이 없다면 헛스윙
         if (animalTime < GoodRange.x || animalTime > GoodRange.y)
         {
+            StartCoroutine(ArrowEffect(inputKey, 0));
             PlaySFX("Swing");
             return;
         }
@@ -66,6 +71,7 @@ public class Rhythm_PlayerController : MonoBehaviour
         KeyCode correctKey = animal.CorrectKeyCode;
         if (inputKey != correctKey)
         {
+            StartCoroutine(ArrowEffect(inputKey, 0));
             PlaySFX("Hit_Wrong");
             return;
         }
@@ -76,15 +82,15 @@ public class Rhythm_PlayerController : MonoBehaviour
             // 퍼펙트 범위 안
             if (animalTime > PerfectRange.x && animalTime < PerfectRange.y)
             {
-                PlaySFX("MaxHit");
-                Rhythm_ChapterManager.instance.CountAdd(2);
                 FullHitStar.GetComponent<ParticleSystem>().Play();
+                Rhythm_ChapterManager.instance.JudgeResult(2);
+                StartCoroutine(ArrowEffect(inputKey, 2));
             }
             // 굿 범위
             else
             {
-                PlaySFX("Hit");
-                Rhythm_ChapterManager.instance.CountAdd(1);
+                Rhythm_ChapterManager.instance.JudgeResult(1);
+                StartCoroutine(ArrowEffect(inputKey, 1));
             }
             MeatParticle.GetComponent<ParticleSystemRenderer>().mesh = MeatMesh[animal.animalIndex];
             HitSmoke.GetComponent<ParticleSystem>().Play();
@@ -92,6 +98,21 @@ public class Rhythm_PlayerController : MonoBehaviour
         }
     }
 
+
+    private IEnumerator ArrowEffect(KeyCode inputKey, int judge)
+    {
+        Color c = new Color(1, 0, 0);
+        if (judge.Equals(1)) c = new Color(1, 1, 0);
+        else if (judge.Equals(2)) c = new Color(0, 1, 0);
+
+        int index = 0;
+        if (inputKey == KeyCode.UpArrow) index = 1;
+        else if (inputKey == KeyCode.RightArrow) index = 2;
+
+        judgeArrow[index].color = c;
+        yield return new WaitForSeconds(0.1f);
+        judgeArrow[index].color = Color.white;
+    }
 
     private void PlaySFX(string s)
     {

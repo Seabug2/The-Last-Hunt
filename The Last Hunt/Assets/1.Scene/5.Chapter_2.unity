@@ -797,6 +797,11 @@ MonoBehaviour:
   scoreBarFillImage: {fileID: 1800645229}
   NextButton: {fileID: 1254033005}
   Hunter_ani: {fileID: 8471352758974273437}
+  judgeImages:
+  - {fileID: -6499416248719552088, guid: 1a7b34fcb0b26cd459b8b35d136499b5, type: 3}
+  - {fileID: 618080615788274626, guid: 1a7b34fcb0b26cd459b8b35d136499b5, type: 3}
+  - {fileID: 3906082716883466651, guid: 1a7b34fcb0b26cd459b8b35d136499b5, type: 3}
+  judgeImageAppear: {fileID: 0}
   message: {fileID: 8909996}
   text: {fileID: 2147012103}
   Maxcount: 0
@@ -7380,6 +7385,101 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 14
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &626801316
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 626801317}
+  - component: {fileID: 626801319}
+  - component: {fileID: 626801318}
+  - component: {fileID: 626801320}
+  m_Layer: 5
+  m_Name: Judge
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &626801317
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 626801316}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1080156221}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 256, y: 51.2}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &626801318
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 626801316}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 3906082716883466651, guid: 1a7b34fcb0b26cd459b8b35d136499b5, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &626801319
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 626801316}
+  m_CullTransparentMesh: 1
+--- !u!95 &626801320
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 626801316}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: fe5872cf00941a04ca7592222ff562de, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &735126697
 GameObject:
   m_ObjectHideFlags: 0
@@ -8386,6 +8486,7 @@ RectTransform:
   - {fileID: 1929304658}
   - {fileID: 1650433757}
   - {fileID: 1267151887}
+  - {fileID: 626801317}
   m_Father: {fileID: 0}
   m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -40032,7 +40133,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &2961594436095771021
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -67975,6 +68076,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9165845450a623448863900c368d156f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  judgeArrow:
+  - {fileID: 1929304659}
+  - {fileID: 1650433758}
+  - {fileID: 1267151888}
   MeatParticle: {fileID: 162616240}
   HitSmoke: {fileID: 9073078136610958222}
   FullHitStar: {fileID: 4805953403414246388}

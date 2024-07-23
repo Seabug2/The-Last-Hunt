@@ -10,7 +10,7 @@ public class Rhythm_AnimalController : MonoBehaviour
     public KeyCode CorrectKeyCode => correctKeyCode;
     public int animalIndex;
     public RectTransform arrowsRT;
-    public GameObject arrowPrefab, obj;
+    public GameObject arrowPrefab, note_obj;
     public Canvas ingameCanvas;
 
     public double t { get; private set; }
@@ -26,19 +26,20 @@ public class Rhythm_AnimalController : MonoBehaviour
         endPosition = Rhythm_AnimalPooling.instance.targetPoint.position;
         UI_StartPos = arrowsRT.position +  Vector3.up * 600;
         UI_EndPos = UI_StartPos + Vector3.down * (600 / 0.83f);
+        note_obj = Instantiate(arrowPrefab, ingameCanvas.transform);
     }
 
     private void OnEnable()
     {
-        obj = Instantiate(arrowPrefab, ingameCanvas.transform);
-        obj.GetComponent<RectTransform>().position = UI_StartPos;
+        note_obj.SetActive(true);
+        note_obj.GetComponent<RectTransform>().position = UI_StartPos;
         if(CorrectKeyCode == KeyCode.LeftArrow)
         {
-            obj.GetComponent<RectTransform>().localRotation = Quaternion.Euler(0, 0, 0);
+            note_obj.GetComponent<RectTransform>().localRotation = Quaternion.Euler(0, 0, 0);
         }
         else if (CorrectKeyCode == KeyCode.RightArrow)
         {
-            obj.GetComponent<RectTransform>().localRotation = Quaternion.Euler(0, 0, 180);
+            note_obj.GetComponent<RectTransform>().localRotation = Quaternion.Euler(0, 0, 180);
         }
         t = 0;
         checkTime = AudioSettings.dspTime;
@@ -55,12 +56,11 @@ public class Rhythm_AnimalController : MonoBehaviour
         checkTime = AudioSettings.dspTime;
 
         transform.position = Vector3.Lerp(startPosition, endPosition, (float)t);
-        obj.GetComponent<RectTransform>().position = Vector2.Lerp(UI_StartPos, UI_EndPos, (float)t);
+        note_obj.GetComponent<RectTransform>().position = Vector2.Lerp(UI_StartPos, UI_EndPos, (float)t);
 
         if (t > 0.99f)
         {
-            Rhythm_SoundManager.instance.PlaySFX("Miss");
-            Rhythm_ChapterManager.instance.CountAdd(0);
+            Rhythm_ChapterManager.instance.JudgeResult(0);
             Inactive();
         }
     }
@@ -68,7 +68,7 @@ public class Rhythm_AnimalController : MonoBehaviour
     public void Inactive()
     {
         Rhythm_AnimalPooling.instance.ReturnObjectToPool(this);
-        Destroy(obj);
+        note_obj.SetActive(false);
         gameObject.SetActive(false);
     }
 }
