@@ -6,15 +6,22 @@ public class ArrowController_Shoot : MonoBehaviour
 {
     public float arrow_damage;
 
-    [SerializeField] private AudioSource audio_s;
     [SerializeField] private Rigidbody arrow_r;
     [SerializeField] private AnimalController_Shoot animal;
 
     private void Start()
     {
-        //TryGetComponent(out audio_s);
         TryGetComponent(out arrow_r);
         arrow_damage = 25f;
+    }
+
+    private void Update()
+    {
+        if (!arrow_r.isKinematic)
+        {
+            transform.up = arrow_r.velocity.normalized;
+        }
+        arrow_r.AddForce(Wind_Shoot.windDir * Wind_Shoot.windStr, ForceMode.Acceleration);
     }
 
     private void OnCollisionEnter(Collision collision)

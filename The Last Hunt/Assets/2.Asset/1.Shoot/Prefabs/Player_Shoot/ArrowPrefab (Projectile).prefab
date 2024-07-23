@@ -272,7 +272,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   arrow_damage: 0
-  audio_s: {fileID: 0}
   arrow_r: {fileID: 0}
   animal: {fileID: 0}
 --- !u!96 &-3844198283316806730

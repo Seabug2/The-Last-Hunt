@@ -8,6 +8,7 @@ public class PlayerController_Shoot : MonoBehaviour
     [SerializeField] private PlayerInput_Shoot input;
     private Rigidbody player_r;
     [SerializeField] private Animator player_ani;
+    [SerializeField] private AudioSource audio_s;
 
     [SerializeField] private Archery_Data_Shoot Archery_Data;
     public int ammoRemain = 0;
@@ -15,6 +16,7 @@ public class PlayerController_Shoot : MonoBehaviour
     public float drawTime = 0.0f;
     public float releaseTime = 0.0f;
     private bool isKnock = false;
+    private bool isMoving;
     public bool isDraw;
     public bool isAlive = true;
 
@@ -23,9 +25,11 @@ public class PlayerController_Shoot : MonoBehaviour
     {
         TryGetComponent(out input);
         TryGetComponent(out player_r);
+        TryGetComponent(out audio_s);
         player_ani = GetComponentInChildren<Animator>();
         ammoRemain = Archery_Data.QuiverCapacity;
         isDraw = false;
+        isMoving = false;
         moveSpeed = 8f;
     }
 
@@ -38,10 +42,28 @@ public class PlayerController_Shoot : MonoBehaviour
         if (input.MoveFBValue > 0.1 || input.MoveFBValue < -0.1)
         {
             player_ani.SetFloat("MoveFB", input.MoveFBValue);
+            isMoving = true;
         }
-        if (input.MoveLRValue > 0.1 || input.MoveLRValue < -0.1)
+        else if (input.MoveLRValue > 0.1 || input.MoveLRValue < -0.1)
         {
             player_ani.SetFloat("MoveLR", input.MoveLRValue);
+            isMoving = true;
+        }
+        else
+        {
+            isMoving = false;
+        }
+
+        if (isMoving)
+        {
+            if (!audio_s.isPlaying)
+            {
+                audio_s.Play();
+            }
+        }
+        else
+        {
+            audio_s.Stop();
         }
 
         if (ammoRemain <= 0)

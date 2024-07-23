@@ -20,10 +20,12 @@ public class UIController_Shoot : MonoBehaviour
     [SerializeField] private Text GameClearScore_Text;
     [SerializeField] private GameObject GameOver;
     [SerializeField] private Text GameOverScore_Text;
-    [SerializeField] private GameObject Pause;
 
     [SerializeField] private Slider BowCharge;
     [SerializeField] private PlayerController_Shoot player;
+
+    [SerializeField] private GameObject wind;
+    [SerializeField] private Text windText;
 
     public bool isNoMessage
     {
@@ -50,7 +52,6 @@ public class UIController_Shoot : MonoBehaviour
         TotalKill_Score = 0;
         GameClear.SetActive(false);
         GameOver.SetActive(false);
-        Pause.SetActive(false);
     }
 
     private void Start()
@@ -69,6 +70,11 @@ public class UIController_Shoot : MonoBehaviour
         {
             BowCharge.value = 0;
         }
+
+        float windDelta = Vector3.SignedAngle(player.transform.forward, Wind_Shoot.windDir, player.transform.up);
+        Quaternion windSpin = Quaternion.Euler(0, 0, -windDelta);
+        wind.transform.rotation = windSpin;
+        windText.text = string.Format("{0:#.0} m/s", Wind_Shoot.windStr * 200);
     }
 
     public void ShowMessage(string message, float time = 1)
@@ -146,20 +152,6 @@ public class UIController_Shoot : MonoBehaviour
         {
             GameOver.SetActive(true);
             GameOverScore_Text.text = string.Format("Score : {0}", TotalKill_Score);
-        }
-    }
-
-    public void PauseMenu()
-    {
-        if (Pause.activeSelf == false)
-        {
-            Time.timeScale = 0;
-            Pause.SetActive(true);
-        }
-        else
-        {
-            Time.timeScale = 1;
-            Pause.SetActive(false);
         }
     }
 

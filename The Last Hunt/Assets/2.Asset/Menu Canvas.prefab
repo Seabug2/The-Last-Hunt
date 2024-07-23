@@ -3211,7 +3211,7 @@ GameObject:
   - component: {fileID: 2961594436823178761}
   - component: {fileID: 2961594436823178760}
   m_Layer: 5
-  m_Name: Realy
+  m_Name: QuitConfirm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
