@@ -143,15 +143,15 @@ public class UIController_Shoot : MonoBehaviour
     public void ResultScreen()
     {
         // Save result to JSON
-        if (TotalKill_Score >= 1000)
+        if (TotalKill_Score >= 2000)
         {
             GameClear.SetActive(true);
-            GameClearScore_Text.text = string.Format("Score : {0}", TotalKill_Score);
+            GameClearScore_Text.text = string.Format("Score : {0:#,##0}", TotalKill_Score);
         }
         else
         {
             GameOver.SetActive(true);
-            GameOverScore_Text.text = string.Format("Score : {0}", TotalKill_Score);
+            GameOverScore_Text.text = string.Format("Score : {0:#,##0}", TotalKill_Score);
         }
     }
 
