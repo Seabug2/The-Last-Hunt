@@ -1,26 +1,30 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 using UnityEngine.SceneManagement;
 
 public class Rhythm_ButtonController : MonoBehaviour
 {
     public void SceneLoader(int num)
     {
-        switch(num)
+        if (num > 4 && Rhythm_ChapterManager.instance.percent < 60)
         {
-            case 0:
-                print("메인으로");
-                break;
-            case 4:
-                print("다시하기");
-                break;
-            case 5:
-                if(Rhythm_ChapterManager.instance.percent > 59)
-                {
-                    print("다음으로");
-                }
-                break;
+            return;
+        }
+        Time.timeScale = 1.0f;
+        DOTween.KillAll();
+
+        if (num.Equals(0))
+        {
+            SceneManager.LoadScene(0);
+        }
+        else if (num.Equals(4))
+        {
+            Scene currentScene = SceneManager.GetActiveScene(); // 현재 씬 가져오기
+            SceneManager.LoadScene(currentScene.buildIndex); // 현재 씬 다시 로드
+        }
+        else
+        {
+            print("다음 씬으로");
         }
     }
 }

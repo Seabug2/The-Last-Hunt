@@ -6,14 +6,25 @@ using DG.Tweening;
 
 public class Rhythm_ChapterManager : MonoBehaviour
 {
-    [SerializeField] private GameObject resultUI, introUI;
-    [SerializeField] private Text maxT, hitT, missT, scoreT, RecordT;
-    [SerializeField] private Slider scoreSlider;
-    [SerializeField] private Image scoreBarFillImage, NextButton;
+    public float Gamespeed = 1f;
+    public int Maxcount = 0;
+    public int Hitcount = 0;
+    public int Misscount = 0;
+    public int percent = 0;
+    public bool BGMisPlaying, BGMisPausing;
+    [SerializeField] private GameObject resultUI, introUI, Menu, NoteUI;
     [SerializeField] private Animator Hunter_ani;
 
     [SerializeField] private Sprite[] judgeImages;
     [SerializeField] private Image judgeImageAppear;
+
+    [Header("결과")]
+    [SerializeField] private Slider scoreSlider;
+    [SerializeField] private Text maxT, hitT, missT, scoreT, RecordT;
+    [SerializeField] private Image scoreBarFillImage, NextButton;
+    [SerializeField] private Sprite ClearSP, FailSP;
+    [SerializeField] private Image ClearImage;
+
 
     // 0. 싱글톤 적용
     public static Rhythm_ChapterManager instance = null;
@@ -28,6 +39,7 @@ public class Rhythm_ChapterManager : MonoBehaviour
 
     // 메시지 출력 부분
     Tween currentTween = null;
+    [Header("메시지")]
     // [SerializeField] private Image HeaderBoard;
     [SerializeField] private RectTransform message;
     [SerializeField] private Text text;
@@ -77,40 +89,41 @@ public class Rhythm_ChapterManager : MonoBehaviour
 
 
 
-    public int Maxcount = 0;
-    public int Hitcount = 0;
-    public int Misscount = 0;
-    public int percent = 0;
-    public bool BGMisPlaying, BGMisPausing;
 
     private IEnumerator Start()
     {
         ShowMessage(text.text);
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(2f);
         Rhythm_SoundManager.instance.PlayBGM("BGM");
+        yield return new WaitForSeconds(2f);
+        Menu.SetActive(true);
+        NoteUI.SetActive(true);
         BGMisPlaying = true;
         BGMisPausing = false;
     }
 
     public void JudgeResult(int hit)
     {
-        // judgeImageAppear.sprite = judgeImages[hit];
-        // judgeImageAppear.GetComponent<Animator>().Play();
+        judgeImageAppear.sprite = judgeImages[hit];
+        judgeImageAppear.GetComponent<Animator>().SetTrigger("IsJudged");
         if (hit > 0)
         {
             if (hit > 1) 
             {
+                judgeImageAppear.color = Color.green;
                 PlaySFX("MaxHit");
                 Maxcount++;
             }
             else
             {
+                judgeImageAppear.color = Color.yellow;
                 PlaySFX("Hit");
                 Hitcount++;
             }
         }
         else
         {
+            judgeImageAppear.color = Color.red;
             PlaySFX("Miss");
             Misscount++;
         }
@@ -124,8 +137,10 @@ public class Rhythm_ChapterManager : MonoBehaviour
 
     public void ResultAppear()
     {
+        Menu.SetActive(false);
+        NoteUI.SetActive(false);
         BGMisPlaying = false;
-        percent = (100 * Maxcount + 70 * Hitcount) / (Maxcount + Hitcount + Misscount);
+        percent = (100 * Maxcount + 60 * Hitcount) / (Maxcount + Hitcount + Misscount);
         resultUI.SetActive(true);
 
         maxT.text = Maxcount.ToString();
@@ -133,13 +148,14 @@ public class Rhythm_ChapterManager : MonoBehaviour
         missT.text = Misscount.ToString();
         scoreT.text = percent.ToString();
         scoreSlider.value = percent * 0.01f;
-        RecordT.rectTransform.anchoredPosition = new Vector3(125, -150, 0);
+        RecordT.rectTransform.anchoredPosition = new Vector3(125, -200, 0);
         RecordT.rectTransform.eulerAngles = new Vector3(0, 0, 15);
+        NextButton.color = new Color(1, 1, 1, 0.25f);
 
         // 실패
         if (percent < 60)
         {
-            NextButton.color = new Color(1, 1, 1, 0.25f);
+            ClearImage.sprite = FailSP;
             scoreBarFillImage.color = new Color(120, 0, 0);
             Hunter_ani.SetInteger("GameResult", -1);
             RecordT.text = "";
@@ -147,7 +163,14 @@ public class Rhythm_ChapterManager : MonoBehaviour
         // 성공
         else
         {
-            NextButton.color = new Color(1, 1, 1, 1);
+            // GameManager.instance.userDate.IsCleared[1] = true;
+            // GameManager.instance.userDate.SaveJson();
+
+            ClearImage.sprite = ClearSP;
+            // if(GameManager.instance.IsStoryMode)
+            {
+                NextButton.color = new Color(1, 1, 1, 1);
+            }
             int BestScore = PlayerPrefs.GetInt("Ch2_BestScore");
             if (BestScore < percent)
             {
@@ -156,7 +179,7 @@ public class Rhythm_ChapterManager : MonoBehaviour
             }
             else if (percent < 100)
             {
-                RecordT.rectTransform.anchoredPosition = new Vector3(125, -175, 0);
+                RecordT.rectTransform.anchoredPosition = new Vector3(125, -200, 0);
                 RecordT.rectTransform.eulerAngles = new Vector3(0, 0, 0);
                 RecordT.text = $"Best: {BestScore}" ;
             }

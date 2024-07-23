@@ -5,9 +5,18 @@ using UnityEngine.UI;
 
 public class Rhythm_PlayerController : MonoBehaviour
 {
-    [SerializeField] private Image[] judgeArrow;
-    [SerializeField] private GameObject MeatParticle, HitSmoke, FullHitStar;
+    private double lastSwing;
+
+    [Header("파티클")]
     [SerializeField] private Mesh[] MeatMesh;
+    [SerializeField] private GameObject MeatParticle, HitSmoke, FullHitStar;
+    public Transform ParticlePos;
+    public float ParticlePosOffset;
+
+    [Header("판정")]
+    [SerializeField] private Image[] judgeArrow;
+    public Transform startPosition, endPosition;
+    public Vector2 PerfectRange, GoodRange, BadRange;
 
     private Animator Hunter_ani;
     private void Start()
@@ -22,12 +31,20 @@ public class Rhythm_PlayerController : MonoBehaviour
         {
             return;
         }
+
+        // 마지막 스윙에서 0.2초 안 지났을 때(무지성 연타 방지)
+        if (AudioSettings.dspTime - lastSwing < 0.2)
+        {
+            return;
+        }
+
         // 3개 화살표 외 입력 시 -> 무시
         if (!Input.GetKeyDown(KeyCode.UpArrow) && !Input.GetKeyDown(KeyCode.RightArrow) && !Input.GetKeyDown(KeyCode.LeftArrow))
         {
             return;
         }
 
+        lastSwing = AudioSettings.dspTime;
         Hunter_ani.SetTrigger("Swing");
         // 입력한 키를 변수에 담기
         KeyCode inputKey;
@@ -125,14 +142,6 @@ public class Rhythm_PlayerController : MonoBehaviour
 
 
 
-    public Transform startPosition;
-    public Transform endPosition;
-
-    public Transform ParticlePos;
-    public float ParticlePosOffset;
-    public Vector2 PerfectRange;
-    public Vector2 GoodRange;
-    public Vector2 BadRange;
 
     private void OnDrawGizmos()
     {
