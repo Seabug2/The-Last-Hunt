@@ -1,10 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Rhythm_PlayerController : MonoBehaviour
 {
-    [SerializeField] private GameObject targetAnimal, HitSmoke, FullHitStar;
+    [SerializeField] private Image[] judgeArrow;
+    [SerializeField] private GameObject MeatParticle, HitSmoke, FullHitStar;
+    [SerializeField] private Mesh[] MeatMesh;
+
     private Animator Hunter_ani;
     private void Start()
     {
@@ -13,6 +17,11 @@ public class Rhythm_PlayerController : MonoBehaviour
 
     private void Update()
     {
+        // BGM 재생 중 아닐 때 -> 무시
+        if (!Rhythm_ChapterManager.instance.BGMisPlaying || Rhythm_ChapterManager.instance.BGMisPausing)
+        {
+            return;
+        }
         // 3개 화살표 외 입력 시 -> 무시
         if (!Input.GetKeyDown(KeyCode.UpArrow) && !Input.GetKeyDown(KeyCode.RightArrow) && !Input.GetKeyDown(KeyCode.LeftArrow))
         {
@@ -36,7 +45,7 @@ public class Rhythm_PlayerController : MonoBehaviour
         }
         
         // 동물의 위치(0~1)를 가져오기 - 단, 없다면 헛스윙
-        float animalTime;
+        double animalTime;
         Rhythm_AnimalController animal;
         if (Rhythm_AnimalPooling.instance.ActiveQueue.Count > 0)
         {
@@ -45,6 +54,7 @@ public class Rhythm_PlayerController : MonoBehaviour
         }
         else
         {
+            StartCoroutine(ArrowEffect(inputKey, 0));
             PlaySFX("Swing");
             return;
         }
@@ -52,6 +62,7 @@ public class Rhythm_PlayerController : MonoBehaviour
         // 범위 안에 동물이 없다면 헛스윙
         if (animalTime < GoodRange.x || animalTime > GoodRange.y)
         {
+            StartCoroutine(ArrowEffect(inputKey, 0));
             PlaySFX("Swing");
             return;
         }
@@ -60,40 +71,54 @@ public class Rhythm_PlayerController : MonoBehaviour
         KeyCode correctKey = animal.CorrectKeyCode;
         if (inputKey != correctKey)
         {
+            StartCoroutine(ArrowEffect(inputKey, 0));
             PlaySFX("Hit_Wrong");
             return;
         }
 
-        // 여기까지 왔으면 일단 정답
-        // 퍼펙트 범위 안
-        if (animalTime > PerfectRange.x && animalTime < PerfectRange.y)
-        {
-            PlaySFX("MaxHit");
-            Rhythm_ChapterManager.instance.CountAdd(2);
-            ChangeToMeat(animal);
-        }
-        // 굿 범위
+        // 여기까지 왔으면 정답
         else
         {
-            PlaySFX("Hit");
-            Rhythm_ChapterManager.instance.CountAdd(1);
-            ChangeToMeat(animal);
+            // 퍼펙트 범위 안
+            if (animalTime > PerfectRange.x && animalTime < PerfectRange.y)
+            {
+                FullHitStar.GetComponent<ParticleSystem>().Play();
+                Rhythm_ChapterManager.instance.JudgeResult(2);
+                StartCoroutine(ArrowEffect(inputKey, 2));
+            }
+            // 굿 범위
+            else
+            {
+                Rhythm_ChapterManager.instance.JudgeResult(1);
+                StartCoroutine(ArrowEffect(inputKey, 1));
+            }
+            MeatParticle.GetComponent<ParticleSystemRenderer>().mesh = MeatMesh[animal.animalIndex];
+            HitSmoke.GetComponent<ParticleSystem>().Play();
+            animal.Inactive();
         }
     }
 
+
+    private IEnumerator ArrowEffect(KeyCode inputKey, int judge)
+    {
+        Color c = new Color(1, 0, 0);
+        if (judge.Equals(1)) c = new Color(1, 1, 0);
+        else if (judge.Equals(2)) c = new Color(0, 1, 0);
+
+        int index = 0;
+        if (inputKey == KeyCode.UpArrow) index = 1;
+        else if (inputKey == KeyCode.RightArrow) index = 2;
+
+        judgeArrow[index].color = c;
+        yield return new WaitForSeconds(0.1f);
+        judgeArrow[index].color = Color.white;
+    }
 
     private void PlaySFX(string s)
     {
         Rhythm_SoundManager.instance.PlaySFX(s);
     }
 
-    private void ChangeToMeat(Rhythm_AnimalController animal)
-    {
-        // 이펙트 발생
-        HitSmoke.GetComponent<ParticleSystem>().Play();
-        // 동물 형태는 반납
-        animal.Inactive();
-    }
 
 
 

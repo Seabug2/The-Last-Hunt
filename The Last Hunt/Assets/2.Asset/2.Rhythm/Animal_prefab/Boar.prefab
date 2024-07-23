@@ -63,6 +63,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   correctKeyCode: 276
+  animalIndex: 0
 --- !u!33 &2248298921563417858
 MeshFilter:
   m_ObjectHideFlags: 0

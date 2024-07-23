@@ -12,6 +12,9 @@ public class Rhythm_ChapterManager : MonoBehaviour
     [SerializeField] private Image scoreBarFillImage, NextButton;
     [SerializeField] private Animator Hunter_ani;
 
+    [SerializeField] private Sprite[] judgeImages;
+    [SerializeField] private Image judgeImageAppear;
+
     // 0. ½Ì±ÛÅæ Àû¿ë
     public static Rhythm_ChapterManager instance = null;
     private void Awake()
@@ -78,7 +81,7 @@ public class Rhythm_ChapterManager : MonoBehaviour
     public int Hitcount = 0;
     public int Misscount = 0;
     public int percent = 0;
-    public bool BGMisPlaying;
+    public bool BGMisPlaying, BGMisPausing;
 
     private IEnumerator Start()
     {
@@ -86,13 +89,37 @@ public class Rhythm_ChapterManager : MonoBehaviour
         yield return new WaitForSeconds(1f);
         Rhythm_SoundManager.instance.PlayBGM("BGM");
         BGMisPlaying = true;
+        BGMisPausing = false;
     }
 
-    public void CountAdd(int hit)
+    public void JudgeResult(int hit)
     {
-        if (hit > 1) Maxcount++;
-        else if (hit > 0) Hitcount++;
-        else Misscount++;
+        // judgeImageAppear.sprite = judgeImages[hit];
+        // judgeImageAppear.GetComponent<Animator>().Play();
+        if (hit > 0)
+        {
+            if (hit > 1) 
+            {
+                PlaySFX("MaxHit");
+                Maxcount++;
+            }
+            else
+            {
+                PlaySFX("Hit");
+                Hitcount++;
+            }
+        }
+        else
+        {
+            PlaySFX("Miss");
+            Misscount++;
+        }
+    }
+
+
+    private void PlaySFX(string s)
+    {
+        Rhythm_SoundManager.instance.PlaySFX(s);
     }
 
     public void ResultAppear()

@@ -29,7 +29,7 @@ public class Rhythm_SoundManager : MonoBehaviour
     [SerializeField] private Sound[] BGM;
     [SerializeField] private Sound[] SFX;
     [Header("AudioSource")]
-    [SerializeField] private AudioSource BGMPlayer;
+    [SerializeField] public AudioSource BGMPlayer;
     [SerializeField] private AudioSource[] SFXPlayer;
 
     // 2. 메서드 모음
