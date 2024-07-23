@@ -38,7 +38,7 @@ public class UI_SelectChapter : MonoBehaviour
     public void ShiftVirtualCamera(int num)
     {
         brain.ActiveVirtualCamera.Priority = 0;
-        selectedNum = selectedNum + num;
+        selectedNum +=  num;
 
         if (selectedNum < 0 || selectedNum >= cameras.Length)
         {

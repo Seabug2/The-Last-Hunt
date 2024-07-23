@@ -31,6 +31,11 @@ public class GameManager : MonoBehaviour
     bool isStoryMode;
     public bool IsStoryMode => isStoryMode;
 
+    public void SetPlayingMode(bool on)
+    {
+        isStoryMode = on;
+    }
+
     string path;
     public UserData userDate;
 
@@ -62,7 +67,7 @@ public class GameManager : MonoBehaviour
         return false;
     }
 
-    void SaveJson()
+    public void SaveJson()
     {
         string file = JsonUtility.ToJson(userDate, true);
         File.WriteAllText(path, file);

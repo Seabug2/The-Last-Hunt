@@ -20,7 +20,7 @@ public class Timer : MonoBehaviour
         text.text = ConvertTimeCode(time);
     }
 
-    public string ConvertTimeCode(double time)
+    public static string ConvertTimeCode(double time)
     {
         // Get total seconds and then calculate minutes, seconds, and milliseconds
         int totalSeconds = (int)time;

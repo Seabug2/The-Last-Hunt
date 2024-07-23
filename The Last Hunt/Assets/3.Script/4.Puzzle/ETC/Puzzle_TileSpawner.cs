@@ -18,11 +18,11 @@ public class Puzzle_TileSpawner : MonoBehaviour
     [SerializeField, Header("2 : 늑대"), Header("1 : 바위"), Header("0 : 나무")]
     GameObject[] obstacle;
 
-    //타일의 크기는?
-    int tileSize = 3;
+    ////타일의 크기는?
+    //int tileSize = 3;
     
-    private void Start()
-    {
-        tileSize = Puzzle_GameManager.tileSize;
-    }
+    //private void Start()
+    //{
+    //    tileSize = Puzzle_GameManager.tileSize;
+    //}
 }

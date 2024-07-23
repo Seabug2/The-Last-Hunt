@@ -14,6 +14,7 @@ public class UI_Toggle : MonoBehaviour
 
     public void Toggle()
     {
+        print("Å¬¸¯");
         TargetUI.SetActive(!TargetUI.activeSelf);
     }
 }

@@ -37,7 +37,7 @@ public class Puzzle_Bear : MonoBehaviour
         Vector3 dir = other.transform.position;
         transform.LookAt(new Vector3(dir.x, 0, dir.z), Vector3.up);
 
-        if (other.TryGetComponent(out Puzzle_Horse horse))
+        if (other.TryGetComponent(out Puzzle_Horse _))
         {
             //말을 공격
             Puzzle_GameManager.instance.VCamFollowHorse();

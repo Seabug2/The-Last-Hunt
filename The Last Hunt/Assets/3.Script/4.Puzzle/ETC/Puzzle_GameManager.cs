@@ -22,6 +22,8 @@ public class Puzzle_GameManager : MonoBehaviour
         Init();
     }
 
+    System.Diagnostics.Stopwatch stopwatch = new System.Diagnostics.Stopwatch();
+
     public const int tileSize = 3;
 
     [SerializeField, Header("타일 레이어"), Space(10)]
@@ -123,6 +125,7 @@ public class Puzzle_GameManager : MonoBehaviour
         }
 
         GameStartEvent.Invoke();
+        stopwatch.Start();
     }
 
     /// <summary>
@@ -250,10 +253,40 @@ public class Puzzle_GameManager : MonoBehaviour
         yield break;
     }
 
+    public Timer timer;
+    public Text currentScore;
+    public Text bestScore;
+    public GameObject nextButton;
+    public GameObject returnButton;
     public IEnumerator GameClear_co()
     {
         EndGame?.Invoke();
+        float time = (float)timer.time;
+        currentScore.text = Timer.ConvertTimeCode(time);
+        print(time);
+
+        if (GameManager.instance.userDate.score[3] > time || GameManager.instance.userDate.score[3] == 0)
+        {
+            GameManager.instance.userDate.score[3] = time;
+            GameManager.instance.SaveJson();
+            print("최고 점수 갱신!");
+        }
+
+        bestScore.text = Timer.ConvertTimeCode(GameManager.instance.userDate.score[3]);
+
+        if (GameManager.instance.IsStoryMode)
+        {
+            nextButton.SetActive(true);
+            returnButton.SetActive(false);
+        }
+        else
+        {
+            nextButton.SetActive(false);
+            returnButton.SetActive(true);
+        }
+
         traceVCam.Follow = FindObjectOfType<Puzzle_Horse>().transform;
+
         yield return null;
         yield return new WaitWhile(() => brainCam.IsBlending);
 
@@ -261,18 +294,10 @@ public class Puzzle_GameManager : MonoBehaviour
         yield return new WaitForSeconds(tt);
 
         lookAtHunterVCam.Priority = brainCam.ActiveVirtualCamera.Priority + 1;
-        yield return null;
+        yield return new WaitUntil(()=>brainCam.ActiveVirtualCamera.Equals(lookAtHunterVCam));
         yield return new WaitWhile(() => brainCam.IsBlending);
 
         GameClearEvent?.Invoke();
-
-        //결과 UI
-        yield return new WaitForSeconds(1.5f);
-
-        yield return StartCoroutine(Fade_co(true, 3f));
-
-        SceneManager.LoadScene(0);
-        //SceneManager.LoadScene(nextSceneName);
     }
 
     #region 메시지 출력
