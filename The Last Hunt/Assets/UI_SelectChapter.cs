@@ -16,9 +16,9 @@ public class UI_SelectChapter : MonoBehaviour
     [SerializeField]
     int[] SceneNumber;
     [SerializeField]
-    string[] name;
+    Sprite[] chapterSprtie;
     [SerializeField]
-    Text ChapterName;
+    Image chapterName;
 
     private void Awake()
     {
@@ -29,7 +29,8 @@ public class UI_SelectChapter : MonoBehaviour
     {
         menuCamera.Priority = 0;
         selectedNum = 0;
-        ChapterName.text = name[selectedNum];
+        chapterName.sprite = chapterSprtie[selectedNum];
+        chapterName.SetNativeSize();
         cameras[selectedNum].Priority = menuCamera.Priority + 1;
         popUpCanvas.SetActive(true);
     }
@@ -42,9 +43,11 @@ public class UI_SelectChapter : MonoBehaviour
         if (selectedNum < 0 || selectedNum >= cameras.Length)
         {
             GoBackMenu();
+            return;
         }
 
-        ChapterName.text = name[selectedNum];
+        chapterName.sprite = chapterSprtie[selectedNum];
+        chapterName.SetNativeSize();
         cameras[selectedNum].Priority = brain.ActiveVirtualCamera.Priority + 1;
     }
     public void GoBackMenu()
