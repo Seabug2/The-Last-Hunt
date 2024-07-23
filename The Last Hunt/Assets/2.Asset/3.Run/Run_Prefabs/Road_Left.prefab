@@ -372,6 +372,7 @@ GameObject:
   - component: {fileID: 5852914505044524088}
   - component: {fileID: 5852914505044524084}
   - component: {fileID: 5852914505044524086}
+  - component: {fileID: -4597340861261528979}
   m_Layer: 0
   m_Name: Road_Left
   m_TagString: Untagged
@@ -388,7 +389,7 @@ Transform:
   m_GameObject: {fileID: 5852914505044524089}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 3, y: 3, z: 3}
   m_Children:
   - {fileID: 5852914505058413122}
   - {fileID: 5852914503233920186}
@@ -457,6 +458,18 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &-4597340861261528979
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5852914505044524089}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d183bab6b8907a840967e08741953a67, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5852914505058413123
 GameObject:
   m_ObjectHideFlags: 0
