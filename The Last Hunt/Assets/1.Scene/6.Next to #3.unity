@@ -630,7 +630,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: Subtitles
+  m_Text: 
 --- !u!222 &986778680
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -779,6 +779,7 @@ MonoBehaviour:
   - "\uD558\uC9C0\uB9CC \uBAA9\uC228\uC5D0 \uB300\uD55C \uC704\uD611\uC774 \uD754\uD55C
     \uC774 \uC9C1\uAD70\uC740 \uC0B4\uC544\uB0A8\uC544\uC11C \uC740\uD1F4\uD55C \uC790\uB4E4\uC774
     \uCD5C\uACE0\uC785\uB2C8\uB2E4."
+  skip: {fileID: 210691182}
 --- !u!4 &1514051922
 Transform:
   m_ObjectHideFlags: 0

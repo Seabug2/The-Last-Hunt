@@ -146,7 +146,7 @@ public class UIController_Shoot : MonoBehaviour
         // Save result to JSON
         if (TotalKill_Score >= 2000)
         {
-            if (!GameManager.instance.IsStoryMode)
+            if (GameManager.instance.IsStoryMode)
             {
                 NextChapter.SetActive(false);
             }

@@ -204,6 +204,7 @@ MonoBehaviour:
   - "\uC624\uB298 \uBC24\uC758 \uAE30\uB3C4\uB97C \uB9C8\uCE5C \uADF8\uB294 \uAE4A\uC740
     \uC7A0\uC5D0 \uBE60\uC84C\uC2B5\uB2C8\uB2E4\u2026\uC800\uD3B8\uC5D0 \uBB34\uC5C7\uC774
     \uAE30\uB2E4\uB9AC\uB294\uC9C0 \uBAA8\uB978 \uCC44 "
+  skip: {fileID: 1211786102}
 --- !u!82 &218623342
 AudioSource:
   m_ObjectHideFlags: 0
@@ -370,7 +371,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: Subtitles (Korean)
+  m_Text: 
 --- !u!222 &428682942
 CanvasRenderer:
   m_ObjectHideFlags: 0
