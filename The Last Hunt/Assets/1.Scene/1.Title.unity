@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.32702237, g: 0.28158697, b: 0.41664535, a: 1}
+  m_IndirectSpecularColor: {r: 0.32563856, g: 0.26615465, b: 0.4137108, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -97,8 +97,8 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
-  m_LightingDataAsset: {fileID: 0}
-  m_LightingSettings: {fileID: 0}
+  m_LightingDataAsset: {fileID: 112000000, guid: c4cd3e6e654dfa94bb3d2391daabf62f, type: 2}
+  m_LightingSettings: {fileID: 4890085278179872738, guid: c5974e8659630ea4c912fabe72e94473, type: 2}
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -1868,6 +1868,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8be844ca57665fa458a5a2cb309d94cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  userDate:
+    IsCleared: 00000000
+    score:
+    - 0
+    - 0
+    - 0
+    - 0
 --- !u!4 &608377278
 Transform:
   m_ObjectHideFlags: 0
@@ -4926,7 +4933,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1776413188}
-  m_LocalRotation: {x: 4.90806e-18, y: 0.7071058, z: -4.908907e-18, w: 0.70710784}
+  m_LocalRotation: {x: -1.00437e-14, y: 0.70710576, z: 1.00436695e-14, w: 0.7071079}
   m_LocalPosition: {x: 1.735601, y: 0.676, z: 1.1819854}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:

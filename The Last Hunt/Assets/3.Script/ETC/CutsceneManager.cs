@@ -15,10 +15,12 @@ public class CutsceneManager : MonoBehaviour
 
     private void Awake()
     {
+        Time.timeScale = 1;
         illustration = GetComponentInChildren<Image>();
         TryGetComponent(out audio_s);
         isNarrationComplete = false;
     }
+
 
     private void Start()
     {
@@ -83,4 +85,5 @@ public class CutsceneManager : MonoBehaviour
         yield return new WaitForSeconds(3);
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
+    
 }
