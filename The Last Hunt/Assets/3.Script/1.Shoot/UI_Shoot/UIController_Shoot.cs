@@ -18,6 +18,7 @@ public class UIController_Shoot : MonoBehaviour
 
     [SerializeField] private GameObject GameClear;
     [SerializeField] private Text GameClearScore_Text;
+    [SerializeField] private GameObject NextChapter;
     [SerializeField] private GameObject GameOver;
     [SerializeField] private Text GameOverScore_Text;
 
@@ -143,16 +144,27 @@ public class UIController_Shoot : MonoBehaviour
     public void ResultScreen()
     {
         // Save result to JSON
-        if (TotalKill_Score >= 1000)
+        if (TotalKill_Score >= 2000)
         {
+            if (GameManager.instance.IsStoryMode)
+            {
+                NextChapter.SetActive(false);
+            }
             GameClear.SetActive(true);
-            GameClearScore_Text.text = string.Format("Score : {0}", TotalKill_Score);
+            GameClearScore_Text.text = string.Format("Score : {0:#,##0}", TotalKill_Score);
+            //GameManager.instance.userDate.IsCleared[0] = true;
+            //GameManager.instance.SaveJson();
         }
         else
         {
             GameOver.SetActive(true);
-            GameOverScore_Text.text = string.Format("Score : {0}", TotalKill_Score);
+            GameOverScore_Text.text = string.Format("Score : {0:#,##0}", TotalKill_Score);
         }
+    }
+
+    public void NextCh()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 
     public void Restart()
@@ -162,7 +174,7 @@ public class UIController_Shoot : MonoBehaviour
 
     public void MainMenu()
     {
-        SceneManager.LoadScene("1.Title");
+        SceneManager.LoadScene(0);
     }
 
     public void Exit()
