@@ -28,20 +28,20 @@ public class VolumeSlider : MonoBehaviour
     {
         slider = GetComponent<Slider>();
         slider.maxValue = 0;
-        slider.minValue = -80;
+        slider.minValue = -20;
         float value;
         switch (m_Group)
         {
             case AudioGroup.Master:
-                value = PlayerPrefs.GetFloat("AudioLevel_Master",0);
+                value = PlayerPrefs.GetFloat("AudioLevel_Master");
                 audioMixer.SetFloat("Master", value);
                 break;
             case AudioGroup.BGM:
-                value = PlayerPrefs.GetFloat("AudioLevel_BGM", 0);
+                value = PlayerPrefs.GetFloat("AudioLevel_BGM");
                 audioMixer.SetFloat("BGM", value);
                 break;
             case AudioGroup.SFX:
-                value = PlayerPrefs.GetFloat("AudioLevel_SFX", 0);
+                value = PlayerPrefs.GetFloat("AudioLevel_SFX");
                 audioMixer.SetFloat("SFX", value);
                 break;
             default:
@@ -54,6 +54,11 @@ public class VolumeSlider : MonoBehaviour
     public void VolumeControl(float value)
     {
         value = Mathf.FloorToInt(value);
+        
+        if (value <= -20)
+        {
+            value = -80;
+        }
 
         switch (m_Group)
         {
@@ -71,22 +76,4 @@ public class VolumeSlider : MonoBehaviour
                 break;
         }
     }
-
-    //public void MasterControl(float value)
-    //{
-    //    audioMixer.SetFloat("Master", value);
-    //}
-    //public void BGMControl(float value)
-    //{
-    //    audioMixer.SetFloat("BGM", value);
-    //}
-    //public void SFXControl(float value)
-    //{
-    //    audioMixer.SetFloat("SFX", value);
-    //}
-
-    //public void VolumeControl(string group)
-    //{
-    //    audioMixer.SetFloat(group, slider.value);
-    //}
 }

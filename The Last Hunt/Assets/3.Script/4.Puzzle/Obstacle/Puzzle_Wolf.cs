@@ -27,11 +27,6 @@ public class Puzzle_Wolf : Puzzle_Obstacle
             Puzzle_GameManager.instance.GameOver_Hunter(hunter);
         }
     }
-    void AudioPlay()
-    {
-        GetComponent<AudioSource>().Play();
-    }
-
     private void OnTriggerEnter(Collider other)
     {
         //영역에 닿은 객체를 바라본다

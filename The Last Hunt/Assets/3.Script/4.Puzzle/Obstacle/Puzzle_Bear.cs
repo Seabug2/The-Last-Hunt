@@ -11,10 +11,6 @@ public class Puzzle_Bear : MonoBehaviour
         Puzzle_GameManager.instance.EndGame?.Invoke();
         GetComponent<Animator>().SetTrigger("Attack");
     }
-    void AudioPlay()
-    {
-        GetComponent<AudioSource>().Play();
-    }
     public void RemoveTarget()
     {
         if (target.TryGetComponent(out Puzzle_Horse horse))
@@ -46,13 +42,8 @@ public class Puzzle_Bear : MonoBehaviour
         }
         else if (other.TryGetComponent(out Puzzle_Hunter hunter))
         {
-            //장비를 장착하고 있지 않은 경우
-            if (!hunter.EquippedItem)
-            {
-                //플레이어를 공격
-                Puzzle_GameManager.instance.LookAtHunter();
-                Attack();
-            }
+            Puzzle_GameManager.instance.LookAtHunter();
+            Attack();
         }
     }
 }

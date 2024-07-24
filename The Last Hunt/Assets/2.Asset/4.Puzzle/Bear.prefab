@@ -786,6 +786,7 @@ GameObject:
   - component: {fileID: 544717034}
   - component: {fileID: 5911649748387151859}
   - component: {fileID: 8024686560338016326}
+  - component: {fileID: 6598043255514092140}
   m_Layer: 0
   m_Name: Bear
   m_TagString: Untagged
@@ -949,6 +950,18 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 1.3
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &6598043255514092140
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1514481875857408}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 96e4a5b866e687340bcb307d6859eb1c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1553622972924214
 GameObject:
   m_ObjectHideFlags: 0

@@ -101624,4 +101624,11 @@ AnimationClip:
   m_EulerEditorCurves: []
   m_HasGenericRootTransform: 0
   m_HasMotionFloatCurves: 0
-  m_Events: []
+  m_Events:
+  - time: 1.5
+    functionName: AudioPlayOneShot
+    data: 
+    objectReferenceParameter: {fileID: 8300000, guid: c128ab4ab50ebb3438ff9675f582bcff, type: 3}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
