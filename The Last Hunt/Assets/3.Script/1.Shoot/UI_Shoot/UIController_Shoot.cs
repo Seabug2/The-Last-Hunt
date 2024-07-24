@@ -164,7 +164,7 @@ public class UIController_Shoot : MonoBehaviour
 
     public void NextCh()
     {
-        SceneManager.LoadScene("4.Next to #2");
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 
     public void Restart()
@@ -174,7 +174,7 @@ public class UIController_Shoot : MonoBehaviour
 
     public void MainMenu()
     {
-        SceneManager.LoadScene("1.Title");
+        SceneManager.LoadScene(0);
     }
 
     public void Exit()

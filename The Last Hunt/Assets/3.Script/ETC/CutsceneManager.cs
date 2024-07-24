@@ -15,6 +15,7 @@ public class CutsceneManager : MonoBehaviour
 
     private void Awake()
     {
+        illustration = GetComponentInChildren<Image>();
         TryGetComponent(out audio_s);
         isNarrationComplete = false;
     }
@@ -27,10 +28,11 @@ public class CutsceneManager : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.F))
+        if (Input.GetKeyDown(KeyCode.Space))
         {
-            StartCoroutine(FadeImage_co(false));
-            StartCoroutine(LoadNextScene_co());
+            Debug.Log("Skip");
+            StopCoroutine(AudioSubtitle_co());
+            isNarrationComplete = true;
         }
         if (isNarrationComplete)
         {
