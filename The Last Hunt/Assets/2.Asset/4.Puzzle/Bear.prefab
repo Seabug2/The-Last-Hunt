@@ -783,9 +783,9 @@ GameObject:
   m_Component:
   - component: {fileID: 4909805588602726}
   - component: {fileID: 95827728344365426}
-  - component: {fileID: 544717033}
   - component: {fileID: 544717034}
   - component: {fileID: 5911649748387151859}
+  - component: {fileID: 8024686560338016326}
   m_Layer: 0
   m_Name: Bear
   m_TagString: Untagged
@@ -828,19 +828,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!65 &544717033
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1514481875857408}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 2.2, y: 2, z: 2.2}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &544717034
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -949,6 +936,19 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!135 &8024686560338016326
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1514481875857408}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 1.3
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1553622972924214
 GameObject:
   m_ObjectHideFlags: 0

@@ -9642,9 +9642,9 @@ GameObject:
   m_Component:
   - component: {fileID: 7249060989404240147}
   - component: {fileID: 7332936271127474141}
-  - component: {fileID: 547989458191315411}
   - component: {fileID: 547989458191315412}
   - component: {fileID: 4410525138123967981}
+  - component: {fileID: 6382153595999740039}
   m_Layer: 0
   m_Name: Wolf
   m_TagString: Obstacle
@@ -9688,19 +9688,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!65 &547989458191315411
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7247092767159262195}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 2, y: 2, z: 2}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &547989458191315412
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9811,6 +9798,19 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!135 &6382153595999740039
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7247092767159262195}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.85
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &7296348107307058384
 GameObject:
   m_ObjectHideFlags: 0

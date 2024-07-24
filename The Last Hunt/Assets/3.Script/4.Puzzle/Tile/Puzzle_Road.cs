@@ -35,7 +35,7 @@ public class Puzzle_Road : Puzzle_Tile
     /// <summary>
     /// 말이 하나의 타일을 이동하는데 걸리는 시간
     /// </summary>
-    const float duration = 5f;
+    const float duration = 6.9f;
 
     public override void TileEvent(Puzzle_Horse target)
     {

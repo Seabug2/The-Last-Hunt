@@ -26,7 +26,9 @@ public class Puzzle_Wolf : Puzzle_Obstacle
         {
             Puzzle_GameManager.instance.GameOver_Hunter(hunter);
         }
-
+    }
+    void AudioPlay()
+    {
         GetComponent<AudioSource>().Play();
     }
 

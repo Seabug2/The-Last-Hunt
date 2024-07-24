@@ -37,39 +37,56 @@ public class GameManager : MonoBehaviour
     }
 
     string path;
-    public UserData userDate;
+    public UserData userData;
 
     void LoadJson()
     {
         if (!File.Exists(path))
         {
-            userDate = new UserData();
+            userData = new UserData();
             return;
         }
         string json = File.ReadAllText(path);
-        userDate = JsonUtility.FromJson<UserData>(json);
+        userData = JsonUtility.FromJson<UserData>(json);
     }
 
     /// <summary>
-    /// 최고 점수 이상을 기록하면 최고 점수로 기록합니다.
+    /// 
     /// </summary>
-    /// <param name="chapterNumber">게임 순서대로 0, 1, 2, 3</param>
-    /// <param name="newScore">현재 게임 결과</param>
+    /// <param name="chapterNumber"></param>
+    /// <param name="newScore"></param>
+    /// <param name="isHigher">true = 높은 기록을 저장 / false = 낮은 기록을 저장</param>
     /// <returns></returns>
-    public bool IsNewHighScore(int chapterNumber, float newScore)
+    public bool IsNewHighScore(int chapterNumber, float newScore, bool isHigher = true)
     {
-        if (userDate.score[chapterNumber] <= newScore)
+        //이 bool 함수를 호출한 시점에서 게임을 클리어 한 것으로 간주
+        userData.IsCleared[chapterNumber] = true;
+
+        if (isHigher)
         {
-            userDate.score[chapterNumber] = newScore;
-            SaveJson();
-            return true;
+            if (userData.score[chapterNumber] <= newScore)
+            {
+                userData.score[chapterNumber] = newScore;
+                SaveJson();
+                return true;
+            }
         }
+        else
+        {
+            if (userData.score[chapterNumber] <= 0 || userData.score[chapterNumber] >= newScore)
+            {
+                userData.score[chapterNumber] = newScore;
+                SaveJson();
+                return true;
+            }
+        }
+
         return false;
     }
 
     public void SaveJson()
     {
-        string file = JsonUtility.ToJson(userDate, true);
+        string file = JsonUtility.ToJson(userData, true);
         File.WriteAllText(path, file);
     }
 }

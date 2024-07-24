@@ -46,6 +46,7 @@ public class Puzzle_GameManager : MonoBehaviour
     CinemachineVirtualCamera lookAtHunterVCam;
     [SerializeField]
     CinemachineVirtualCamera lookAtHorseVCam;
+
     /// <summary>
     /// 메인 카메라
     /// </summary>
@@ -261,18 +262,15 @@ public class Puzzle_GameManager : MonoBehaviour
     public IEnumerator GameClear_co()
     {
         EndGame?.Invoke();
+        GameManager.instance.userData.IsCleared[3] = true;
         float time = (float)timer.time;
         currentScore.text = Timer.ConvertTimeCode(time);
-        print(time);
-
-        if (GameManager.instance.userDate.score[3] > time || GameManager.instance.userDate.score[3] == 0)
+        if (GameManager.instance.IsNewHighScore(3,time,false))
         {
-            GameManager.instance.userDate.score[3] = time;
-            GameManager.instance.SaveJson();
             print("최고 점수 갱신!");
         }
 
-        bestScore.text = Timer.ConvertTimeCode(GameManager.instance.userDate.score[3]);
+        bestScore.text = Timer.ConvertTimeCode(GameManager.instance.userData.score[3]);
 
         if (GameManager.instance.IsStoryMode)
         {

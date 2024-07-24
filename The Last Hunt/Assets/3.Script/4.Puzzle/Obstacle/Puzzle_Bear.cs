@@ -11,7 +11,10 @@ public class Puzzle_Bear : MonoBehaviour
         Puzzle_GameManager.instance.EndGame?.Invoke();
         GetComponent<Animator>().SetTrigger("Attack");
     }
-
+    void AudioPlay()
+    {
+        GetComponent<AudioSource>().Play();
+    }
     public void RemoveTarget()
     {
         if (target.TryGetComponent(out Puzzle_Horse horse))
@@ -22,8 +25,6 @@ public class Puzzle_Bear : MonoBehaviour
         {
             Puzzle_GameManager.instance.GameOver_Hunter(hunter);
         }
-
-        GetComponent<AudioSource>().Play();
     }
 
     private void OnTriggerEnter(Collider other)
