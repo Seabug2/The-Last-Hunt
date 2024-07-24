@@ -62,8 +62,6 @@ public class CutsceneManager : MonoBehaviour
                 skip.color = new Color(0, 0, 0, i);
                 yield return null;
             }
-
-            yield return new WaitForSeconds(3);
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
         }
     }
