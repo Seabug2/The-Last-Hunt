@@ -12,9 +12,11 @@ public class Run_PlayerMove : MonoBehaviour
     public bool isJump = false;
     public bool isSlide = false;
 
+    private float x;
     private Rigidbody Player_rig;
     private CapsuleCollider player_c;
     private Animator player_ani;
+    private Vector3 moveDir = Vector3.zero;
 
     private void Start()
     {
@@ -99,15 +101,15 @@ public class Run_PlayerMove : MonoBehaviour
             player_ani.SetBool("isRun", false);
             Debug.Log("isJump_animation은 True입니다.");
             Player_rig.AddForce(new Vector3(0, JumpForce, 0), ForceMode.VelocityChange);
-            
+
         }
-        
+
     }
     public void EndJump()//점프 animation KeyFrame에 추가할 메서드
     {
         isJump = false;
         player_ani.SetBool("isJump", false);
-        player_ani.SetBool("isRun", true); 
+        player_ani.SetBool("isRun", true);
         Debug.Log("isJump는 false입니다.");
     }
 
@@ -131,7 +133,38 @@ public class Run_PlayerMove : MonoBehaviour
         isJump = false;
         isSlide = false;
     }
+    public void PlayerMove()
+    {
+        if(!isSlide&&!isJump)
+        {
+            //if(Input.GetKeyDown(KeyCode.A))
+            //{
+            //    Debug.Log("왼쪽으로 움직일까요?");
+            //    transform.position -= moveDir * rotationSpeed * Time.deltaTime;
+            //    Debug.Log("왼쪽으로 움직였습니다.");
+            //}
+            //if (Input.GetKeyDown(KeyCode.D))
+            //{
+            //        Debug.Log("오른쪽으로 움직일까요?");
+            //    transform.position += moveDir * rotationSpeed * Time.deltaTime;
+            //        Debug.Log("오른쪽으로 움직였습니다.");
+            //}
 
+            //x = Input.GetAxisRaw("Horizontal");
+            //Player_rig.AddForce(new Vector3(x, 0, 0));
+
+            if(Input.GetKey(KeyCode.D))
+            {
+                transform.position += transform.right * rotationSpeed * Time.deltaTime;
+            }
+            if(Input.GetKey(KeyCode.A))
+            {
+                transform.position -= transform.right * rotationSpeed * Time.deltaTime;
+            }
+
+        }
+            
+    }
     // private IEnumerator Jump_co()
     // {
     //     Debug.Log("아 점프 들어오긴 했는데요");
