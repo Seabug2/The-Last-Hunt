@@ -154,6 +154,10 @@ public class UIController_Shoot : MonoBehaviour
             GameClearScore_Text.text = string.Format("Score : {0:#,##0}", TotalKill_Score);
             //GameManager.instance.userDate.IsCleared[0] = true;
             //GameManager.instance.SaveJson();
+            if(GameManager.instance.IsNewHighScore(0, TotalKill_Score))
+            {
+                print("최고 기록 갱신!");
+            }
         }
         else
         {

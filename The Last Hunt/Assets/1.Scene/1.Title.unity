@@ -1775,7 +1775,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8be844ca57665fa458a5a2cb309d94cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  userDate:
+  userData:
     IsCleared: 00000000
     score:
     - 0

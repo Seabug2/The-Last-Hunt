@@ -24,8 +24,8 @@ public class Rhythm_AnimalController : MonoBehaviour
     {
         startPosition = Rhythm_AnimalPooling.instance.Spawner.position;
         endPosition = Rhythm_AnimalPooling.instance.targetPoint.position;
-        UI_StartPos = arrowsRT.position +  Vector3.up * 600;
-        UI_EndPos = UI_StartPos + Vector3.down * (600 / 0.83f);
+        UI_StartPos = arrowsRT.position +  Vector3.up * 900;
+        UI_EndPos = UI_StartPos + Vector3.down * (900 / 0.825f);
         note_obj = Instantiate(arrowPrefab, ingameCanvas.transform);
     }
 

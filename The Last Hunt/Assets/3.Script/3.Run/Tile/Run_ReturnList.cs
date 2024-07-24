@@ -13,7 +13,7 @@ public class Run_ReturnList : MonoBehaviour
         if(other.CompareTag("Animal"))
         {
             Debug.Log($"{other.transform.name}");
-            roads.ReturnList(other.transform, "Water", "Tile");
+            //roads.ReturnList(other.transform, "Water", "Tile");
             Debug.Log("레이어 원상복구");
         }
 
