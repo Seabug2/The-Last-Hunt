@@ -115,7 +115,7 @@ public class Rhythm_PlayerController : MonoBehaviour
         }
     }
 
-
+    // 화살표 입력 시 -> 결과에 따라 판정존 화살표에 효과 부여
     private IEnumerator ArrowEffect(KeyCode inputKey, int judge)
     {
         Color c = new Color(1, 0, 0);

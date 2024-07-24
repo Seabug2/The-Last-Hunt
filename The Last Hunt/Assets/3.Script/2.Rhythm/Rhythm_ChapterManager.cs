@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Cinemachine;
 using DG.Tweening;
 
 public class Rhythm_ChapterManager : MonoBehaviour
@@ -24,6 +25,14 @@ public class Rhythm_ChapterManager : MonoBehaviour
     [SerializeField] private Image scoreBarFillImage, NextButton;
     [SerializeField] private Sprite ClearSP, FailSP;
     [SerializeField] private Image ClearImage;
+
+    [Header("Ä«¸Þ¶ó")]
+    [SerializeField] private CinemachineBrain brainCam;
+    [SerializeField] private CinemachineVirtualCamera initVcam;
+    [SerializeField] private CinemachineVirtualCamera mainVcam;
+    [SerializeField] private CinemachineBlendListCamera mainBcam;
+    [SerializeField] private CinemachineVirtualCamera resultVcam;
+
 
 
     // 0. ½Ì±ÛÅæ Àû¿ë
@@ -92,10 +101,15 @@ public class Rhythm_ChapterManager : MonoBehaviour
 
     private IEnumerator Start()
     {
-        ShowMessage(text.text);
-        yield return new WaitForSeconds(2f);
+        introUI.SetActive(true);
+        yield return new WaitForSeconds(1.5f);
+        mainVcam.Priority = initVcam.Priority + 1;
+        yield return new WaitForSeconds(2.5f);
+        PlaySFX("ChapterIntro");
+        ShowMessage(text.text, 1.5f);
+        yield return new WaitForSeconds(3f);
         Rhythm_SoundManager.instance.PlayBGM("BGM");
-        yield return new WaitForSeconds(2f);
+        mainBcam.Priority = mainVcam.Priority + 1;
         Menu.SetActive(true);
         NoteUI.SetActive(true);
         BGMisPlaying = true;
@@ -137,6 +151,7 @@ public class Rhythm_ChapterManager : MonoBehaviour
 
     public void ResultAppear()
     {
+        resultVcam.Priority = mainBcam.Priority + 1;
         Menu.SetActive(false);
         NoteUI.SetActive(false);
         BGMisPlaying = false;
@@ -155,8 +170,9 @@ public class Rhythm_ChapterManager : MonoBehaviour
         // ½ÇÆÐ
         if (percent < 60)
         {
+            PlaySFX("ChapterFail");
             ClearImage.sprite = FailSP;
-            scoreBarFillImage.color = new Color(120, 0, 0);
+            scoreBarFillImage.color = new Color(.75f, 0, 0);
             Hunter_ani.SetInteger("GameResult", -1);
             RecordT.text = "";
         }
@@ -165,7 +181,7 @@ public class Rhythm_ChapterManager : MonoBehaviour
         {
             // GameManager.instance.userDate.IsCleared[1] = true;
             // GameManager.instance.userDate.SaveJson();
-
+            PlaySFX("ChapterClear");
             ClearImage.sprite = ClearSP;
             // if(GameManager.instance.IsStoryMode)
             {
@@ -187,13 +203,13 @@ public class Rhythm_ChapterManager : MonoBehaviour
             // 60~79
             if (percent < 80)
             {
-                scoreBarFillImage.color = new Color(120, 120, 0);
+                scoreBarFillImage.color = new Color(.75f, .75f, 0);
                 Hunter_ani.SetInteger("GameResult", 1);
             }
             // 80~100
             else
             {
-                scoreBarFillImage.color = new Color(0, 120, 0);
+                scoreBarFillImage.color = new Color(0, .75f, 0);
                 Hunter_ani.SetInteger("GameResult", 2);
                 // 100
                 if (percent > 99)
