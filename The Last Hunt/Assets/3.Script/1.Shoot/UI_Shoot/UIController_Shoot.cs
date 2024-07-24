@@ -92,6 +92,12 @@ public class UIController_Shoot : MonoBehaviour
         Message.gameObject.SetActive(true);
         Sequence headerSequence = DOTween.Sequence();
 
+        if (currentTween == null)
+        {
+            Debug.Log("Tween is null");
+            return;
+        }
+
         // Expand for 0.4 seconds
         headerSequence.Append(Message.DOSizeDelta(new Vector2(1920, 126), 0.4f).SetEase(Ease.InOutQuad));
         // Hold for {time}
