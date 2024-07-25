@@ -4,20 +4,28 @@ using UnityEngine;
 
 public class Run_ReturnList : MonoBehaviour
 {
-    Run_RoadSpawner roads;
+   // public Run_RoadSpawner roads;
+   //
+   //
+   // private void Start()
+   // {
+   //     
+   // }
+   //
+   //
+   // private void OnTriggerEnter(Collider other)
+   //{
+   //
+   //    if(other.CompareTag("Animal"))
+   //    {
+   //        Debug.Log($"{transform.name}");
+   //        roads.ReturnList(transform, "Tile");
+   //        Debug.Log("레이어 원상복구");
+   //        
+   //     }
+   //
+   //}
+
     
-
-    private void OnTriggerExit(Collider other)
-    {
-
-        if(other.CompareTag("Animal"))
-        {
-            Debug.Log($"{other.transform.name}");
-            //roads.ReturnList(other.transform, "Water", "Tile");
-            Debug.Log("레이어 원상복구");
-        }
-
-
-    }
     
 }
