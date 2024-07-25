@@ -6255,19 +6255,7 @@ MonoBehaviour:
   fadeBoard: {fileID: 834624605}
   FadeOutEvent:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 834624603}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &264585070
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7329,9 +7317,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 348171720}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d2737c1ffe482f44db9047383f773c38, type: 3}
+  m_Script: {fileID: 11500000, guid: 13c1a19f24bc01c40a29fe6ab5a7cc13, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fadeBoard: {fileID: 834624605}
+  FadeOutEvent:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &348171723
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7377,13 +7369,13 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 348171722}
-        m_TargetAssemblyTypeName: UI_Restart, Assembly-CSharp
-        m_MethodName: RestartGame
-        m_Mode: 1
+        m_TargetAssemblyTypeName: UI_GoToScene, Assembly-CSharp
+        m_MethodName: GoToScene
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
+          m_IntArgument: 4
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -7925,19 +7917,7 @@ MonoBehaviour:
   fadeBoard: {fileID: 834624605}
   FadeOutEvent:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 834624603}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &580252401
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9697,14 +9677,7 @@ MonoBehaviour:
   m_Follow: {fileID: 0}
   m_ShowDebugText: 0
   m_Loop: 1
-  m_ChildCameras:
-  - {fileID: 1549317862}
-  - {fileID: 1404141468}
-  - {fileID: 973286597}
-  - {fileID: 459316130}
-  - {fileID: 1043555600}
-  - {fileID: 1590847493}
-  - {fileID: 775381215}
+  m_ChildCameras: []
   m_Instructions:
   - m_VirtualCamera: {fileID: 459316130}
     m_Hold: 2.8
