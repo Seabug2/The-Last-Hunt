@@ -615,7 +615,7 @@ MonoBehaviour:
   m_FontData:
     m_Font: {fileID: 12800000, guid: d8e417e1f0c470f4db76494fddcca3ca, type: 3}
     m_FontSize: 50
-    m_FontStyle: 0
+    m_FontStyle: 1
     m_BestFit: 0
     m_MinSize: 0
     m_MaxSize: 50
@@ -835,7 +835,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8be844ca57665fa458a5a2cb309d94cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  userDate:
+  userData:
     IsCleared: 00000000
     score:
     - 0
@@ -3963,7 +3963,7 @@ MonoBehaviour:
   m_FontData:
     m_Font: {fileID: 12800000, guid: d8e417e1f0c470f4db76494fddcca3ca, type: 3}
     m_FontSize: 50
-    m_FontStyle: 0
+    m_FontStyle: 1
     m_BestFit: 0
     m_MinSize: 5
     m_MaxSize: 50
@@ -5157,6 +5157,7 @@ MonoBehaviour:
   player: {fileID: 953260351}
   wind: {fileID: 959962674}
   windText: {fileID: 633523563}
+  TotalKill_Score: 0
 --- !u!1 &786358652
 GameObject:
   m_ObjectHideFlags: 0
@@ -7509,7 +7510,7 @@ MonoBehaviour:
   m_FontData:
     m_Font: {fileID: 12800000, guid: d8e417e1f0c470f4db76494fddcca3ca, type: 3}
     m_FontSize: 40
-    m_FontStyle: 0
+    m_FontStyle: 1
     m_BestFit: 0
     m_MinSize: 0
     m_MaxSize: 50
@@ -8362,7 +8363,7 @@ MonoBehaviour:
   m_FontData:
     m_Font: {fileID: 12800000, guid: d8e417e1f0c470f4db76494fddcca3ca, type: 3}
     m_FontSize: 70
-    m_FontStyle: 0
+    m_FontStyle: 1
     m_BestFit: 0
     m_MinSize: 0
     m_MaxSize: 100
@@ -8372,7 +8373,8 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: Hunt as many animals you can before the sun sets!
+  m_Text: "\uD574\uAC00 \uC9C0\uAE30 \uC804\uC5D0 \uB3D9\uBB3C\uB4E4\uC744 \uCD5C\uB300\uD55C
+    \uB9CE\uC774 \uC0AC\uB0E5\uD558\uC138\uC694!"
 --- !u!222 &1121411929
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -14121,7 +14123,7 @@ MonoBehaviour:
   m_FontData:
     m_Font: {fileID: 12800000, guid: d8e417e1f0c470f4db76494fddcca3ca, type: 3}
     m_FontSize: 50
-    m_FontStyle: 0
+    m_FontStyle: 1
     m_BestFit: 0
     m_MinSize: 5
     m_MaxSize: 50

@@ -39,12 +39,12 @@ public class PlayerController_Shoot : MonoBehaviour
         MoveLR();
         Rotate();
 
-        if (input.MoveFBValue > 0.2 || input.MoveFBValue < -0.2)
+        if (input.MoveFBValue > 0.1 || input.MoveFBValue < -0.1)
         {
             player_ani.SetFloat("MoveFB", input.MoveFBValue);
             isMoving = true;
         }
-        else if (input.MoveLRValue > 0.2 || input.MoveLRValue < -0.2)
+        else if (input.MoveLRValue > 0.1 || input.MoveLRValue < -0.1)
         {
             player_ani.SetFloat("MoveLR", input.MoveLRValue);
             isMoving = true;

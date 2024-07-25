@@ -42,7 +42,7 @@ public class UIController_Shoot : MonoBehaviour
     private int ReindeerKill_Score;
     private int BoarKill_Score;
     private int WolfKill_Score;
-    private int TotalKill_Score; // Remember to change to Float
+    public int TotalKill_Score; // Remember to change to Float
 
     private void Awake()
     {
@@ -143,20 +143,17 @@ public class UIController_Shoot : MonoBehaviour
 
     public void ResultScreen()
     {
-        // Save result to JSON
         if (TotalKill_Score >= 2000)
         {
-            if (GameManager.instance.IsStoryMode)
+            if (!GameManager.instance.IsStoryMode)
             {
                 NextChapter.SetActive(false);
             }
             GameClear.SetActive(true);
             GameClearScore_Text.text = string.Format("Score : {0:#,##0}", TotalKill_Score);
-            //GameManager.instance.userDate.IsCleared[0] = true;
-            //GameManager.instance.SaveJson();
             if(GameManager.instance.IsNewHighScore(0, TotalKill_Score))
             {
-                print("최고 기록 갱신!");
+                Debug.Log("최고 기록 갱신!");
             }
         }
         else

@@ -24,7 +24,7 @@ public class CutsceneManager : MonoBehaviour
 
     private IEnumerator Start()
     {
-        for (float i = 0; i <= 3; i += Time.deltaTime)
+        for (float i = 0; i <= 2; i += Time.deltaTime)
         {
             illustration.color = new Color(1, 1, 1, i);
             subtitle.color = new Color(0, 0, 0, i);
@@ -55,15 +55,13 @@ public class CutsceneManager : MonoBehaviour
 
         if (isNarrationComplete)
         {
-            for (float i = 3; i >= 0; i -= Time.deltaTime)
+            for (float i = 2; i >= 0; i -= Time.deltaTime)
             {
                 illustration.color = new Color(1, 1, 1, i);
                 subtitle.color = new Color(0, 0, 0, i);
                 skip.color = new Color(0, 0, 0, i);
                 yield return null;
             }
-
-            yield return new WaitForSeconds(3);
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
         }
     }

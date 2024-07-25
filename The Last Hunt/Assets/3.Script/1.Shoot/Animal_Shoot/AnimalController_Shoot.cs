@@ -1040,7 +1040,7 @@ public class AnimalController_Shoot : MonoBehaviour
             navMeshAgent.destination = transform.position;
         }
         enabled = false;
-        Destroy(gameObject, 5f);
+        Destroy(gameObject, 3f);
     }
     // Attack method : Set turn speed -> Clear bools -> Set attack animation -> Invoke attack event
     private void Attack()
