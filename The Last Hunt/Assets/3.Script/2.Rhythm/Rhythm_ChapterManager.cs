@@ -12,7 +12,10 @@ public class Rhythm_ChapterManager : MonoBehaviour
     public int Hitcount = 0;
     public int Misscount = 0;
     public float percent = 0;
+    private int notskip = 1;
     public bool BGMisPlaying, BGMisPausing;
+    Animator judgeAnimation;
+
     [SerializeField] private GameObject resultUI, introUI, Menu, NoteUI, BestScore;
     [SerializeField] private Animator Hunter_ani;
 
@@ -20,7 +23,7 @@ public class Rhythm_ChapterManager : MonoBehaviour
     [SerializeField] private Image judgeImageAppear;
 
     [Header("결과")]
-    [SerializeField] private Image ClearImage;
+    [SerializeField] private Image ClearImage, NextButtonImage;
     [SerializeField] private Sprite ClearSP, FailSP;
     [SerializeField] private Text maxT, hitT, missT, scoreT, RecordT;
     [SerializeField] private GameObject NextButton, MainButton;
@@ -43,6 +46,7 @@ public class Rhythm_ChapterManager : MonoBehaviour
             instance = this;
         }
         else { Destroy(gameObject); }
+        judgeAnimation = judgeImageAppear.GetComponent<Animator>();
     }
 
     // 메시지 출력 부분
@@ -101,12 +105,26 @@ public class Rhythm_ChapterManager : MonoBehaviour
     private IEnumerator Start()
     {
         introUI.SetActive(true);
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(1.5f * notskip);
         mainVcam.Priority = initVcam.Priority + 1;
-        yield return new WaitForSeconds(2.5f);
-        PlaySFX("ChapterIntro");
+        yield return new WaitForSeconds(2.5f * notskip);
+        if (notskip > 0) PlaySFX("ChapterIntro");
         ShowMessage(text.text, 1.5f);
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(3f * notskip);
+        if (notskip > 0) StartBGM();
+    }
+
+    public void SkipIntro()
+    {
+        notskip = 0;
+        Rhythm_SoundManager.instance.StopSFX();
+        StartBGM();
+    }
+
+    private void StartBGM()
+    {
+        introUI.SetActive(false);
+        Hunter_ani.SetTrigger("StartBGM");
         Rhythm_SoundManager.instance.PlayBGM("BGM");
         mainBcam.Priority = mainVcam.Priority + 1;
         Menu.SetActive(true);
@@ -114,38 +132,40 @@ public class Rhythm_ChapterManager : MonoBehaviour
         BGMisPlaying = true;
         BGMisPausing = false;
     }
-
     public void JudgeResult(int hit)
     {
         judgeImageAppear.sprite = judgeImages[hit];
-        judgeImageAppear.GetComponent<Animator>().SetTrigger("IsJudged");
-        if (hit > 0)
+        switch(hit)
         {
-            if (hit > 1) 
-            {
+            case 2:
                 judgeImageAppear.color = Color.green;
                 PlaySFX("MaxHit");
                 Maxcount++;
-            }
-            else
-            {
+                break;
+            case 1:
                 judgeImageAppear.color = Color.yellow;
                 PlaySFX("Hit");
                 Hitcount++;
-            }
+                break;
+            default:
+                judgeImageAppear.color = Color.red;
+                PlaySFX("Miss");
+                Misscount++;
+                break;
         }
-        else
-        {
-            judgeImageAppear.color = Color.red;
-            PlaySFX("Miss");
-            Misscount++;
-        }
+        judgeAnimation.SetTrigger("IsJudged");
     }
 
 
     private void PlaySFX(string s)
     {
         Rhythm_SoundManager.instance.PlaySFX(s);
+    }
+
+    public void DebugButton()
+    {
+        Rhythm_SoundManager.instance.BGMPlayer.Stop();
+        ResultAppear();
     }
 
     public void ResultAppear()
@@ -170,20 +190,23 @@ public class Rhythm_ChapterManager : MonoBehaviour
         {
             PlaySFX("ChapterFail");
             ClearImage.sprite = FailSP;
+            NextButton.GetComponent<Image>().color = new Color(1, 1, 1, 0.5f);
+            NextButtonImage.color = new Color(1, 1, 1, 0.3f);
+            NextButton.GetComponent<Button>().interactable = false;
             Hunter_ani.SetInteger("GameResult", -1);
             BestScore.SetActive(false);
         }
         // 성공
         else
         {
-            if (GameManager.instance.IsNewHighScore(1, percent)) 
+            if (GameManager.instance.IsNewHighScore(1, percent))
             {
                 RecordT.color = Color.yellow;
             }
+            RecordT.text = GameManager.instance.userData.score[1].ToString("0.00");
             PlaySFX("ChapterClear");
             ClearImage.sprite = ClearSP;
             Hunter_ani.SetInteger("GameResult", 2);
-            RecordT.text = GameManager.instance.userData.score[1].ToString("0.00");
         }
     }
 }

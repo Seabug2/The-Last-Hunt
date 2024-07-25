@@ -4,6 +4,11 @@ using UnityEngine.SceneManagement;
 
 public class Rhythm_ButtonController : MonoBehaviour
 {
+    public void DebugButton()
+    {
+        Rhythm_ChapterManager.instance.DebugButton();
+    }
+
     public void SceneLoader(int num)
     {
         if (num > 4 && Rhythm_ChapterManager.instance.percent < 60)

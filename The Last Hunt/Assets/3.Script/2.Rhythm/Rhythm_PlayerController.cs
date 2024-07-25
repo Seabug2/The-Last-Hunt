@@ -26,6 +26,15 @@ public class Rhythm_PlayerController : MonoBehaviour
 
     private void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            if (Hunter_ani.GetCurrentAnimatorStateInfo(0).IsName("BeforeBGM") && !Rhythm_ChapterManager.instance.BGMisPlaying)
+            {
+                Rhythm_ChapterManager.instance.SkipIntro();
+            }
+            else return;
+        }
+
         // BGM 재생 중 아닐 때 -> 무시
         if (!Rhythm_ChapterManager.instance.BGMisPlaying || Rhythm_ChapterManager.instance.BGMisPausing)
         {

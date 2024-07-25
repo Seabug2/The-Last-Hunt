@@ -60,9 +60,14 @@ public class Rhythm_AnimalSpawner : MonoBehaviour
             count++;
             if (count > 126)
             {
-                Rhythm_ChapterManager.instance.ResultAppear();
+                Invoke("ResultAppear", 1.5f);
             }
             current_time -= (60d / BPM);
         }
+    }
+
+    private void ResultAppear()
+    {
+        Rhythm_ChapterManager.instance.ResultAppear();
     }
 }

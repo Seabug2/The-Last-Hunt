@@ -78,4 +78,13 @@ public class Rhythm_SoundManager : MonoBehaviour
         }
         Debug.Log($"PlaySFX {name} ¾øÀ½");
     }
+
+
+    public void StopSFX()
+    {
+        for (int i = 0; i < SFXPlayer.Length; i++)
+        {
+            SFXPlayer[i].Stop();
+        }
+    }
 }
