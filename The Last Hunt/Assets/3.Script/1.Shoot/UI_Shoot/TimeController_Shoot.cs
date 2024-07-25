@@ -30,20 +30,24 @@ public class TimeController_Shoot : MonoBehaviour
     
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.P))
+        if (currentTime.TimeOfDay > sunsetTime)
         {
-            Time.timeScale = 0;
-            ui.TotalKill_Score = 2000;
-            ui.ResultScreen();
+            return;
         }
         if (currentTime.TimeOfDay <= sunsetTime)
         {
             UpdateTimeOfDay();
             RotateSun();
+            if (currentTime.TimeOfDay > sunsetTime)
+            {
+                ui.ResultScreen();
+                enabled = false;
+            }
         }
-        else
+        if (Input.GetKeyDown(KeyCode.P))
         {
             Time.timeScale = 0;
+            ui.TotalKill_Score = 2000;
             ui.ResultScreen();
         }
     }

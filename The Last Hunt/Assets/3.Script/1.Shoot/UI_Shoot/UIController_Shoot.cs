@@ -92,6 +92,7 @@ public class UIController_Shoot : MonoBehaviour
             for (float i = 2; i >= 0; i -= Time.deltaTime)
             {
                 fade.color = new Color(0, 0, 0, i);
+                print("asd");
                 yield return null;
             }
         }
@@ -102,8 +103,11 @@ public class UIController_Shoot : MonoBehaviour
             for (float i = 0; i <= 2; i += Time.deltaTime)
             {
                 fade.color = new Color(0, 0, 0, i);
+                print(Time.deltaTime);
+                print(i);
                 yield return null;
             }
+
         }
         fade.gameObject.SetActive(false);
     }
