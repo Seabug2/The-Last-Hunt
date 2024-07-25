@@ -67,8 +67,9 @@ public class Run_InputManager : MonoBehaviour
                 if (Input.GetKeyDown(KeyCode.D))
                 {
                     //우회전
-                    hit.collider.gameObject.layer = 0;
                     transform.Rotate(new Vector3(0f, 90f, 0f));
+                    hit.collider.gameObject.layer = 4;
+                   
                     Debug.Log("타일 오른쪽 조건 클리어");
                     return;
                 }
@@ -76,8 +77,9 @@ public class Run_InputManager : MonoBehaviour
                 else if(Input.GetKeyDown(KeyCode.A))
                 {
                     //좌회전
-                    hit.collider.gameObject.layer = 0;
                     transform.Rotate(new Vector3(0f, -90f, 0f));
+                    hit.collider.gameObject.layer = 4;
+                    
                     Debug.Log("타일 왼쪽 조건 클리어");
                     return;
                 }

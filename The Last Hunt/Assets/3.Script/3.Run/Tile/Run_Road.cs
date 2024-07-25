@@ -38,8 +38,15 @@ public class Run_Road : MonoBehaviour
 
         if (other.CompareTag("Player"))
         {
-            Debug.Log("dddd");
             spawner.InstantiateRoad(nextRoadPosition.position, nextRoadPosition.forward);
+            //spawner.ReturnToPool(this);
+        }
+        else if (other.CompareTag("Animal"))
+        {
+            GetComponent<Animator>().enabled = true;
+            Debug.Log($"{transform.name}");
+            spawner.ReturnToPool(this);
+            Debug.Log("레이어 원상복구");
         }
     }
 

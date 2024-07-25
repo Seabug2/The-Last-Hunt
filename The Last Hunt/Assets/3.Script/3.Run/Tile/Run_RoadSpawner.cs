@@ -5,16 +5,22 @@ using UnityEngine;
 public class Run_RoadSpawner : MonoBehaviour
 {
 
-    [SerializeField] List<Run_Road> roads;
+    [SerializeField] List<Run_Road> roads = new List<Run_Road>();
     
     Run_Road lastRoad;
-    private int r_index;
-    private Transform tempPos;
+
+    private List<Run_Road> activeRoads = new List<Run_Road>();                 //추가
+    private List<Run_Road> inactiveRoads = new List<Run_Road>();               //추가
 
 
     private void Start()
     {
-        List<Run_Road> roads = new List<Run_Road>();
+        //List<Run_Road> roads = new List<Run_Road>();
+        foreach (var road in roads)
+        {
+            road.gameObject.SetActive(false);
+            inactiveRoads.Add(road);
+        }
     }
 
     /// <summary>
@@ -22,30 +28,20 @@ public class Run_RoadSpawner : MonoBehaviour
     /// </summary>
     public  void InstantiateRoad(Vector3 spawnPosition, Vector3 spawnDir)
     {
-        Run_Road road = roads[Random.Range(0, roads.Count)];
-        roads.Remove(road);
+        int randomIndex = Random.Range(0, inactiveRoads.Count);     //추가
+        Run_Road road = inactiveRoads[randomIndex];                 //추가
+        inactiveRoads.RemoveAt(randomIndex);                        //추가
+        activeRoads.Add(road);                                      //추가
+        //추가
+        //Run_Road road = roads[Random.Range(0, roads.Count)];
+        //roads.Remove(road);
         road.transform.position = spawnPosition;
         road.transform.forward = spawnDir;
         lastRoad = road;
         road.gameObject.SetActive(true);
-        if(roads == null)
-        {
-            roads.Add(road);
-        }
-        //if(road_q.Count==0)
-        //{
-        //    r_index = Random.Range(0, road_q.Count);
-        //    GameObject road  = Instantiate(roadPreFabs[r_index], tempPos.position, Quaternion.identity);
-        //    this.gameObject.SetActive(false);
-        //    return road;
-        //}
-        //else
-        //{
-        //    GameObject road = road_q.Dequeue();
-        //    return road;
-        //}
-    }
 
+    }
+  
 
     public void ReturnList(Transform parentTransform,string layerName)
     {
@@ -59,19 +55,29 @@ public class Run_RoadSpawner : MonoBehaviour
         //여기서는 리스트로 다시 돌아가는 계산만 해줄꺼
         
             Debug.Log("아 오브젝트 비활성화 준비");
-        this.gameObject.SetActive(false);
+            //gameObject.SetActive(false);
             Debug.Log("아 오브젝트 비활성화 완료");
 
         //여기서 비활성화한 오브젝트의 자식객체의 Layer를 탐색하여 다시 Tile로 바꿔줌
+        Transform parentTranform = this.transform;
         foreach (Transform childTransform in parentTransform)
         {
             if (childTransform.name == "Water")
             {
                 childTransform.gameObject.layer = 6;
-                
+                print("레이어 6번으로 바뀌었습니다.");
             }
-
         }
+
         
+
     }
+    public void ReturnToPool(Run_Road road)
+    {
+        ReturnList(road.transform,"Tile");
+        road.gameObject.SetActive(false);
+        activeRoads.Remove(road);
+        inactiveRoads.Add(road);
+    }
+
 }
