@@ -23,7 +23,9 @@ public class UI_GoToScene : MonoBehaviour
         Time.timeScale = 1.0f;
         if (fadeBoard)
         {
-            fadeBoard.DOFade(0, 5f).OnComplete(() => SceneManager.LoadScene(sceneNumber));
+            fadeBoard.color = new Color(0, 0, 0, 0);
+            fadeBoard.gameObject.SetActive(true);
+            fadeBoard.DOFade(1, 3.5f).OnComplete(() => SceneManager.LoadScene(sceneNumber));
         }
         else
         {
