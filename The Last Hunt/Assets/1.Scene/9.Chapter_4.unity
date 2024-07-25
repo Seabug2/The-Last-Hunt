@@ -10008,6 +10008,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
+      - m_Target: {fileID: 2710364035735481828}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
   timer: {fileID: 1088100374}
   currentScore: {fileID: 2134675719}
   bestScore: {fileID: 489929590}
@@ -15526,7 +15538,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13c1a19f24bc01c40a29fe6ab5a7cc13, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sceneNumber: 9
+  fadeBoard: {fileID: 0}
+  FadeOutEvent:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!4 &1439760705 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 9078290346955189337, guid: 31144460ee7cf744a8374e0a5556fddb, type: 3}
@@ -20139,7 +20154,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2134231728
 RectTransform:
   m_ObjectHideFlags: 0
@@ -20266,7 +20281,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13c1a19f24bc01c40a29fe6ab5a7cc13, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sceneNumber: 0
+  fadeBoard: {fileID: 0}
+  FadeOutEvent:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &2134675716
 GameObject:
   m_ObjectHideFlags: 0
@@ -47830,7 +47848,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13c1a19f24bc01c40a29fe6ab5a7cc13, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sceneNumber: 0
+  fadeBoard: {fileID: 0}
+  FadeOutEvent:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &2961594435678312721
 GameObject:
   m_ObjectHideFlags: 0
@@ -49706,7 +49727,7 @@ PrefabInstance:
       objectReference: {fileID: 8300000, guid: 946cfec7e67e79f48bd62c12cc377ec6, type: 3}
     - target: {fileID: 1465019383, guid: 53df01ac724c8f0478d01711790d1aed, type: 3}
       propertyPath: BypassReverbZones
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1465019383, guid: 53df01ac724c8f0478d01711790d1aed, type: 3}
       propertyPath: OutputAudioMixerGroup
@@ -49831,6 +49852,10 @@ PrefabInstance:
     - target: {fileID: 4879094753263337379, guid: 53df01ac724c8f0478d01711790d1aed, type: 3}
       propertyPath: FallingEvent.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.AudioClip, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 4879094753263337380, guid: 53df01ac724c8f0478d01711790d1aed, type: 3}
+      propertyPath: rotSpeed
+      value: 700
       objectReference: {fileID: 0}
     - target: {fileID: 4879094753263337380, guid: 53df01ac724c8f0478d01711790d1aed, type: 3}
       propertyPath: m_Enabled
@@ -50426,6 +50451,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 712515503}
     m_Modifications:
+    - target: {fileID: 145909424836429771, guid: 64dacc47807390447aa532b5a02a82b5, type: 3}
+      propertyPath: BypassReverbZones
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 145909424836429771, guid: 64dacc47807390447aa532b5a02a82b5, type: 3}
+      propertyPath: OutputAudioMixerGroup
+      value: 
+      objectReference: {fileID: 7063044450789205771, guid: 14af5919092fdc048ac56cb7940ed04c, type: 2}
     - target: {fileID: 227264478951622849, guid: 64dacc47807390447aa532b5a02a82b5, type: 3}
       propertyPath: m_Name
       value: NukeConeExplosionFire
