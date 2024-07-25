@@ -33,6 +33,7 @@ public class Rhythm_AnimalPooling : MonoBehaviour
         Rhythm_AnimalController animal = AnimalList[Random.Range(0, AnimalList.Count)];
         AnimalList.Remove(animal);
         ActiveQueue.Add(animal);
+        animal.transform.position = Spawner.position;
         animal.gameObject.SetActive(true);
         animal.gameObject.GetComponent<Rigidbody>().AddTorque(Random.insideUnitSphere * 10f, ForceMode.Impulse);
         Rhythm_SoundManager.instance.PlaySFX("Cue");
