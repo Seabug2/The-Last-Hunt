@@ -1,13 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 using System.IO;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
 
-    
+    /// <summary>
+    /// 여기에 클리어한 점수를 기록합니다.
+    /// </summary>
+    public float[] currentGameScore = new float[4];
+    public AudioMixer audioMixer;
 
     private void Awake()
     {
@@ -17,17 +22,25 @@ public class GameManager : MonoBehaviour
             DontDestroyOnLoad(this.gameObject);
 
             isStoryMode = true;
-
             path = Path.Combine(Application.dataPath, "UserData.json");
             LoadJson();
-
-
-
         }
         else
         {
             Destroy(this.gameObject);
         }
+    }
+
+    private void Start()
+    {
+        MixerSetting();
+    }
+
+    void MixerSetting()
+    {
+        audioMixer.SetFloat("Master", PlayerPrefs.GetFloat("AudioLevel_Master", 0));
+        audioMixer.SetFloat("BGM", PlayerPrefs.GetFloat("AudioLevel_BGM", 0));
+        audioMixer.SetFloat("SFX", PlayerPrefs.GetFloat("AudioLevel_SFX", 0));
     }
 
     /// <summary>

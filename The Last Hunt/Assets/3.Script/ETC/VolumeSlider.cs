@@ -1,9 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Audio;
-using static UnityEngine.Rendering.DebugUI;
 
 public class VolumeSlider : MonoBehaviour
 {
@@ -18,34 +15,28 @@ public class VolumeSlider : MonoBehaviour
 
     public AudioMixer audioMixer;
     Slider slider;
-
     private void Awake()
+    {
+        slider = GetComponent<Slider>();
+    }
+
+    private void Start()
     {
         SliderSet();
     }
-
     void SliderSet()
     {
-        slider = GetComponent<Slider>();
-        slider.maxValue = 0;
-        slider.minValue = -20;
-        float value;
+        float value = 0;
         switch (m_Group)
         {
             case AudioGroup.Master:
                 value = PlayerPrefs.GetFloat("AudioLevel_Master");
-                audioMixer.SetFloat("Master", value);
                 break;
             case AudioGroup.BGM:
                 value = PlayerPrefs.GetFloat("AudioLevel_BGM");
-                audioMixer.SetFloat("BGM", value);
                 break;
             case AudioGroup.SFX:
                 value = PlayerPrefs.GetFloat("AudioLevel_SFX");
-                audioMixer.SetFloat("SFX", value);
-                break;
-            default:
-                value = 0;
                 break;
         }
         slider.value = value;
@@ -53,11 +44,10 @@ public class VolumeSlider : MonoBehaviour
 
     public void VolumeControl(float value)
     {
-        value = Mathf.FloorToInt(value);
-        
+        print("asd");
         if (value <= -20)
         {
-            value = -80;
+            value = -80f;
         }
 
         switch (m_Group)
