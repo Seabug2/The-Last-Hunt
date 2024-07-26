@@ -7,16 +7,17 @@ using DG.Tweening;
 
 public class Rhythm_ChapterManager : MonoBehaviour
 {
-    public float Gamespeed = 1f;
+    public static float GameSpeed = 1.0f;
+    public static int Wave = 1;
     public int Maxcount = 0;
     public int Hitcount = 0;
     public int Misscount = 0;
     public float percent = 0;
     private int notskip = 1;
-    public bool BGMisPlaying, BGMisPausing;
+    public bool MainBGMisPlaying, isPausing;
     Animator judgeAnimation;
 
-    [SerializeField] private GameObject resultUI, introUI, Menu, NoteUI, BestScore;
+    [SerializeField] private GameObject resultUI, introUI, Menu, NoteUI, BestScore, IntroBlackbg;
     [SerializeField] private Animator Hunter_ani;
 
     [SerializeField] private Sprite[] judgeImages;
@@ -25,7 +26,7 @@ public class Rhythm_ChapterManager : MonoBehaviour
     [Header("결과")]
     [SerializeField] private Image ClearImage, NextButtonImage;
     [SerializeField] private Sprite ClearSP, FailSP;
-    [SerializeField] private Text maxT, hitT, missT, scoreT, RecordT;
+    [SerializeField] private Text SkipMessage, maxT, hitT, missT, scoreT, RecordT;
     [SerializeField] private GameObject NextButton, MainButton;
 
     [Header("카메라")]
@@ -123,14 +124,16 @@ public class Rhythm_ChapterManager : MonoBehaviour
 
     private void StartBGM()
     {
+        SkipMessage.text = "";
+        IntroBlackbg.SetActive(false);
         introUI.SetActive(false);
         Hunter_ani.SetTrigger("StartBGM");
         Rhythm_SoundManager.instance.PlayBGM("BGM");
         mainBcam.Priority = mainVcam.Priority + 1;
         Menu.SetActive(true);
         NoteUI.SetActive(true);
-        BGMisPlaying = true;
-        BGMisPausing = false;
+        MainBGMisPlaying = true;
+        isPausing = false;
     }
     public void JudgeResult(int hit)
     {
@@ -168,6 +171,30 @@ public class Rhythm_ChapterManager : MonoBehaviour
         ResultAppear();
     }
 
+    public void NextWave()
+    {
+        MainBGMisPlaying = false;
+        if (Wave.Equals(3))
+        {
+            Invoke("ResultAppear", 1.5f);
+        }
+        else
+        {
+            Rhythm_SoundManager.instance.PlayBGM("SpeedUp");
+            Wave++;
+            GameSpeed += 0.15f;
+            introUI.SetActive(true);
+            ShowMessage("스피드 업!", 1.5f);
+            Invoke("BGMAgain", 4.5f / GameSpeed);
+        }
+    }
+    private void BGMAgain()
+    {
+        MainBGMisPlaying = true;
+        Rhythm_SoundManager.instance.BGMPlayer.pitch = GameSpeed;
+        Rhythm_SoundManager.instance.PlayBGM("BGM");
+    }
+
     public void ResultAppear()
     {
         if (GameManager.instance.IsStoryMode) MainButton.SetActive(false);
@@ -176,7 +203,7 @@ public class Rhythm_ChapterManager : MonoBehaviour
         resultVcam.Priority = mainBcam.Priority + 1;
         Menu.SetActive(false);
         NoteUI.SetActive(false);
-        BGMisPlaying = false;
+        MainBGMisPlaying = false;
         percent = (100f * Maxcount + 60 * Hitcount) / (Maxcount + Hitcount + Misscount);
         resultUI.SetActive(true);
 

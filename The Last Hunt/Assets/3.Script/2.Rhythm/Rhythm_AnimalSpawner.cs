@@ -18,56 +18,59 @@ public class Rhythm_AnimalSpawner : MonoBehaviour
         animal_appear = new int[127]
         {
             0,0,0,0,0,0,0,0,0,0,
-            0,0,1,0,0,0,0,0,0,0,
-            1,0,0,0,0,0,0,0,1,0,
-            0,0,1,0,0,0,1,0,0,1,
-            1,0,0,0,1,0,0,0,0,0,
-            0,0,1,0,0,0,0,0,0,0,
+            0,0,1,0, 0,0,3,4,
+            0,0,1,0, 0,3,4,0,
+            0,0,1,0, 4,0,1,3,
+            0,0,1,0 ,0,1,1,0,
 
-            1,0,0,0,1,0,0,0,1,0,
-            0,0,1,0,0,0,1,0,0,0,
-            1,0,0,0,1,0,0,1,1,0,
-            0,0,1,0,0,0,1,0,0,0,
-            1,0,0,0,1,1,0,0,1,0,
+            0,0,1,0, 0,3,0,2,
+            0,0,1,0, 0,2,3,4,
+            0,0,1,0, 0,0,1,3,
+            0,0,1,0, 0,2,1,2,
+            0,0,1,0, 3,0,1,4,
+            0,2,1,0, 3,1,1,0,
 
-            0,0,1,1,0,0,1,0,0,0,
-            1,1,0,0,0,0,0
+            0,0,1,0, 0,2,1,0,
+            0,0,1,0, 0,2,1,1,
+            0,0,1,0, 2,3,1,1,
+            0,4,1,0, 4,3,1,1,
+            0,0,0,0,0
         };
         checkTime = AudioSettings.dspTime;
     }
 
     private void Update()
     {
-        if (count > 126 || !Rhythm_SoundManager.instance.BGMisPlaying() || Rhythm_ChapterManager.instance.BGMisPausing)
+        if (count > 126 || !Rhythm_ChapterManager.instance.MainBGMisPlaying || Rhythm_ChapterManager.instance.isPausing)
         {
             checkTime = AudioSettings.dspTime;
             return;
         }
 
-        current_time += AudioSettings.dspTime - checkTime;
+        current_time += (AudioSettings.dspTime - checkTime) * Rhythm_ChapterManager.GameSpeed;
         checkTime = AudioSettings.dspTime;
 
         if (current_time > 60d / BPM)
         {
-            if (animal_appear[count] < 1)
-            {
-                // 안 나오는 박자
-            }
-            else
+            if (animal_appear[count] > 0 && animal_appear[count] < Rhythm_ChapterManager.Wave + 2)
             {
                 Rhythm_AnimalPooling.instance.GetObjectFromPool();
             }
             count++;
             if (count > 126)
             {
-                Invoke("ResultAppear", 1.5f);
+                Invoke("NextWave", 1.0f);
             }
             current_time -= (60d / BPM);
         }
     }
 
-    private void ResultAppear()
+    private void NextWave()
     {
-        Rhythm_ChapterManager.instance.ResultAppear();
+        if (Rhythm_ChapterManager.Wave < 3)
+        {
+            count = 5;
+        }
+        Rhythm_ChapterManager.instance.NextWave();
     }
 }
