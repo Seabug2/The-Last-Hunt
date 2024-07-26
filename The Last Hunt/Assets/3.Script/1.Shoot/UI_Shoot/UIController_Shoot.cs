@@ -44,7 +44,7 @@ public class UIController_Shoot : MonoBehaviour
     private int ReindeerKill_Score;
     private int BoarKill_Score;
     private int WolfKill_Score;
-    public int TotalKill_Score; // Remember to change to Float
+    public int TotalKill_Score; // Change to Float?
 
     private void Awake()
     {
@@ -92,7 +92,6 @@ public class UIController_Shoot : MonoBehaviour
             for (float i = 2; i >= 0; i -= Time.deltaTime)
             {
                 fade.color = new Color(0, 0, 0, i);
-                print("asd");
                 yield return null;
             }
         }
