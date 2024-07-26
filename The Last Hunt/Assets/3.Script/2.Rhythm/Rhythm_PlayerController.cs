@@ -28,7 +28,7 @@ public class Rhythm_PlayerController : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            if (Hunter_ani.GetCurrentAnimatorStateInfo(0).IsName("BeforeBGM") && !Rhythm_ChapterManager.instance.BGMisPlaying)
+            if (Hunter_ani.GetCurrentAnimatorStateInfo(0).IsName("BeforeBGM") && !Rhythm_ChapterManager.instance.MainBGMisPlaying)
             {
                 Rhythm_ChapterManager.instance.SkipIntro();
             }
@@ -36,13 +36,13 @@ public class Rhythm_PlayerController : MonoBehaviour
         }
 
         // BGM 재생 중 아닐 때 -> 무시
-        if (!Rhythm_ChapterManager.instance.BGMisPlaying || Rhythm_ChapterManager.instance.BGMisPausing)
+        if (!Rhythm_ChapterManager.instance.MainBGMisPlaying || Rhythm_ChapterManager.instance.isPausing)
         {
             return;
         }
 
         // 마지막 스윙에서 0.2초 안 지났을 때(무지성 연타 방지)
-        if (AudioSettings.dspTime - lastSwing < 0.2)
+        if ((AudioSettings.dspTime - lastSwing) * Rhythm_ChapterManager.GameSpeed < 0.2) 
         {
             return;
         }
