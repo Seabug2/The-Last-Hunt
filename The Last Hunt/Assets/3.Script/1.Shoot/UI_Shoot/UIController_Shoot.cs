@@ -176,7 +176,7 @@ public class UIController_Shoot : MonoBehaviour
 
     public void ResultScreen()
     {
-        if (TotalKill_Score >= 2000)
+        if (TotalKill_Score >= 4000)
         {
             if (!GameManager.instance.IsStoryMode)
             {
