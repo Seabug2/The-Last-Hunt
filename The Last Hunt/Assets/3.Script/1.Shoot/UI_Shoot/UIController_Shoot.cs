@@ -28,6 +28,8 @@ public class UIController_Shoot : MonoBehaviour
     [SerializeField] private GameObject wind;
     [SerializeField] private Text windText;
 
+    [SerializeField] private Image fade;
+
     public bool isNoMessage
     {
         get
@@ -42,10 +44,12 @@ public class UIController_Shoot : MonoBehaviour
     private int ReindeerKill_Score;
     private int BoarKill_Score;
     private int WolfKill_Score;
-    public int TotalKill_Score; // Remember to change to Float
+    public int TotalKill_Score; // Change to Float?
 
     private void Awake()
     {
+        Time.timeScale = 0;
+        StartCoroutine(Fade_co(true));
         DeerKill_Score = 0;
         ReindeerKill_Score = 0;
         BoarKill_Score = 0;
@@ -55,9 +59,11 @@ public class UIController_Shoot : MonoBehaviour
         GameOver.SetActive(false);
     }
 
-    private void Start()
+    private IEnumerator Start()
     {
+        yield return new WaitForSeconds(1.5f);
         ShowMessage(Header_Text.text);
+        Time.timeScale = 1;
     }
 
     private void Update()
@@ -76,6 +82,33 @@ public class UIController_Shoot : MonoBehaviour
         Quaternion windSpin = Quaternion.Euler(0, 0, -windDelta);
         wind.transform.rotation = windSpin;
         windText.text = string.Format("{0:#.0} m/s", Wind_Shoot.windStr * 200);
+    }
+
+    private IEnumerator Fade_co(bool isFadeIn)
+    {
+        fade.gameObject.SetActive(true);
+        if (isFadeIn)
+        {
+            for (float i = 2; i >= 0; i -= Time.deltaTime)
+            {
+                fade.color = new Color(0, 0, 0, i);
+                yield return null;
+            }
+        }
+        else
+        {
+            Debug.Log("FadeOut");
+            Time.timeScale = 1;
+            for (float i = 0; i <= 2; i += Time.deltaTime)
+            {
+                fade.color = new Color(0, 0, 0, i);
+                print(Time.deltaTime);
+                print(i);
+                yield return null;
+            }
+
+        }
+        fade.gameObject.SetActive(false);
     }
 
     public void ShowMessage(string message, float time = 1)
@@ -143,7 +176,7 @@ public class UIController_Shoot : MonoBehaviour
 
     public void ResultScreen()
     {
-        if (TotalKill_Score >= 2000)
+        if (TotalKill_Score >= 4000)
         {
             if (!GameManager.instance.IsStoryMode)
             {
@@ -165,16 +198,40 @@ public class UIController_Shoot : MonoBehaviour
 
     public void NextCh()
     {
+        StartCoroutine(NextCh_co());
+    }
+
+    private IEnumerator NextCh_co()
+    {
+        StartCoroutine(Fade_co(false));
+        yield return new WaitForSeconds(1f);
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 
     public void Restart()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        StartCoroutine(Restart_co());
+    }
+
+    private IEnumerator Restart_co()
+    {
+        Time.timeScale = 1.0f;
+        DOTween.KillAll();
+        StartCoroutine(Fade_co(false));
+        yield return new WaitForSeconds(1f);
+        Scene currentScene = SceneManager.GetActiveScene();
+        SceneManager.LoadScene(currentScene.buildIndex);
     }
 
     public void MainMenu()
     {
+        StartCoroutine(MainMenu_co());
+    }
+
+    private IEnumerator MainMenu_co()
+    {
+        StartCoroutine(Fade_co(false));
+        yield return new WaitForSeconds(1f);
         SceneManager.LoadScene(0);
     }
 

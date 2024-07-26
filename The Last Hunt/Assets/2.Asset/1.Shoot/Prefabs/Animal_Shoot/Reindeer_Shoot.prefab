@@ -11650,7 +11650,7 @@ MonoBehaviour:
   isStealthy: 0
   constrainedToZone: 0
   peacefulTowards: []
-  matchSurfaceRotation: 0
+  matchSurfaceRotation: 1
   surfaceRotationSpeed: 2
   logChanges: 0
   showGizmos: 1

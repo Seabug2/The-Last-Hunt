@@ -21,7 +21,7 @@ public class BowController_Shoot : MonoBehaviour
         p_controller = GetComponentInParent<PlayerController_Shoot>();
         TryGetComponent(out bow_ani);
         TryGetComponent(out audio_s);
-        arrowPrefab.SetActive(false);
+        //arrowPrefab.SetActive(false);
         ammo = p_controller.ammoRemain;
     }
     
@@ -31,20 +31,20 @@ public class BowController_Shoot : MonoBehaviour
         {
             if (input.isKnock)
             {
-                arrowPrefab.SetActive(true);
+                //arrowPrefab.SetActive(true);
                 bow_ani.SetBool("isDraw", true);
                 audio_s.PlayOneShot(drawClip);
                 isKnock = true;
             }
             else if (input.isKnockCancel)
             {
-                arrowPrefab.SetActive(false);
+                //arrowPrefab.SetActive(false);
                 bow_ani.SetBool("isDraw", false);
                 isKnock = false;
             }
             if (input.isFire && isKnock)
             {
-                arrowPrefab.SetActive(false);
+                //arrowPrefab.SetActive(false);
                 bow_ani.SetBool("isDraw", false);
                 audio_s.PlayOneShot(looseClip);
                 ammo--;

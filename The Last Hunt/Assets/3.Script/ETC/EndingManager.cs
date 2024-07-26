@@ -39,6 +39,7 @@ public class EndingManager : MonoBehaviour
         TheEnd_text.text = "The End...";
         yield return new WaitForSeconds(0.5f);
         TheEnd_text.text = "The End...?";
+        audio_s.Play();
         yield return new WaitForSeconds(3f);
 
         for (float i = 0; i <= 3; i += Time.deltaTime)
@@ -55,7 +56,6 @@ public class EndingManager : MonoBehaviour
             yield return null;
         }
 
-        audio_s.Play();
         credit_ani.SetTrigger("EndRoll");
         while (audio_s.isPlaying)
         {

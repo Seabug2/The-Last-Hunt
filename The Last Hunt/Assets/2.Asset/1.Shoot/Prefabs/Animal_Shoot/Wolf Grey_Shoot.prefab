@@ -275,7 +275,7 @@ MonoBehaviour:
   healthUI: {fileID: 0}
   aggression: 0
   originalAggression: 0
-  isTerritoral: 0
+  isTerritoral: 1
   isStealthy: 0
   constrainedToZone: 0
   peacefulTowards: []
@@ -2172,8 +2172,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 3, y: 3}
+  m_AnchoredPosition: {x: 0, y: 0.1}
+  m_SizeDelta: {x: 4, y: 4}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &1871388372387645188
 Canvas:

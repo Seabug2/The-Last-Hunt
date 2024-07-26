@@ -10,6 +10,7 @@ public class PlayerController_Shoot : MonoBehaviour
     [SerializeField] private Animator player_ani;
     [SerializeField] private AudioSource audio_s;
 
+    [SerializeField] private MapData_Shoot Map_Data;
     [SerializeField] private Archery_Data_Shoot Archery_Data;
     public int ammoRemain = 0;
 
@@ -53,7 +54,7 @@ public class PlayerController_Shoot : MonoBehaviour
         {
             isMoving = false;
         }
-
+        
         if (isMoving)
         {
             if (!audio_s.isPlaying)
@@ -108,17 +109,19 @@ public class PlayerController_Shoot : MonoBehaviour
             }
         }
     }
-
+    
     private void MoveFB()
     {
         Vector3 MoveDirection = input.MoveFBValue * transform.forward * moveSpeed * Time.deltaTime;
         player_r.MovePosition(player_r.position + MoveDirection);
+        player_r.position = new Vector3(Mathf.Clamp(player_r.position.x, Map_Data.LimitMin.x, Map_Data.LimitMax.x), Mathf.Clamp(player_r.position.y, Map_Data.LimitMin.y, Map_Data.LimitMax.y), Mathf.Clamp(player_r.position.z, Map_Data.LimitMin.z, Map_Data.LimitMax.z));
     }
 
     private void MoveLR()
     {
         Vector3 MoveDirection = input.MoveLRValue * transform.right * moveSpeed * Time.deltaTime;
         player_r.MovePosition(player_r.position + MoveDirection);
+        player_r.position = new Vector3(Mathf.Clamp(player_r.position.x, Map_Data.LimitMin.x, Map_Data.LimitMax.x), Mathf.Clamp(player_r.position.y, Map_Data.LimitMin.y, Map_Data.LimitMax.y), Mathf.Clamp(player_r.position.z, Map_Data.LimitMin.z, Map_Data.LimitMax.z));
     }
 
     private void Rotate()
