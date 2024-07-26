@@ -2,6 +2,7 @@ using Cinemachine;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using DG.Tweening;
 
 public class UI_SelectChapter : MonoBehaviour
 {
@@ -37,8 +38,10 @@ public class UI_SelectChapter : MonoBehaviour
 
     public void ShiftVirtualCamera(int num)
     {
+        if (brain.IsBlending) return;
+
         brain.ActiveVirtualCamera.Priority = 0;
-        selectedNum +=  num;
+        selectedNum += num;
 
         if (selectedNum < 0 || selectedNum >= cameras.Length)
         {
@@ -60,7 +63,14 @@ public class UI_SelectChapter : MonoBehaviour
     public void GotoChapter()
     {
         if (selectedNum < 0 || selectedNum >= cameras.Length) return;
-        SceneManager.LoadScene(SceneNumber[selectedNum]);
+        if (fadeBoard)
+        {
+            fadeBoard.color = new Color(0, 0, 0, 0);
+            fadeBoard.gameObject.SetActive(true);
+            fadeBoard.DOFade(1, 4f).OnComplete(() => SceneManager.LoadScene(SceneNumber[selectedNum]));
+        }
+        else SceneManager.LoadScene(SceneNumber[selectedNum]);
     }
 
+    public Image fadeBoard;
 }

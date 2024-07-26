@@ -44,7 +44,6 @@ public class VolumeSlider : MonoBehaviour
 
     public void VolumeControl(float value)
     {
-        print("asd");
         if (value <= -20)
         {
             value = -80f;

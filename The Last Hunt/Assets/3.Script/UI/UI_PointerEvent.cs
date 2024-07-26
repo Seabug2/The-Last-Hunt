@@ -5,6 +5,7 @@ using UnityEngine.EventSystems;
 public class UI_PointerEvent : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
 {
     public UnityEvent OnClickEvent;
+    public UnityEvent OnEnterEvent;
 
     private void Start()
     {
@@ -17,7 +18,7 @@ public class UI_PointerEvent : MonoBehaviour, IPointerEnterHandler, IPointerExit
     {
         transform.localScale = Vector3.one * 1.1f;
         transform.localRotation = Quaternion.identity;
-
+        OnEnterEvent?.Invoke();
     }
 
     public void OnPointerExit(PointerEventData eventData)
