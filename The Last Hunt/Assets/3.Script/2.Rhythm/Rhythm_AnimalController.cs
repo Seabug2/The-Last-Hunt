@@ -52,7 +52,7 @@ public class Rhythm_AnimalController : MonoBehaviour
             checkTime = AudioSettings.dspTime;
             return;
         }
-        t += (AudioSettings.dspTime - checkTime) * 0.9 * Rhythm_ChapterManager.GameSpeed;
+        t += (AudioSettings.dspTime - checkTime) * 0.9 * Rhythm_ChapterManager.instance.GameSpeed;
         checkTime = AudioSettings.dspTime;
 
         transform.position = Vector3.Lerp(startPosition, endPosition, (float)t);
@@ -73,17 +73,5 @@ public class Rhythm_AnimalController : MonoBehaviour
     }
 
 
-    public RectTransform[] rects;
-    [ContextMenu("View")]
-    public void SETTTT(){
-        Vector3 tartPos = arrowsRT.position + Vector3.up * 1400;
-        Vector3 ndPos = tartPos + Vector3.down * (1400 / 0.825f);
-
-        rects[0].position = Vector2.Lerp(tartPos , ndPos, 0.785f);
-        rects[1].position = Vector2.Lerp(tartPos , ndPos, 0.795f);
-        rects[2].position = Vector2.Lerp(tartPos , ndPos, 0.855f);
-        rects[3].position = Vector2.Lerp(tartPos , ndPos, 0.865f);
-
-    }
 
 }
