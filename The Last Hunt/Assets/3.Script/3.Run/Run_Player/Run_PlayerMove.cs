@@ -4,23 +4,25 @@ using UnityEngine;
 
 public class Run_PlayerMove : MonoBehaviour
 {
-    [SerializeField] private float forwardSpeed;
+    [SerializeField] public float forwardSpeed;
     [SerializeField] private float rotationSpeed;
     [SerializeField] private float JumpForce;
+    [SerializeField] private float gravityForce;
     //public int jumpCount =1, slideCount = 1;
 
     public bool isJump = false;
     public bool isSlide = false;
 
     private float x;
-    private Rigidbody Player_rig;
+    private Rigidbody player_rig;
     private CapsuleCollider player_c;
     private Animator player_ani;
+    
     private Vector3 moveDir = Vector3.zero;
 
     private void Start()
     {
-        Player_rig = GetComponent<Rigidbody>();
+        player_rig = GetComponent<Rigidbody>();
         player_c = GetComponent<CapsuleCollider>();
         player_ani = GetComponent<Animator>();
     }
@@ -30,6 +32,7 @@ public class Run_PlayerMove : MonoBehaviour
         //Jump();
         //Sliding();
         //코루틴으로 할지 고민
+        AddGravity();
     }
 
 
@@ -37,11 +40,12 @@ public class Run_PlayerMove : MonoBehaviour
     {
         if (!isJump)
             MoveForward();
+        
     }
 
     private void MoveForward()
     {
-        Player_rig.velocity = transform.forward * Time.fixedDeltaTime * forwardSpeed;
+        player_rig.velocity = transform.forward * Time.fixedDeltaTime * forwardSpeed;
 
         //transform.Translate(transform.forward * forwardSpeed * Time.deltaTime);
         //Vector3 forwardMove = transform.forward * forwardSpeed * Time.fixedDeltaTime;
@@ -50,6 +54,10 @@ public class Run_PlayerMove : MonoBehaviour
 
 
         //나중에 코너 때문에 transform.Forward를 조건에 맞게 바꿔야함.
+    }
+    private void AddGravity()
+    {
+        player_rig.AddForce(Vector3.down * gravityForce, ForceMode.Impulse);
     }
     //private void Jump()
     //{
@@ -100,7 +108,7 @@ public class Run_PlayerMove : MonoBehaviour
             player_ani.SetBool("isJump", true);
             player_ani.SetBool("isRun", false);
             Debug.Log("isJump_animation은 True입니다.");
-            Player_rig.AddForce(new Vector3(0, JumpForce, 0), ForceMode.VelocityChange);
+            player_rig.AddForce(new Vector3(0, JumpForce, 0), ForceMode.VelocityChange);
 
         }
 
@@ -118,6 +126,7 @@ public class Run_PlayerMove : MonoBehaviour
         isSlide = true;
         player_ani.SetBool("isSlide", true);
         player_ani.SetBool("isRun", false);
+        player_c.height = 1;
         Debug.Log("isSlide는 True입니다.");
     }
     public void EndSlide()//슬라이드 animation Keyframe에 추가할 메서드
@@ -125,6 +134,7 @@ public class Run_PlayerMove : MonoBehaviour
         isSlide = false;
         player_ani.SetBool("isSlide", false);
         player_ani.SetBool("isRun", true);
+        player_c.height = 2;
         Debug.Log("isSlide는 false입니다.");
 
     }
@@ -153,16 +163,17 @@ public class Run_PlayerMove : MonoBehaviour
             //x = Input.GetAxisRaw("Horizontal");
             //Player_rig.AddForce(new Vector3(x, 0, 0));
 
-            if(Input.GetKey(KeyCode.D))
+            if(Input.GetKey(KeyCode.D)||Input.GetKey(KeyCode.RightArrow))
             {
                 transform.position += transform.right * rotationSpeed * Time.deltaTime;
             }
-            if(Input.GetKey(KeyCode.A))
+            if(Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
             {
                 transform.position -= transform.right * rotationSpeed * Time.deltaTime;
             }
 
         }
+       
             
     }
     // private IEnumerator Jump_co()
@@ -205,6 +216,18 @@ public class Run_PlayerMove : MonoBehaviour
     //     
     //    
     // }
+    public void PlayerDie()
+    {
 
-
+    }
+    public void RemoveFowardSpeed()
+    {
+        StartCoroutine("Remove_forward");
+    }
+    private IEnumerator Remove_forward()
+    {
+        forwardSpeed = 0;
+        yield return new WaitForSeconds(4f);
+        forwardSpeed = 1000;
+    }
 }

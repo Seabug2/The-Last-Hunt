@@ -10,7 +10,7 @@ public class Run_Road : MonoBehaviour
     [SerializeField]
     GameObject[] myObstacle;
     Run_RoadSpawner spawner;
-
+    public GameObject obstacleRoad;//길이 점프를 해야하는 길이면 이 오브젝트를 끄겠다
     private void Awake()
     {
         spawner = FindObjectOfType<Run_RoadSpawner>();
@@ -39,7 +39,7 @@ public class Run_Road : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             spawner.InstantiateRoad(nextRoadPosition.position, nextRoadPosition.forward);
-            //spawner.ReturnToPool(this);
+            
         }
         else if (other.CompareTag("Animal"))
         {
@@ -50,7 +50,52 @@ public class Run_Road : MonoBehaviour
         }
     }
 
-  
+    public void OnEnableObstacle()
+    {
+        int randomValue = Random.Range(0, 2);
+        int randomIndex = Random.Range(0, myObstacle.Length);
+        /*
+        if (randomValue == 0)
+        {
+            obstacleRoad.SetActive(false);
+            
+            Debug.Log("value는 0입니다.");
+            return;
+            //for jump
+        }
+        else if(randomValue != 0)
+        {
+
+            obstacleRoad.SetActive(true);
+
+            Debug.Log("value는 1입니다.");
+            // 모든 장애물을 비활성화
+            for (int i = 0; i < myObstacle.Length; i++)
+            {
+                
+                if (i == randomIndex) 
+                myObstacle[i].SetActive(true);
+               else
+                myObstacle[i].SetActive(false);
+                    
+            }
+            return;
+        }
+        */
+        obstacleRoad.SetActive(true);
+
+        Debug.Log("value는 1입니다.");
+        // 모든 장애물을 비활성화
+        for (int i = 0; i < myObstacle.Length; i++)
+        {
+
+            if (i == randomIndex)
+                myObstacle[i].SetActive(true);
+            else
+                myObstacle[i].SetActive(false);
+
+        }
+    }
 
 
 }

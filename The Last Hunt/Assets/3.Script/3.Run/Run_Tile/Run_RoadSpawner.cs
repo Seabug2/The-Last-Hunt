@@ -11,7 +11,8 @@ public class Run_RoadSpawner : MonoBehaviour
 
     private List<Run_Road> activeRoads = new List<Run_Road>();                 //추가
     private List<Run_Road> inactiveRoads = new List<Run_Road>();               //추가
-
+    [SerializeField]
+    LayerMask turningLayer;
 
     private void Start()
     {
@@ -21,6 +22,7 @@ public class Run_RoadSpawner : MonoBehaviour
             road.gameObject.SetActive(false);
             inactiveRoads.Add(road);
         }
+        
     }
 
     /// <summary>
@@ -38,6 +40,7 @@ public class Run_RoadSpawner : MonoBehaviour
         road.transform.position = spawnPosition;
         road.transform.forward = spawnDir;
         lastRoad = road;
+        road.OnEnableObstacle();
         road.gameObject.SetActive(true);
 
     }
@@ -51,6 +54,7 @@ public class Run_RoadSpawner : MonoBehaviour
         if(layer ==-1)
         {
             Debug.Log($"Layer '{layerName}'이 없습니다.");
+            return;
         }
         //여기서는 리스트로 다시 돌아가는 계산만 해줄꺼
         
@@ -59,19 +63,16 @@ public class Run_RoadSpawner : MonoBehaviour
             Debug.Log("아 오브젝트 비활성화 완료");
 
         //여기서 비활성화한 오브젝트의 자식객체의 Layer를 탐색하여 다시 Tile로 바꿔줌
-        Transform parentTranform = this.transform;
+        //Transform parentTranform = this.transform;
         foreach (Transform childTransform in parentTransform)
         {
-            if (childTransform.name == "Water")
+            if (childTransform.gameObject.layer == 4)
             {
-                childTransform.gameObject.layer = 6;
-                print("레이어 6번으로 바뀌었습니다.");
+                childTransform.gameObject.layer = LayerMask.NameToLayer("Tile");
             }
         }
-
-        
-
     }
+
     public void ReturnToPool(Run_Road road)
     {
         ReturnList(road.transform,"Tile");
