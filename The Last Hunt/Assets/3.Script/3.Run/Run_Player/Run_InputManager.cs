@@ -7,6 +7,7 @@ public class Run_InputManager : MonoBehaviour
     public static Run_InputManager instance = null;
 
     private Animator player_ani;
+    public LayerMask originLayer;
 
     //public int jumpCount = 1, slideCount = 1;
     private void Awake()
@@ -64,7 +65,7 @@ public class Run_InputManager : MonoBehaviour
             {
 
                 Debug.Log("타일 첫째조건 클리어");
-                if (Input.GetKeyDown(KeyCode.D))
+                if (Input.GetKeyDown(KeyCode.D)||Input.GetKeyDown(KeyCode.RightArrow))
                 {
                     //우회전
                     transform.Rotate(new Vector3(0f, 90f, 0f));
@@ -74,7 +75,7 @@ public class Run_InputManager : MonoBehaviour
                     return;
                 }
                 
-                else if(Input.GetKeyDown(KeyCode.A))
+                else if(Input.GetKeyDown(KeyCode.A)||Input.GetKeyDown(KeyCode.LeftArrow))
                 {
                     //좌회전
                     transform.Rotate(new Vector3(0f, -90f, 0f));
