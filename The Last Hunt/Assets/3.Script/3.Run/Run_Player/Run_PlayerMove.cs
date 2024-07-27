@@ -12,6 +12,7 @@ public class Run_PlayerMove : MonoBehaviour
 
     public bool isJump = false;
     public bool isSlide = false;
+    private bool isDie = false;
 
     private float x;
     private Rigidbody player_rig;
@@ -32,19 +33,21 @@ public class Run_PlayerMove : MonoBehaviour
         //Jump();
         //Sliding();
         //코루틴으로 할지 고민
-        AddGravity();
+        if (isDie) return;
+            AddGravity();
     }
 
 
     private void FixedUpdate()
     {
-        if (!isJump)
+        if (!isJump&&!isDie)
             MoveForward();
         
     }
 
     private void MoveForward()
     {
+        if (isDie) return;
         player_rig.velocity = transform.forward * Time.fixedDeltaTime * forwardSpeed;
 
         //transform.Translate(transform.forward * forwardSpeed * Time.deltaTime);
@@ -57,6 +60,7 @@ public class Run_PlayerMove : MonoBehaviour
     }
     private void AddGravity()
     {
+        if (isDie) return;
         player_rig.AddForce(Vector3.down * gravityForce, ForceMode.Impulse);
     }
     //private void Jump()
@@ -100,6 +104,7 @@ public class Run_PlayerMove : MonoBehaviour
 
     public void PlayerJump()
     {
+        if (isDie) return;
         Debug.Log("PlayerJump 진입");
         if (!isJump && !isSlide)
         {
@@ -115,6 +120,7 @@ public class Run_PlayerMove : MonoBehaviour
     }
     public void EndJump()//점프 animation KeyFrame에 추가할 메서드
     {
+        if (isDie) return;
         isJump = false;
         player_ani.SetBool("isJump", false);
         player_ani.SetBool("isRun", true);
@@ -123,6 +129,7 @@ public class Run_PlayerMove : MonoBehaviour
 
     public void PlayerSlide()
     {
+        if (isDie) return;
         isSlide = true;
         player_ani.SetBool("isSlide", true);
         player_ani.SetBool("isRun", false);
@@ -131,6 +138,7 @@ public class Run_PlayerMove : MonoBehaviour
     }
     public void EndSlide()//슬라이드 animation Keyframe에 추가할 메서드
     {
+        if (isDie) return;
         isSlide = false;
         player_ani.SetBool("isSlide", false);
         player_ani.SetBool("isRun", true);
@@ -162,8 +170,9 @@ public class Run_PlayerMove : MonoBehaviour
 
             //x = Input.GetAxisRaw("Horizontal");
             //Player_rig.AddForce(new Vector3(x, 0, 0));
+            if (isDie) return;
 
-            if(Input.GetKey(KeyCode.D)||Input.GetKey(KeyCode.RightArrow))
+            if (Input.GetKey(KeyCode.D)||Input.GetKey(KeyCode.RightArrow))
             {
                 transform.position += transform.right * rotationSpeed * Time.deltaTime;
             }
@@ -218,7 +227,8 @@ public class Run_PlayerMove : MonoBehaviour
     // }
     public void PlayerDie()
     {
-
+        isDie = true;
+        //
     }
     public void RemoveFowardSpeed()
     {
