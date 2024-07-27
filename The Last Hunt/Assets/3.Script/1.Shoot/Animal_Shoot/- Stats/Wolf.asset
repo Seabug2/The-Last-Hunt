@@ -14,11 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dominance: 10
   stamina: 30
-  attack: 25
+  attack: 50
   health: 200
   aggression: 60
   attackSpeed: 2
-  isTerritorial: 0
+  isTerritorial: 1
   isStealthy: 0
   sensitivity: 5
   value: 1000

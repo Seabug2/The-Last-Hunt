@@ -694,6 +694,7 @@ public class AnimalController_Shoot : MonoBehaviour
         {
             isHitByArrow = true;
             playerAlertStage = PlayerAlertStage.Alerted;
+            playerAlertLevel = 150;
         }
     }
 
