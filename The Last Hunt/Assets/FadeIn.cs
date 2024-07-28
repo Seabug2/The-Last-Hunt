@@ -14,6 +14,6 @@ public class FadeIn : MonoBehaviour
     private void Start()
     {
         fadeBoard.color = Color.black;
-        fadeBoard.DOFade(0, 5).OnComplete(() => gameObject.SetActive(false));
+        fadeBoard.DOFade(0, 3.5f).SetEase(Ease.InQuint).OnComplete(() => gameObject.SetActive(false));
     }
 }
