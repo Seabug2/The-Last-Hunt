@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class Run_Intro : MonoBehaviour
 {
+    GameObject pauseUi;
+    
     Run_cameraController camera;
     Run_PlayerMove player;
     public GameObject panel,band; public Text IntroText;
@@ -22,6 +24,7 @@ public class Run_Intro : MonoBehaviour
     private void Awake()
     {
         camera = GetComponent<Run_cameraController>();
+        pauseUi = GameObject.Find("Option Button").GetComponent<GameObject>();
 
         if (playerObject != null)
         {
@@ -46,6 +49,7 @@ public class Run_Intro : MonoBehaviour
     {
         
         StartIntro();
+        pauseUi.SetActive(true);
         camera.ShiftVirtualCam();
         
     }
@@ -72,10 +76,12 @@ public class Run_Intro : MonoBehaviour
     private IEnumerator Fadein()
     {
         panel.SetActive(true); // 패널 활성화
-        yield return StartCoroutine(FadeIn_co()); // 페이드 인 코루틴 실행 및 대기
+        band.SetActive(true);
+        StartCoroutine(FadeIn_co()); // 페이드 인 코루틴 실행 및 대기
         yield return new WaitForSeconds(2f); // 2초 대기
-        yield return StartCoroutine(FadeOut_co()); // 페이드 아웃 코루틴 실행 및 대기
+        StartCoroutine(FadeOut_co()); // 페이드 아웃 코루틴 실행 및 대기
         panel.SetActive(false); // 패널 비활성화
+        band.SetActive(false);
     }
     private IEnumerator FadeIn_co()
     {
@@ -130,7 +136,7 @@ public class Run_Intro : MonoBehaviour
         while (IntroText.color.a < 1f)
         {
             IntroText.color =
-                new Color(IntroText.color.r, IntroText.color.g, IntroText.color.b, IntroText.color.a + (Time.deltaTime / 2f));
+                new Color(IntroText.color.r, IntroText.color.g, IntroText.color.b, IntroText.color.a + (currentTime / textTime));
             yield return null;
         }
     }
@@ -143,7 +149,7 @@ public class Run_Intro : MonoBehaviour
         while (IntroText.color.a > 0f)
         {
             IntroText.color =
-                new Color(IntroText.color.r, IntroText.color.g, IntroText.color.b, IntroText.color.a - (Time.deltaTime / 1.3f));
+                new Color(IntroText.color.r, IntroText.color.g, IntroText.color.b, IntroText.color.a - (currentTime / textTime));
             yield return null;
         }
     }
