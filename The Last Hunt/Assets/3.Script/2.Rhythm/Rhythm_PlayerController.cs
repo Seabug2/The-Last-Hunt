@@ -42,7 +42,7 @@ public class Rhythm_PlayerController : MonoBehaviour
         }
 
         // 마지막 스윙에서 0.2초 안 지났을 때(무지성 연타 방지)
-        if ((AudioSettings.dspTime - lastSwing) * Rhythm_ChapterManager.GameSpeed < 0.2) 
+        if ((AudioSettings.dspTime - lastSwing) * Rhythm_ChapterManager.instance.GameSpeed < 0.2) 
         {
             return;
         }

@@ -47,12 +47,12 @@ public class Rhythm_AnimalSpawner : MonoBehaviour
             return;
         }
 
-        current_time += (AudioSettings.dspTime - checkTime) * Rhythm_ChapterManager.GameSpeed;
+        current_time += (AudioSettings.dspTime - checkTime) * Rhythm_ChapterManager.instance.GameSpeed;
         checkTime = AudioSettings.dspTime;
 
         if (current_time > 60d / BPM)
         {
-            if (animal_appear[count] > 0 && animal_appear[count] < Rhythm_ChapterManager.Wave + 2)
+            if (animal_appear[count] > 0 && animal_appear[count] < Rhythm_ChapterManager.instance.Wave + 2)
             {
                 Rhythm_AnimalPooling.instance.GetObjectFromPool();
             }
@@ -67,7 +67,7 @@ public class Rhythm_AnimalSpawner : MonoBehaviour
 
     private void NextWave()
     {
-        if (Rhythm_ChapterManager.Wave < 3)
+        if (Rhythm_ChapterManager.instance.Wave < 3)
         {
             count = 5;
         }

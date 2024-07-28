@@ -15,7 +15,7 @@ MonoBehaviour:
   dominance: 2
   stamina: 35
   attack: 4
-  health: 60
+  health: 50
   aggression: 1
   attackSpeed: 1
   isTerritorial: 0

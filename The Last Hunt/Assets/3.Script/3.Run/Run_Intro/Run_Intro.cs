@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class Run_Intro : MonoBehaviour
 {
+    public Button pauseButton;
+    private UI_Pause uiPause;
     Run_cameraController camera;
     Run_PlayerMove player;
     public GameObject panel,band; public Text IntroText;
@@ -22,7 +24,7 @@ public class Run_Intro : MonoBehaviour
     private void Awake()
     {
         camera = GetComponent<Run_cameraController>();
-
+        GameObject optionButton = GameObject.Find("Option Button");
         if (playerObject != null)
         {
             player = playerObject.GetComponent<Run_PlayerMove>();
@@ -41,13 +43,35 @@ public class Run_Intro : MonoBehaviour
         {
             Debug.LogError("Run_PlayerMove 컴포넌트를 playerObject에서 찾을 수 없습니다.");
         }
+
+        
+        if (optionButton != null)
+        {
+            pauseButton = optionButton.GetComponent<Button>();
+            uiPause = optionButton.GetComponent<UI_Pause>();
+            if (pauseButton != null && uiPause != null)
+            {
+                pauseButton.gameObject.SetActive(false);
+                pauseButton.onClick.AddListener(uiPause.PauseToggle);
+            }
+            else
+            {
+                Debug.LogError("Button 또는 UI_Pause 컴포넌트를 찾을 수 없습니다.");
+            }
+        }
+        else
+        {
+            Debug.LogError("Option Button GameObject를 찾을 수 없습니다.");
+        }
     }
+
     private void Start()
     {
         
         StartIntro();
         camera.ShiftVirtualCam();
-        
+        pauseButton.gameObject.SetActive(true);
+
     }
    
     private void StartIntro()
@@ -72,10 +96,12 @@ public class Run_Intro : MonoBehaviour
     private IEnumerator Fadein()
     {
         panel.SetActive(true); // 패널 활성화
-        yield return StartCoroutine(FadeIn_co()); // 페이드 인 코루틴 실행 및 대기
+        band.SetActive(true);
+        StartCoroutine(FadeIn_co()); // 페이드 인 코루틴 실행 및 대기
         yield return new WaitForSeconds(2f); // 2초 대기
-        yield return StartCoroutine(FadeOut_co()); // 페이드 아웃 코루틴 실행 및 대기
+        StartCoroutine(FadeOut_co()); // 페이드 아웃 코루틴 실행 및 대기
         panel.SetActive(false); // 패널 비활성화
+        band.SetActive(false);
     }
     private IEnumerator FadeIn_co()
     {
@@ -130,7 +156,7 @@ public class Run_Intro : MonoBehaviour
         while (IntroText.color.a < 1f)
         {
             IntroText.color =
-                new Color(IntroText.color.r, IntroText.color.g, IntroText.color.b, IntroText.color.a + (Time.deltaTime / 2f));
+                new Color(IntroText.color.r, IntroText.color.g, IntroText.color.b, IntroText.color.a + (currentTime / textTime));
             yield return null;
         }
     }
@@ -143,10 +169,11 @@ public class Run_Intro : MonoBehaviour
         while (IntroText.color.a > 0f)
         {
             IntroText.color =
-                new Color(IntroText.color.r, IntroText.color.g, IntroText.color.b, IntroText.color.a - (Time.deltaTime / 1.3f));
+                new Color(IntroText.color.r, IntroText.color.g, IntroText.color.b, IntroText.color.a - (currentTime / textTime));
             yield return null;
         }
     }
+
 
     /*
     public void FadeInText()

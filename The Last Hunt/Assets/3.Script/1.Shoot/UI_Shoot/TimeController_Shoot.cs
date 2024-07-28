@@ -47,7 +47,7 @@ public class TimeController_Shoot : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.P))
         {
             Time.timeScale = 0;
-            ui.TotalKill_Score = 4000;
+            ui.TotalKill_Score = 3000;
             ui.ResultScreen();
         }
     }
