@@ -20,7 +20,8 @@ public class UI_SelectChapter : MonoBehaviour
     Sprite[] chapterSprtie;
     [SerializeField]
     Image chapterName;
-
+    [SerializeField]
+    GameObject isCleared;
     private void Awake()
     {
         brain = Camera.main.GetComponent<CinemachineBrain>();
@@ -32,6 +33,7 @@ public class UI_SelectChapter : MonoBehaviour
         selectedNum = 0;
         chapterName.sprite = chapterSprtie[selectedNum];
         chapterName.SetNativeSize();
+        isCleared.SetActive(GameManager.instance.userData.IsCleared[selectedNum]);
         cameras[selectedNum].Priority = menuCamera.Priority + 1;
         popUpCanvas.SetActive(true);
     }

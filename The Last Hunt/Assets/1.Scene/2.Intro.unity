@@ -831,6 +831,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   illustration: {fileID: 2034175286}
   audio_s: {fileID: 741124536}
+  subtitle: {fileID: 428682941}
   narrationClips:
   - {fileID: 8300000, guid: 020a56b09d913a6468eafb9a5ef44bbf, type: 3}
   - {fileID: 8300000, guid: 668759a13a926364a82a342304d5b108, type: 3}
@@ -841,7 +842,6 @@ MonoBehaviour:
   - {fileID: 8300000, guid: a870d4cdbf785424894a7216a4e8aba3, type: 3}
   - {fileID: 8300000, guid: 669869f28dd5e8948ad78f0ba3278872, type: 3}
   - {fileID: 8300000, guid: 51c78e7ebcc933c41bb93dc2e025546b, type: 3}
-  subtitle: {fileID: 428682941}
   subtitleClips:
   - "\uB178\uC778\uC740 \uC655\uB144\uC5D0 \uD6CC\uB96D\uD55C \uC0AC\uB0E5\uAFBC\uC774\uC5C8\uC2B5\uB2C8\uB2E4."
   - "\uD558\uC9C0\uB9CC, \uC2DC\uAC04\uC774 \uADF8\uC758 \uC80A\uC74C\uC744 \uBE7C\uC557\uC73C\uBA74\uC11C
@@ -864,7 +864,6 @@ MonoBehaviour:
     \uC7A0\uC5D0 \uBE60\uC84C\uC2B5\uB2C8\uB2E4\u2026\uC800\uD3B8\uC5D0 \uBB34\uC5C7\uC774
     \uAE30\uB2E4\uB9AC\uB294\uC9C0 \uBAA8\uB978 \uCC44 "
   skip: {fileID: 1211786100}
-  nextClip: {fileID: 0}
 --- !u!1 &1211786100
 GameObject:
   m_ObjectHideFlags: 0
