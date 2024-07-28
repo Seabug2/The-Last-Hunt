@@ -5,8 +5,8 @@ using UnityEngine.UI;
 
 public class Run_Intro : MonoBehaviour
 {
-    GameObject pauseUi;
-    
+    public Button pauseButton;
+    private UI_Pause uiPause;
     Run_cameraController camera;
     Run_PlayerMove player;
     public GameObject panel,band; public Text IntroText;
@@ -24,8 +24,7 @@ public class Run_Intro : MonoBehaviour
     private void Awake()
     {
         camera = GetComponent<Run_cameraController>();
-        pauseUi = GameObject.Find("Option Button").GetComponent<GameObject>();
-
+        GameObject optionButton = GameObject.Find("Option Button");
         if (playerObject != null)
         {
             player = playerObject.GetComponent<Run_PlayerMove>();
@@ -44,14 +43,35 @@ public class Run_Intro : MonoBehaviour
         {
             Debug.LogError("Run_PlayerMove 컴포넌트를 playerObject에서 찾을 수 없습니다.");
         }
+
+        
+        if (optionButton != null)
+        {
+            pauseButton = optionButton.GetComponent<Button>();
+            uiPause = optionButton.GetComponent<UI_Pause>();
+            if (pauseButton != null && uiPause != null)
+            {
+                pauseButton.gameObject.SetActive(false);
+                pauseButton.onClick.AddListener(uiPause.PauseToggle);
+            }
+            else
+            {
+                Debug.LogError("Button 또는 UI_Pause 컴포넌트를 찾을 수 없습니다.");
+            }
+        }
+        else
+        {
+            Debug.LogError("Option Button GameObject를 찾을 수 없습니다.");
+        }
     }
+
     private void Start()
     {
         
         StartIntro();
-        pauseUi.SetActive(true);
         camera.ShiftVirtualCam();
-        
+        pauseButton.gameObject.SetActive(true);
+
     }
    
     private void StartIntro()
@@ -153,6 +173,7 @@ public class Run_Intro : MonoBehaviour
             yield return null;
         }
     }
+
 
     /*
     public void FadeInText()

@@ -8,11 +8,16 @@ public class Run_PlayerMove : MonoBehaviour
     [SerializeField] private float rotationSpeed;
     [SerializeField] private float JumpForce;
     [SerializeField] private float gravityForce;
+
+    [SerializeField] private AudioClip dieclip;
     //public int jumpCount =1, slideCount = 1;
 
     public bool isJump = false;
     public bool isSlide = false;
     private bool isDie = false;
+    private bool isStart = false;
+
+    Run_Result result;
 
     private float x;
     private Rigidbody player_rig;
@@ -26,6 +31,7 @@ public class Run_PlayerMove : MonoBehaviour
         player_rig = GetComponent<Rigidbody>();
         player_c = GetComponent<CapsuleCollider>();
         player_ani = GetComponent<Animator>();
+        result = GetComponent<Run_Result>();
     }
     private void Update()
     {
@@ -171,7 +177,7 @@ public class Run_PlayerMove : MonoBehaviour
             //x = Input.GetAxisRaw("Horizontal");
             //Player_rig.AddForce(new Vector3(x, 0, 0));
             if (isDie) return;
-
+            if(isStart)
             if (Input.GetKey(KeyCode.D)||Input.GetKey(KeyCode.RightArrow))
             {
                 transform.position += transform.right * rotationSpeed * Time.deltaTime;
@@ -228,6 +234,8 @@ public class Run_PlayerMove : MonoBehaviour
     public void PlayerDie()
     {
         isDie = true;
+        result.CallResult();
+        Time.timeScale = 0;
         //
     }
     public void RemoveFowardSpeed()
@@ -236,8 +244,10 @@ public class Run_PlayerMove : MonoBehaviour
     }
     private IEnumerator Remove_forward()
     {
+        isStart = false;
         forwardSpeed = 0;
         yield return new WaitForSeconds(4f);
         forwardSpeed = 1000;
+        isStart = true;
     }
 }
