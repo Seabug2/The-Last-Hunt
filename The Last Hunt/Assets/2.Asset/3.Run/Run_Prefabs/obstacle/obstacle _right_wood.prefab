@@ -527,6 +527,8 @@ GameObject:
   m_Component:
   - component: {fileID: 3158587665106177569}
   - component: {fileID: 8464342143233093050}
+  - component: {fileID: 3122203978711364857}
+  - component: {fileID: -6789652740682486458}
   m_Layer: 0
   m_Name: obstacle _right_wood
   m_TagString: Untagged
@@ -571,6 +573,35 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 2.9348962, y: 0.49000004, z: 2.934896}
   m_Center: {x: 0.00000011920929, y: -0.24499999, z: 0}
+--- !u!114 &3122203978711364857
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3409894793413363903}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5bca92008768b464a9a07f63683df17d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player_o: {fileID: 1782702501690864755, guid: 60770bdb4dc667c45bea53db0339dc05, type: 3}
+--- !u!54 &-6789652740682486458
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3409894793413363903}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &3597465906501286169
 GameObject:
   m_ObjectHideFlags: 0
