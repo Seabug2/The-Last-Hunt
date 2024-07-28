@@ -176,7 +176,8 @@ public class UIController_Shoot : MonoBehaviour
 
     public void ResultScreen()
     {
-        if (TotalKill_Score >= 4000)
+        Time.timeScale = 0;
+        if (TotalKill_Score >= 3000)
         {
             if (!GameManager.instance.IsStoryMode)
             {
@@ -184,6 +185,7 @@ public class UIController_Shoot : MonoBehaviour
             }
             GameClear.SetActive(true);
             GameClearScore_Text.text = string.Format("Score : {0:#,##0}", TotalKill_Score);
+            GameManager.instance.currentGameScore[0] = TotalKill_Score;
             if(GameManager.instance.IsNewHighScore(0, TotalKill_Score))
             {
                 Debug.Log("최고 기록 갱신!");

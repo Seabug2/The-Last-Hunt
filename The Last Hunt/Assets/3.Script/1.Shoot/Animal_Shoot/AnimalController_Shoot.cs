@@ -56,7 +56,7 @@ public class AnimalController_Shoot : MonoBehaviour
     [SerializeField] private bool isAnimalInRange;
 
     [SerializeField] private PlayerController_Shoot player;
-    private float playerAwareness = 200f;
+    private float playerAwareness = 300f;
     [SerializeField] [Range(0, 360)] private float fovAngle;
     [SerializeField] private PlayerAlertStage playerAlertStage;
     [SerializeField] [Range(0, 100)] private float playerAlertLevel;
@@ -693,30 +693,9 @@ public class AnimalController_Shoot : MonoBehaviour
         else if (collision.transform.CompareTag("Arrow"))
         {
             isHitByArrow = true;
-            StartCoroutine(FleeArrow_co(isPlayerLocated, position, targetPosition));
+            playerAlertStage = PlayerAlertStage.Alerted;
+            playerAlertLevel = 150;
         }
-    }
-
-    // Coroutine to flee arrow
-    private IEnumerator FleeArrow_co(bool isPlayerLocated, Vector3 position, Vector3 targetPosition)
-    {
-        if (isPlayerLocated)
-        {
-            Run();
-            targetPosition = position + Vector3.ProjectOnPlane(position - player.transform.position, Vector3.up);
-        }
-        if (!IsValidLocation(targetPosition))
-        {
-            targetPosition = startPosition;
-        }
-        FaceDirection((targetPosition - position).normalized);
-        ValidatePosition(ref targetPosition);
-        stamina -= Time.deltaTime;
-        if (stamina <= 0)
-        {
-            UpdateAI();
-        }
-        yield return new WaitForSeconds(10f);
     }
 
     // Method to face animal in direction of action

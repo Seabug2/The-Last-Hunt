@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: Reindeer
   m_EditorClassIdentifier: 
   dominance: 6
-  stamina: 20
+  stamina: 25
   attack: 15
-  health: 80
+  health: 75
   aggression: 1
   attackSpeed: 1
   isTerritorial: 0
