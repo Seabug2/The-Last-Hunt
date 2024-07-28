@@ -47,11 +47,12 @@ public class TimeController_Shoot : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.P))
         {
             Time.timeScale = 0;
-            ui.TotalKill_Score = 3000;
+            ui.TotalKill_Score = 2500;
             ui.ResultScreen();
         }
     }
 
+    // Method to calculate time of day (clock)
     private void UpdateTimeOfDay()
     {
         currentTime = currentTime.AddSeconds(Time.deltaTime * timeMultiplier);
@@ -61,6 +62,7 @@ public class TimeController_Shoot : MonoBehaviour
         }
     }
 
+    // Method to calculate time difference
     private TimeSpan CalcDeltaTime(TimeSpan fromTime, TimeSpan toTime)
     {
         TimeSpan delta = toTime - fromTime;
@@ -73,6 +75,7 @@ public class TimeController_Shoot : MonoBehaviour
         return delta;
     }
 
+    // Method to rotate directional light (Sun)
     private void RotateSun()
     {
         float sunLightRotation = 0f;

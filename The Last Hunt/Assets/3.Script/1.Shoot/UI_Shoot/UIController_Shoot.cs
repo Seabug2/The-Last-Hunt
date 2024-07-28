@@ -146,6 +146,7 @@ public class UIController_Shoot : MonoBehaviour
         Message.gameObject.SetActive(false);
     }
 
+    // Method to update kill count
     public void AddKill(string species, int score)
     {
         switch (species)
@@ -174,10 +175,11 @@ public class UIController_Shoot : MonoBehaviour
         TotalKill_Text.text = string.Format("Total : {0:#,##0}", TotalKill_Score);
     }
 
+    // Method to show results based on score
     public void ResultScreen()
     {
         Time.timeScale = 0;
-        if (TotalKill_Score >= 3000)
+        if (TotalKill_Score >= 2500)
         {
             if (!GameManager.instance.IsStoryMode)
             {
