@@ -7,8 +7,8 @@ using DG.Tweening;
 
 public class Rhythm_ChapterManager : MonoBehaviour
 {
-    public static float GameSpeed = 1.0f;
-    public static int Wave = 1;
+    public float GameSpeed = 1.0f;
+    public int Wave = 1;
     public int Maxcount = 0;
     public int Hitcount = 0;
     public int Misscount = 0;
@@ -18,7 +18,8 @@ public class Rhythm_ChapterManager : MonoBehaviour
     Animator judgeAnimation;
 
     [SerializeField] private GameObject resultUI, introUI, Menu, NoteUI, BestScore, IntroBlackbg;
-    [SerializeField] private Animator Hunter_ani;
+    [SerializeField] private Animator Hunter_ani, Lap_ani;
+    [SerializeField] private Text SkipMessage, LapCount, NewLapCount;
 
     [SerializeField] private Sprite[] judgeImages;
     [SerializeField] private Image judgeImageAppear;
@@ -26,7 +27,7 @@ public class Rhythm_ChapterManager : MonoBehaviour
     [Header("결과")]
     [SerializeField] private Image ClearImage, NextButtonImage;
     [SerializeField] private Sprite ClearSP, FailSP;
-    [SerializeField] private Text SkipMessage, maxT, hitT, missT, scoreT, RecordT;
+    [SerializeField] private Text maxT, hitT, missT, scoreT, RecordT;
     [SerializeField] private GameObject NextButton, MainButton;
 
     [Header("카메라")]
@@ -168,7 +169,7 @@ public class Rhythm_ChapterManager : MonoBehaviour
     public void DebugButton()
     {
         Rhythm_SoundManager.instance.BGMPlayer.Stop();
-        ResultAppear();
+        NextWave();
     }
 
     public void NextWave()
@@ -180,19 +181,23 @@ public class Rhythm_ChapterManager : MonoBehaviour
         }
         else
         {
-            Rhythm_SoundManager.instance.PlayBGM("SpeedUp");
             Wave++;
+            Rhythm_SoundManager.instance.PlayBGM("SpeedUp");
+            Lap_ani.SetTrigger("LapChange");
             GameSpeed += 0.15f;
             introUI.SetActive(true);
             ShowMessage("스피드 업!", 1.5f);
             Invoke("BGMAgain", 4.5f / GameSpeed);
         }
     }
+
     private void BGMAgain()
     {
         MainBGMisPlaying = true;
         Rhythm_SoundManager.instance.BGMPlayer.pitch = GameSpeed;
         Rhythm_SoundManager.instance.PlayBGM("BGM");
+        LapCount.text = Wave.ToString();
+        NewLapCount.text = (Wave + 1).ToString();
     }
 
     public void ResultAppear()
@@ -226,6 +231,7 @@ public class Rhythm_ChapterManager : MonoBehaviour
         // 성공
         else
         {
+            GameManager.instance.currentGameScore[1] = percent;
             if (GameManager.instance.IsNewHighScore(1, percent))
             {
                 RecordT.color = Color.yellow;
