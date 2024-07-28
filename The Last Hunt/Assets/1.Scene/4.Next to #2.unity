@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657874, g: 0.49641275, b: 0.5748172, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -531,11 +531,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   illustration: {fileID: 0}
   audio_s: {fileID: 0}
+  subtitle: {fileID: 1987468018}
   narrationClips:
   - {fileID: 8300000, guid: a4bd0041435f41d4da194146fdd02080, type: 3}
   - {fileID: 8300000, guid: 81ffbc2b78194da4c8e6e5b0fbe3af01, type: 3}
   - {fileID: 8300000, guid: d970966417e14bb408ebe9da6bbb9dca, type: 3}
-  subtitle: {fileID: 1987468018}
   subtitleClips:
   - "\uC0AC\uB0E5\uAC10 \uD655\uBCF4\uC5D0\uB294 \uC131\uACF5\uC801\uC774\uC5C8\uC9C0\uB9CC
     \uB3D9\uBB3C\uC744 \uC3D8\uB294 \uAC83\uB9CC\uC73C\uB85C \uC0AC\uB0E5\uC740 \uB05D\uB098\uC9C0
@@ -544,7 +544,7 @@ MonoBehaviour:
     \uC790\uC2E0\uC758 \uC0AC\uB0E5\uAC10\uC744 \uC190\uC9C8\uD574\uC57C \uD569\uB2C8\uB2E4."
   - "\uC2DC\uAC04\uC774 \uC880 \uAC78\uB9AC\uACA0\uC9C0\uB9CC, \uC544\uB9C8\uB3C4
     \uC74C\uC545\uC774 \uB3C4\uC6C0\uC774 \uB420 \uAC83\uC785\uB2C8\uB2E4\u2026"
-  skip: {fileID: 1834466011}
+  skip: {fileID: 0}
 --- !u!4 &1794227460
 Transform:
   m_ObjectHideFlags: 0

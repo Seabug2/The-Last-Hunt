@@ -20,5 +20,5 @@ MonoBehaviour:
   attackSpeed: 1
   isTerritorial: 0
   isStealthy: 0
-  sensitivity: 4
+  sensitivity: 7
   value: 200

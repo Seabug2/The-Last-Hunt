@@ -40,6 +40,7 @@ public class PlayerController_Shoot : MonoBehaviour
         MoveLR();
         Rotate();
 
+        // Player movement animation
         if (input.MoveFBValue > 0.1 || input.MoveFBValue < -0.1)
         {
             player_ani.SetFloat("MoveFB", input.MoveFBValue);
@@ -55,6 +56,7 @@ public class PlayerController_Shoot : MonoBehaviour
             isMoving = false;
         }
         
+        // Audio control for player footsteps
         if (isMoving)
         {
             if (!audio_s.isPlaying)
@@ -67,6 +69,7 @@ public class PlayerController_Shoot : MonoBehaviour
             audio_s.Stop();
         }
 
+        // Shooting animations & calculate drawtime
         if (ammoRemain <= 0)
         {
             player_ani.SetBool("isKnock", false);
@@ -86,7 +89,7 @@ public class PlayerController_Shoot : MonoBehaviour
                 player_ani.SetBool("isKnock", false);
                 isKnock = false;
                 isDraw = false;
-                drawTime = 0;
+                drawTime = Time.time;
             }
             if (input.isDraw && !isDraw && isKnock)
             {

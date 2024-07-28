@@ -31,20 +31,17 @@ public class BowController_Shoot : MonoBehaviour
         {
             if (input.isKnock)
             {
-                //arrowPrefab.SetActive(true);
                 bow_ani.SetBool("isDraw", true);
                 audio_s.PlayOneShot(drawClip);
                 isKnock = true;
             }
             else if (input.isKnockCancel)
             {
-                //arrowPrefab.SetActive(false);
                 bow_ani.SetBool("isDraw", false);
                 isKnock = false;
             }
             if (input.isFire && isKnock)
             {
-                //arrowPrefab.SetActive(false);
                 bow_ani.SetBool("isDraw", false);
                 audio_s.PlayOneShot(looseClip);
                 ammo--;
