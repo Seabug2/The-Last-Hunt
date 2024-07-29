@@ -8,8 +8,15 @@ public class Run_PlayerMove : MonoBehaviour
     [SerializeField] private float rotationSpeed;
     [SerializeField] private float JumpForce;
     [SerializeField] private float gravityForce;
+    [SerializeField] private AudioSource bearAudio;
+    [SerializeField] private AudioSource player_Audio;
+    [SerializeField] private AudioClip dieClip;
+    [SerializeField] private AudioClip winClip;
+    [SerializeField] private AudioClip failClip;
 
-    [SerializeField] private AudioClip dieclip;
+
+
+   
     //public int jumpCount =1, slideCount = 1;
 
     public bool isJump = false;
@@ -28,10 +35,14 @@ public class Run_PlayerMove : MonoBehaviour
 
     private void Start()
     {
+        bearAudio = GetComponent<AudioSource>();
         player_rig = GetComponent<Rigidbody>();
         player_c = GetComponent<CapsuleCollider>();
         player_ani = GetComponent<Animator>();
-        result = GetComponent<Run_Result>();
+        result = gameObject.GetComponent<Run_Result>();
+        winClip = GetComponent<AudioClip>();
+        failClip = GetComponent<AudioClip>();
+        dieClip = GetComponent<AudioClip>();
     }
     private void Update()
     {
@@ -234,8 +245,21 @@ public class Run_PlayerMove : MonoBehaviour
     public void PlayerDie()
     {
         isDie = true;
-        result.CallResult();
+        
+
+
+        if (result != null)
+        {
+            result.CallResult();
+        }
+        else
+        {
+            Debug.LogError("result 객체가 초기화되지 않았습니다.");
+        }
+
         Time.timeScale = 0;
+        bearAudio.Stop();
+        player_Audio.Stop();
         //
     }
     public void RemoveFowardSpeed()
