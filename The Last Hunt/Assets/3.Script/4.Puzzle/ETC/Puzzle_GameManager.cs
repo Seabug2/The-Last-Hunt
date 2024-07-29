@@ -265,6 +265,7 @@ public class Puzzle_GameManager : MonoBehaviour
         GameManager.instance.userData.IsCleared[3] = true;
         float time = (float)timer.time;
         currentScore.text = Timer.ConvertTimeCode(time);
+        GameManager.instance.currentGameScore[3] = currentScore.text;
         if (GameManager.instance.IsNewHighScore(3,time,false))
         {
             print("최고 점수 갱신!");

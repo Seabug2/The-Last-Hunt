@@ -49,7 +49,6 @@ public class UIController_Shoot : MonoBehaviour
     private void Awake()
     {
         Time.timeScale = 0;
-        StartCoroutine(Fade_co(true));
         DeerKill_Score = 0;
         ReindeerKill_Score = 0;
         BoarKill_Score = 0;
@@ -57,11 +56,13 @@ public class UIController_Shoot : MonoBehaviour
         TotalKill_Score = 0;
         GameClear.SetActive(false);
         GameOver.SetActive(false);
+        Message.gameObject.SetActive(false);
     }
 
     private IEnumerator Start()
     {
-        yield return new WaitForSeconds(1.5f);
+        yield return StartCoroutine(Fade_co(true));
+        //yield return new WaitForSeconds(1.5f);
         ShowMessage(Header_Text.text);
         Time.timeScale = 1;
     }
@@ -187,7 +188,7 @@ public class UIController_Shoot : MonoBehaviour
             }
             GameClear.SetActive(true);
             GameClearScore_Text.text = string.Format("Score : {0:#,##0}", TotalKill_Score);
-            GameManager.instance.currentGameScore[0] = TotalKill_Score;
+            GameManager.instance.currentGameScore[0] = TotalKill_Score.ToString();
             if(GameManager.instance.IsNewHighScore(0, TotalKill_Score))
             {
                 Debug.Log("최고 기록 갱신!");

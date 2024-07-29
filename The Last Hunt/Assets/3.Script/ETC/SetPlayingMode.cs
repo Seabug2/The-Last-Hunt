@@ -7,6 +7,6 @@ public class SetPlayingMode : MonoBehaviour
     public void ModeSetting(bool on)
     {
         GameManager.instance.SetPlayingMode(on);
-        GameManager.instance.currentGameScore = new float[4];
+        GameManager.instance.currentGameScore = new string[4];
     }
 }

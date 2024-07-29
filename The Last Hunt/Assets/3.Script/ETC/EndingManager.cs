@@ -1,84 +1,82 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class EndingManager : MonoBehaviour
 {
+    [SerializeField] private Image fadeBoard;
     [SerializeField] private Text TheEnd_text;
     [SerializeField] private Text Skip_text;
     [SerializeField] private AudioSource audio_s;
-    [SerializeField] private GameObject EndCredits;
-    [SerializeField] private float scrollSpeed;
-    [SerializeField] private Animator credit_ani;
-    private bool isCreditsComplete;
-
+    [SerializeField] private RectTransform EndCredits;
+    [SerializeField] private RectTransform thankYou;
 
     private void Awake()
     {
         Time.timeScale = 1;
-        TryGetComponent(out audio_s);
-        credit_ani = GetComponentInChildren<Animator>();
-        isCreditsComplete = false;
+
+        fadeBoard.color = Color.black;
+        fadeBoard.gameObject.SetActive(true);
+
+        GetComponent<AudioSource>();
+
+        thankYou.gameObject.SetActive(false);
         Skip_text.gameObject.SetActive(false);
+        EndCredits.localPosition = new Vector3(0, -650, 0);
     }
 
     private IEnumerator Start()
     {
-        for (float i = 0; i <= 3; i += Time.deltaTime)
+        fadeBoard.DOFade(0, 3f).SetEase(Ease.InQuart).OnComplete(() =>
         {
-            TheEnd_text.color = new Color(1, 1, 1, i);
-            yield return null;
-        }
-
-        TheEnd_text.text = "The End.";
-        yield return new WaitForSeconds(0.5f);
-        TheEnd_text.text = "The End..";
-        yield return new WaitForSeconds(0.5f);
-        TheEnd_text.text = "The End...";
-        yield return new WaitForSeconds(0.5f);
-        TheEnd_text.text = "The End...?";
-        audio_s.Play();
+            fadeBoard.gameObject.SetActive(false);
+        });
         yield return new WaitForSeconds(3f);
 
-        for (float i = 0; i <= 3; i += Time.deltaTime)
+        TheEnd_text.DOFade(0, 3f).SetEase(Ease.InQuart).OnComplete(() =>
         {
-            TheEnd_text.color = new Color(0, 0, 0, i);
-            yield return null;
-        }
-        TheEnd_text.gameObject.SetActive(false);
+            TheEnd_text.gameObject.SetActive(false);
+        });
+        yield return new WaitForSeconds(4f);
 
+        audio_s.Play();
+
+        Skip_text.transform.localScale = Vector3.zero;
         Skip_text.gameObject.SetActive(true);
-        for (float i = 0; i <= 3; i += Time.deltaTime)
-        {
-            Skip_text.color = new Color(1, 1, 1, i);
-            yield return null;
-        }
+        Skip_text.transform.DOScale(1, 1f).SetEase(Ease.OutBack);
 
-        credit_ani.SetTrigger("EndRoll");
+        Vector3 start = EndCredits.localPosition;
+        Vector3 end = new Vector3(0, 6900, 0);
+
         while (audio_s.isPlaying)
         {
+            EndCredits.localPosition = Vector3.Lerp(start, end, audio_s.time / audio_s.clip.length);
+
             yield return null;
-            if (Input.GetKeyDown(KeyCode.Space))
+
+            if (!fadeBoard.gameObject.activeSelf && Input.GetKeyDown(KeyCode.Space))
             {
-                Debug.Log("Skip Ending");
-                isCreditsComplete = true;
-                break;
+                Skip_text.transform.DOScale(0, 1f).SetEase(Ease.OutBack);
+
+                audio_s.DOFade(0, 1f).OnComplete(() => audio_s.Stop());
+
+                fadeBoard.color = new Color(0, 0, 0, 0);
+                fadeBoard.gameObject.SetActive(true);
+                fadeBoard.DOFade(1, 1f).SetEase(Ease.InQuart).OnComplete(() => SceneManager.LoadScene(0));
             }
         }
-        isCreditsComplete = true;
 
-        if (isCreditsComplete)
+        if (!fadeBoard.gameObject.activeSelf)
         {
-            Text[] endCredit_text = GetComponentsInChildren<Text>();
-            for (float i = 2; i >= 0; i -= Time.deltaTime)
-            {
-                Skip_text.color = new Color(0, 0, 0, i);
-                endCredit_text[0].color = new Color(0, 0, 0, i);
-                endCredit_text[1].color = new Color(0, 0, 0, i);
-                yield return null;
-            }
+            Skip_text.transform.DOScale(0, 0.8f).SetEase(Ease.OutBack);
+
+            fadeBoard.color = new Color(0, 0, 0, 0);
+            fadeBoard.gameObject.SetActive(true);
+            fadeBoard.DOFade(1, 1f).SetEase(Ease.InQuart);
+            yield return new WaitForSeconds(1);
             SceneManager.LoadScene(0);
         }
     }

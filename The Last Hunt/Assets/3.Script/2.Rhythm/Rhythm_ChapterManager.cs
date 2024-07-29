@@ -231,7 +231,7 @@ public class Rhythm_ChapterManager : MonoBehaviour
         // ¼º°ø
         else
         {
-            GameManager.instance.currentGameScore[1] = percent;
+            GameManager.instance.currentGameScore[1] = percent.ToString() + "%";
             if (GameManager.instance.IsNewHighScore(1, percent))
             {
                 RecordT.color = Color.yellow;

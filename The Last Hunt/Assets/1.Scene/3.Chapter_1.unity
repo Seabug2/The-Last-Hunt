@@ -1864,6 +1864,7 @@ GameObject:
   - component: {fileID: 218658946}
   - component: {fileID: 218658948}
   - component: {fileID: 218658947}
+  - component: {fileID: 218658949}
   m_Layer: 5
   m_Name: Header
   m_TagString: Untagged
@@ -1929,6 +1930,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 218658945}
   m_CullTransparentMesh: 1
+--- !u!114 &218658949
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 218658945}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 31a19414c41e5ae4aae2af33fee712f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ShowMaskGraphic: 1
 --- !u!1001 &219248638
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3759,7 +3773,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &434997715
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3771,8 +3785,8 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 779589253}
-  m_RootOrder: 8
+  m_Father: {fileID: 8060732653601396756}
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -7583,7 +7597,6 @@ RectTransform:
   - {fileID: 2100674287}
   - {fileID: 818122557}
   - {fileID: 218658946}
-  - {fileID: 434997715}
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -23453,7 +23466,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13c1a19f24bc01c40a29fe6ab5a7cc13, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fadeBoard: {fileID: 0}
+  fadeBoard: {fileID: 434997716}
   FadeOutEvent:
     m_PersistentCalls:
       m_Calls: []
@@ -23522,9 +23535,9 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 5099424802363757905}
-        m_TargetAssemblyTypeName: UI_GoBackTitle, Assembly-CSharp
+        m_TargetAssemblyTypeName: UI_GoToScene, Assembly-CSharp
         m_MethodName: GoToScene
-        m_Mode: 1
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -23833,6 +23846,7 @@ RectTransform:
   m_Children:
   - {fileID: 5099424801213699951}
   - {fileID: 5099424800612451028}
+  - {fileID: 434997715}
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

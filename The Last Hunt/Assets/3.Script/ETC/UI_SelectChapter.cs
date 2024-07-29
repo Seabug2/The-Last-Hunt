@@ -53,6 +53,7 @@ public class UI_SelectChapter : MonoBehaviour
 
         chapterName.sprite = chapterSprtie[selectedNum];
         chapterName.SetNativeSize();
+        isCleared.SetActive(GameManager.instance.userData.IsCleared[selectedNum]);
         cameras[selectedNum].Priority = brain.ActiveVirtualCamera.Priority + 1;
     }
     public void GoBackMenu()
