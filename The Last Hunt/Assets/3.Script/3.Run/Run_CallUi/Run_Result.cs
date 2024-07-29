@@ -11,7 +11,7 @@ public class Run_Result : MonoBehaviour
     GameObject _clearUI;
     [SerializeField]
     GameObject _failUI;
-    GameObject Timer;
+
     [SerializeField] Text bestText; 
     Timer timer;
     [SerializeField] Text resultText_clear;
@@ -120,8 +120,9 @@ public class Run_Result : MonoBehaviour
         {
             data.IsCleared[2] = true;
             float previousHighScore = data.score[2];
-            gameManager.currentGameScore[2] = (float)resultTime;
-            gameManager.IsNewHighScore(2, (float)resultTime);
+            GameManager.instance.currentGameScore[2] = Timer.ConvertTimeCode((float)resultTime);
+            //GameManager.instance.currentGameScore[2] = Timer.ConvertTimeCode((float)resultTime);
+            GameManager.instance.IsNewHighScore(2, (float)resultTime);
             resultText_clear.text = resultTime.ToString("F2");
             if (previousHighScore<resultTime)
             {
@@ -150,8 +151,7 @@ public class Run_Result : MonoBehaviour
         if (gameManager != null)
         {
             resultText_clear.text = resultTime.ToString("F2");
-            gameManager.currentGameScore[2] = (float)resultTime;
-            
+            GameManager.instance.currentGameScore[2] = Timer.ConvertTimeCode((float)resultTime);
         }
     }
 }
