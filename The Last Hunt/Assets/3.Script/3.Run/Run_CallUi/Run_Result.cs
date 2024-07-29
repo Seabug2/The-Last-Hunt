@@ -19,6 +19,10 @@ public class Run_Result : MonoBehaviour
     [SerializeField] double resultTime;
     [SerializeField] double limitTime;
     UserData data;
+    [SerializeField] AudioClip clearClip;
+    [SerializeField] AudioClip failClip;
+    [SerializeField] AudioClip dieClip;
+    private AudioSource audi;
     /*
     private void Start()
     {
@@ -65,7 +69,11 @@ public class Run_Result : MonoBehaviour
         resultText_notclear = GetComponent<Text>();
         bestText = GetComponent<Text>();
         GameObject _clearUI = GameObject.Find("Result_isClear");
-        
+        audi = GetComponent<AudioSource>();
+        clearClip = GetComponent<AudioClip>();
+        failClip = GetComponent<AudioClip>();
+
+
         if (_clearUI == null)
         {
             Debug.LogError("Result_isClear GameObject를 찾을 수 없습니다.");
@@ -129,6 +137,8 @@ public class Run_Result : MonoBehaviour
                 bestText.text = "Best";
                 bestText.gameObject.SetActive(true);
             }
+            audi.clip = clearClip;
+            audi.Play();
             isResult = true;
         }
        
@@ -136,7 +146,10 @@ public class Run_Result : MonoBehaviour
 
     public void FailResult()
     {
-
+        audi.clip = dieClip;
+        audi.Play();
+        audi.clip = failClip;
+        audi.Play();
         if (_failUI != null && !isResult)
         {
             _failUI.SetActive(true);

@@ -13,6 +13,8 @@ public class Run_PlayerMove : MonoBehaviour
     [SerializeField] private AudioClip dieClip;
     [SerializeField] private AudioClip winClip;
     [SerializeField] private AudioClip failClip;
+    [SerializeField] GameObject bear;
+    [SerializeField] GameObject player;
 
 
 
@@ -35,7 +37,8 @@ public class Run_PlayerMove : MonoBehaviour
 
     private void Start()
     {
-        bearAudio = GetComponent<AudioSource>();
+        
+        bearAudio = bear.GetComponent<AudioSource>();
         player_rig = GetComponent<Rigidbody>();
         player_c = GetComponent<CapsuleCollider>();
         player_ani = GetComponent<Animator>();
@@ -46,12 +49,9 @@ public class Run_PlayerMove : MonoBehaviour
     }
     private void Update()
     {
-        //StartMove();
-        //Jump();
-        //Sliding();
-        //코루틴으로 할지 고민
-        if (isDie) return;
-            AddGravity();
+        
+        //if (isDie) return;
+        //    AddGravity();
     }
 
 
@@ -75,11 +75,11 @@ public class Run_PlayerMove : MonoBehaviour
 
         //나중에 코너 때문에 transform.Forward를 조건에 맞게 바꿔야함.
     }
-    private void AddGravity()
-    {
-        if (isDie) return;
-        player_rig.AddForce(Vector3.down * gravityForce, ForceMode.Impulse);
-    }
+    //private void AddGravity()
+    //{
+    //    if (isDie) return;
+    //    player_rig.AddForce(Vector3.down * gravityForce, ForceMode.Impulse);
+    //}
     //private void Jump()
     //{
     //    if (jumpCount > 0)
@@ -170,7 +170,7 @@ public class Run_PlayerMove : MonoBehaviour
     }
     public void PlayerMove()
     {
-        if(!isSlide&&!isJump)
+        if(!isSlide&&!isJump&&!isDie)
         {
             //if(Input.GetKeyDown(KeyCode.A))
             //{
@@ -187,16 +187,20 @@ public class Run_PlayerMove : MonoBehaviour
 
             //x = Input.GetAxisRaw("Horizontal");
             //Player_rig.AddForce(new Vector3(x, 0, 0));
-            if (isDie) return;
+            
             if(isStart)
-            if (Input.GetKey(KeyCode.D)||Input.GetKey(KeyCode.RightArrow))
             {
-                transform.position += transform.right * rotationSpeed * Time.deltaTime;
+                if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
+                {
+                    transform.position += transform.right * rotationSpeed * Time.deltaTime;
+                }
+
+                if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
+                {
+                    transform.position -= transform.right * rotationSpeed * Time.deltaTime;
+                }
             }
-            if(Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
-            {
-                transform.position -= transform.right * rotationSpeed * Time.deltaTime;
-            }
+           
 
         }
        
@@ -259,6 +263,7 @@ public class Run_PlayerMove : MonoBehaviour
 
         Time.timeScale = 0;
         bearAudio.Stop();
+
         player_Audio.Stop();
         //
     }

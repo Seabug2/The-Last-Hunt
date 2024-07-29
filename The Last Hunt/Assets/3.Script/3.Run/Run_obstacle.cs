@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Run_obstacle : MonoBehaviour
 {
-    Run_PlayerMove player;
+    Run_PlayerMove player_r;
     [SerializeField] GameObject player_o;
 
     private void Start()
@@ -16,8 +16,8 @@ public class Run_obstacle : MonoBehaviour
             return;
         }
 
-        player = player_o.GetComponent<Run_PlayerMove>();
-        if (player == null)
+        player_r = player_o.GetComponent<Run_PlayerMove>();
+        if (player_o == null)
         {
             Debug.LogError("Player GameObject에 Run_PlayerMove 컴포넌트가 없습니다.");
         }
@@ -26,11 +26,11 @@ public class Run_obstacle : MonoBehaviour
     
     private void OnCollisionEnter(Collision col)
     {
-        if (col.gameObject.name.Equals("Player"))
+        if (col.gameObject.tag.Equals("Player"))
         {
-            if (player != null)
+            if (player_r != null)
             {
-                player.PlayerDie();
+                player_r.PlayerDie();
             }
             else
             {

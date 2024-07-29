@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Run_InputManager : MonoBehaviour
 {
@@ -31,6 +32,10 @@ public class Run_InputManager : MonoBehaviour
 
     private void Update()
     {
+        if(Input.GetKey(KeyCode.P))
+        {
+            SceneManager.LoadScene("8.Next to #4");
+        }
         //만약 캐릭터가 점프 중이거나 슬라이딩 중이면 조작을 할 수 없다.
         if (move.isJump || move.isSlide) return;
 
