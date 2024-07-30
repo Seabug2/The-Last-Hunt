@@ -11,7 +11,7 @@ public class GameManager : MonoBehaviour
     /// <summary>
     /// 여기에 클리어한 점수를 기록합니다.
     /// </summary>
-    public string[] currentGameScore = new string[4];
+    [HideInInspector] public string[] currentGameScore = new string[4];
     public AudioMixer audioMixer;
 
     private void Awake()

@@ -59,7 +59,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: e7e6941bd11bf9d49bef7866e013f427, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -92,7 +92,7 @@ GameObject:
   - component: {fileID: 5110297529496156383}
   - component: {fileID: 5110297529496156382}
   m_Layer: 0
-  m_Name: Grass_01
+  m_Name: Grass
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -106,7 +106,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5110297529496156376}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.31, y: 0, z: -0.33}
+  m_LocalPosition: {x: 0.841, y: 0, z: 0.040000007}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_Children:
   - {fileID: 5110297530707993299}
@@ -146,11 +146,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5110297529505639719}
-  - component: {fileID: 5110297529505639716}
   - component: {fileID: 5110297529505639717}
+  - component: {fileID: 7449490088478482189}
   m_Layer: 0
   m_Name: obstacle_left_stone
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -162,8 +162,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5110297529505639712}
-  m_LocalRotation: {x: 0.005608272, y: 0.007947484, z: 0.007597832, w: 0.9999238}
-  m_LocalPosition: {x: -5.802, y: -0.088, z: -0.353}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 5110297529666495234}
@@ -174,20 +174,7 @@ Transform:
   - {fileID: 5110297529609738700}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0.636, y: 0.916, z: 0.876}
---- !u!65 &5110297529505639716
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5110297529505639712}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1.865188, y: 0.4900001, z: 1.663771}
-  m_Center: {x: -0.5348545, y: 0, z: -0.27761105}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &5110297529505639717
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -200,7 +187,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5bca92008768b464a9a07f63683df17d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player_o: {fileID: 8980430262699301030, guid: 160c0d7be660568468d037c64dfab80b, type: 3}
+--- !u!135 &7449490088478482189
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5110297529505639712}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.98
+  m_Center: {x: 0, y: 0.25, z: 0}
 --- !u!1 &5110297529553187926
 GameObject:
   m_ObjectHideFlags: 0
@@ -293,7 +292,7 @@ GameObject:
   - component: {fileID: 5110297529609738700}
   - component: {fileID: 5110297529609738691}
   m_Layer: 0
-  m_Name: Grass_01 (2)
+  m_Name: Grass
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -307,7 +306,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5110297529609738701}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.31, y: -0, z: -0.939}
+  m_LocalPosition: {x: 0.841, y: 0, z: -0.569}
   m_LocalScale: {x: 3, y: 3, z: 3}
   m_Children:
   - {fileID: 5110297529627603676}
@@ -364,7 +363,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5110297529627603677}
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.184, y: 0, z: 0.375}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 5110297529609738700}
@@ -431,7 +430,7 @@ GameObject:
   - component: {fileID: 5110297529666495232}
   - component: {fileID: 5110297529666495233}
   m_Layer: 0
-  m_Name: Rock_01
+  m_Name: Rock
   m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -445,7 +444,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5110297529666495235}
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.962, y: 0.231, z: 0.057}
+  m_LocalPosition: {x: -0.431, y: 0.231, z: 0.427}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 5110297529505639719}
@@ -525,8 +524,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5110297529972429022}
-  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0, y: 0, z: 0}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 5110297529496156383}
@@ -559,7 +558,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: e7e6941bd11bf9d49bef7866e013f427, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -606,13 +605,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5110297530707993308}
-  m_LocalRotation: {x: 0, y: -0.258819, z: 0, w: 0.9659259}
-  m_LocalPosition: {x: -0.231, y: 0, z: -0.386}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 5110297529496156383}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: -30, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &5110297530707993297
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -688,7 +687,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5110297530851531078}
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 5110297529609738700}
@@ -721,7 +720,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: e7e6941bd11bf9d49bef7866e013f427, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -755,7 +754,7 @@ GameObject:
   - component: {fileID: 5110297530863572778}
   - component: {fileID: 5110297530863572779}
   m_Layer: 0
-  m_Name: Rock_05
+  m_Name: Rock
   m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -769,7 +768,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5110297530863572949}
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.381, y: 0.289, z: -0.529}
+  m_LocalPosition: {x: 0.15, y: 0.289, z: -0.15899996}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_Children: []
   m_Father: {fileID: 5110297529505639719}
@@ -835,7 +834,7 @@ GameObject:
   - component: {fileID: 5110297531166697124}
   - component: {fileID: 5110297531166697147}
   m_Layer: 0
-  m_Name: Grass_01 (1)
+  m_Name: Grass
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -849,7 +848,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5110297531166697125}
   m_LocalRotation: {x: 0, y: 0.5735764, z: 0, w: 0.8191521}
-  m_LocalPosition: {x: -1.202, y: 0, z: -0.486}
+  m_LocalPosition: {x: -0.671, y: 0, z: -0.116}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_Children:
   - {fileID: 5110297529553187925}
@@ -892,7 +891,7 @@ GameObject:
   - component: {fileID: 5110297531389925895}
   - component: {fileID: 5110297531389925888}
   m_Layer: 0
-  m_Name: Rock_02
+  m_Name: Rock
   m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -906,7 +905,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5110297531389925890}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.09, y: 0.04, z: 0.19}
+  m_LocalPosition: {x: 0.621, y: 0.04, z: 0.56}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_Children: []
   m_Father: {fileID: 5110297529505639719}
