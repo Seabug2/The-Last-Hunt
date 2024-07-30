@@ -98,13 +98,11 @@ public class UIController_Shoot : MonoBehaviour
         }
         else
         {
-            Debug.Log("FadeOut");
+            //Debug.Log("FadeOut");
             Time.timeScale = 1;
             for (float i = 0; i <= 2; i += Time.deltaTime)
             {
                 fade.color = new Color(0, 0, 0, i);
-                print(Time.deltaTime);
-                print(i);
                 yield return null;
             }
 
@@ -189,10 +187,10 @@ public class UIController_Shoot : MonoBehaviour
             GameClear.SetActive(true);
             GameClearScore_Text.text = string.Format("Score : {0:#,##0}", TotalKill_Score);
             GameManager.instance.currentGameScore[0] = TotalKill_Score.ToString();
-            if(GameManager.instance.IsNewHighScore(0, TotalKill_Score))
-            {
-                Debug.Log("최고 기록 갱신!");
-            }
+            //if(GameManager.instance.IsNewHighScore(0, TotalKill_Score))
+            //{
+            //    Debug.Log("최고 기록 갱신!");
+            //}
         }
         else
         {

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2417603334637743036}
   - component: {fileID: 2417603334637743039}
   m_Layer: 0
-  m_Name: Grass_02
+  m_Name: Grass
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -163,7 +163,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2417603334899102191}
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2417603335608201919}
@@ -196,7 +196,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: e7e6941bd11bf9d49bef7866e013f427, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -244,7 +244,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2417603334907363209}
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.019, y: 0, z: 0.041}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2417603335608201919}
@@ -358,7 +358,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: e7e6941bd11bf9d49bef7866e013f427, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -391,7 +391,7 @@ GameObject:
   - component: {fileID: 2417603335146252110}
   - component: {fileID: 2417603335146252105}
   m_Layer: 0
-  m_Name: Grass_02 (1)
+  m_Name: Grass
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -447,7 +447,7 @@ GameObject:
   - component: {fileID: 2417603335290063051}
   - component: {fileID: 2417603335290063050}
   m_Layer: 0
-  m_Name: Grass_01
+  m_Name: Grass
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -503,7 +503,7 @@ GameObject:
   - component: {fileID: 2417603335608201919}
   - component: {fileID: 2417603335608201918}
   m_Layer: 0
-  m_Name: Grass_01 (1)
+  m_Name: Grass
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -560,7 +560,7 @@ GameObject:
   - component: {fileID: 2417603335801027571}
   - component: {fileID: 2417603335801027568}
   m_Layer: 0
-  m_Name: Rock_05
+  m_Name: Rock
   m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -655,7 +655,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2417603335968505649}
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.046, y: 0, z: -0.029}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2417603335146252110}
@@ -800,11 +800,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2417603336096080880}
-  - component: {fileID: 2417603336096080893}
   - component: {fileID: 2417603336096080882}
+  - component: {fileID: 4312402985607511075}
   m_Layer: 0
   m_Name: obstacle _right_stone
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -817,7 +817,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2417603336096080881}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -7.02, y: 0, z: 0.78}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 2417603336603746167}
@@ -830,19 +830,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &2417603336096080893
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2417603336096080881}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1.703319, y: 1.1787109, z: 1.5979875}
-  m_Center: {x: 0.58337885, y: 0.54499197, z: 0.1985113}
 --- !u!114 &2417603336096080882
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -855,7 +842,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5bca92008768b464a9a07f63683df17d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player_o: {fileID: 8980430262699301030, guid: 160c0d7be660568468d037c64dfab80b, type: 3}
+  myType: 0
+--- !u!135 &4312402985607511075
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2417603336096080881}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.77
+  m_Center: {x: 0.6, y: 0, z: 0.19}
 --- !u!1 &2417603336306744843
 GameObject:
   m_ObjectHideFlags: 0
@@ -915,7 +915,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: e7e6941bd11bf9d49bef7866e013f427, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -963,7 +963,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2417603336440723053}
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2417603335146252110}
@@ -996,7 +996,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: e7e6941bd11bf9d49bef7866e013f427, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1030,7 +1030,7 @@ GameObject:
   - component: {fileID: 2417603336462062572}
   - component: {fileID: 2417603336462062573}
   m_Layer: 0
-  m_Name: Rock_04
+  m_Name: Rock
   m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1111,7 +1111,7 @@ GameObject:
   - component: {fileID: 2417603336603746160}
   - component: {fileID: 2417603336603746161}
   m_Layer: 0
-  m_Name: Rock_01
+  m_Name: Rock
   m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

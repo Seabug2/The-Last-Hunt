@@ -10,6 +10,7 @@ TagManager:
   - Ground
   - Obstacle
   - FxTemporaire
+  - Turn
   layers:
   - Default
   - TransparentFX

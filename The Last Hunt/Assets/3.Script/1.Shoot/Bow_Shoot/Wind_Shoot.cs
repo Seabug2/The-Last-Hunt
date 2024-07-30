@@ -33,9 +33,9 @@ public class Wind_Shoot : MonoBehaviour
             SetWind();
             randTime = Random.Range(minTerm, maxTerm);
             startTime = Time.time;
-            Debug.Log($"Interval : {randTime}");
-            Debug.Log($"Direction : {windDir}");
-            Debug.Log($"Strength : {windStr}");
+            //Debug.Log($"Interval : {randTime}");
+            //Debug.Log($"Direction : {windDir}");
+            //Debug.Log($"Strength : {windStr}");
         }
         else
         {
