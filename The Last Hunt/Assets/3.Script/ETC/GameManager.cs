@@ -34,6 +34,7 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         MixerSetting();
+        currentGameScore = new string[4];
     }
 
     void MixerSetting()
@@ -46,12 +47,12 @@ public class GameManager : MonoBehaviour
     /// <summary>
     /// 타이틀 화면에서 챕터 선택으로 게임을 시작하면 false
     /// </summary>
-    bool isStoryMode;
-    public bool IsStoryMode => isStoryMode;
+    public bool isStoryMode;
 
     public void SetPlayingMode(bool on)
     {
         isStoryMode = on;
+        currentGameScore = new string[4];
     }
 
     string path;

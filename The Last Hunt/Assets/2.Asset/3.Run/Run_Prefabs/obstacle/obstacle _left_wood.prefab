@@ -309,7 +309,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2573544324849507672}
   - component: {fileID: 2573544324849507677}
-  - component: {fileID: 2573544324849507674}
+  - component: {fileID: 9156190706202584534}
   m_Layer: 0
   m_Name: obstacle _left_wood
   m_TagString: Obstacle
@@ -350,7 +350,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.94206476, y: 1.3115783, z: 4.411714}
   m_Center: {x: -0.06850481, y: 0.25, z: -0.018571138}
---- !u!114 &2573544324849507674
+--- !u!114 &9156190706202584534
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

@@ -13,7 +13,8 @@ public class Puzzle_Hunter_Input : MonoBehaviour
         anim = GetComponent<Animator>();
     }
 
-    public float dead = 1f;
+    [SerializeField,Header("ÀÔ·Â °¨¼è")]
+    float dead = 1f;
     Vector3 dir;
 
     private void Update()

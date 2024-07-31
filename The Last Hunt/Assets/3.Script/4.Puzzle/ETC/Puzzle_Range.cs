@@ -1,6 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEditor;
+using System;
 using UnityEngine;
 
 public class Puzzle_Range : MonoBehaviour
@@ -18,12 +16,9 @@ public class Puzzle_Range : MonoBehaviour
     Vector3 point3;
     Vector3 point4;
 
-    [SerializeField]
-    bool reset = false;
-#if UNITY_EDITOR
-    private void OnValidate()
+    [ContextMenu("함수 실행")]
+    void GuideLineSetting()
     {
-        reset = false;
         if (leftDown == null)
         {
             _leftDown = Vector3.zero;
@@ -46,6 +41,7 @@ public class Puzzle_Range : MonoBehaviour
         point4 = new Vector3(_RightUp.x, 0, _leftDown.z);
     }
 
+#if UNITY_EDITOR
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.white;

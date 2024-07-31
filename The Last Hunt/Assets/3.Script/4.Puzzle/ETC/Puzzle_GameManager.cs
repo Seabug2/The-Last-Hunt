@@ -22,8 +22,6 @@ public class Puzzle_GameManager : MonoBehaviour
         Init();
     }
 
-    System.Diagnostics.Stopwatch stopwatch = new System.Diagnostics.Stopwatch();
-
     public const int tileSize = 3;
 
     [SerializeField, Header("타일 레이어"), Space(10)]
@@ -126,7 +124,6 @@ public class Puzzle_GameManager : MonoBehaviour
         }
 
         GameStartEvent.Invoke();
-        stopwatch.Start();
     }
 
     /// <summary>
@@ -172,7 +169,7 @@ public class Puzzle_GameManager : MonoBehaviour
         yield return new WaitForSeconds(2.5f);
 
         lookAtHunterVCam.Priority = brainCam.ActiveVirtualCamera.Priority + 1;
-        yield return new WaitUntil(()=> brainCam.ActiveVirtualCamera.Equals(lookAtHunterVCam));
+        yield return new WaitUntil(() => brainCam.ActiveVirtualCamera.Equals(lookAtHunterVCam));
         yield return new WaitWhile(() => brainCam.IsBlending);
 
         //플레이어 애니메이션 재생
@@ -209,7 +206,7 @@ public class Puzzle_GameManager : MonoBehaviour
 
     IEnumerator GameOver_Hunter_co(Puzzle_Hunter_TileAction hunter)
     {
-        if(hunter.isFallen)
+        if (hunter.isFallen)
         {
             hunter.FallingEvent?.Invoke();
         }
@@ -266,23 +263,15 @@ public class Puzzle_GameManager : MonoBehaviour
         float time = (float)timer.time;
         currentScore.text = Timer.ConvertTimeCode(time);
         GameManager.instance.currentGameScore[3] = currentScore.text;
-        if (GameManager.instance.IsNewHighScore(3,time,false))
+        if (GameManager.instance.IsNewHighScore(3, time, false))
         {
             print("최고 점수 갱신!");
         }
 
         bestScore.text = Timer.ConvertTimeCode(GameManager.instance.userData.score[3]);
 
-        if (GameManager.instance.IsStoryMode)
-        {
-            nextButton.SetActive(true);
-            returnButton.SetActive(false);
-        }
-        else
-        {
-            nextButton.SetActive(false);
-            returnButton.SetActive(true);
-        }
+        nextButton.SetActive(GameManager.instance.isStoryMode);
+        returnButton.SetActive(!GameManager.instance.isStoryMode);
 
         traceVCam.Follow = FindObjectOfType<Puzzle_Horse>().transform;
 
@@ -293,7 +282,7 @@ public class Puzzle_GameManager : MonoBehaviour
         yield return new WaitForSeconds(tt);
 
         lookAtHunterVCam.Priority = brainCam.ActiveVirtualCamera.Priority + 1;
-        yield return new WaitUntil(()=>brainCam.ActiveVirtualCamera.Equals(lookAtHunterVCam));
+        yield return new WaitUntil(() => brainCam.ActiveVirtualCamera.Equals(lookAtHunterVCam));
         yield return new WaitWhile(() => brainCam.IsBlending);
 
         GameClearEvent?.Invoke();

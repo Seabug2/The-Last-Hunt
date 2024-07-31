@@ -71,7 +71,9 @@ public class Run_PlayerMove : MonoBehaviour
         if (!Physics.Raycast(ray, out RaycastHit hit, 2f, checkingLayer) && !isJumping)
         {
             FallingEvent?.Invoke();
-            Run_Manager.instance.EndEvent?.Invoke();
+            //아직 게임오버 된 상태가 아니라면 게임오버 이벤트를 진행
+            if (!Run_Manager.instance.IsGameOver)
+                Run_Manager.instance.EndEvent?.Invoke();
         }
     }
 

@@ -180,7 +180,7 @@ public class UIController_Shoot : MonoBehaviour
         Time.timeScale = 0;
         if (TotalKill_Score >= 2500)
         {
-            if (!GameManager.instance.IsStoryMode)
+            if (!GameManager.instance.isStoryMode)
             {
                 NextChapter.SetActive(false);
             }

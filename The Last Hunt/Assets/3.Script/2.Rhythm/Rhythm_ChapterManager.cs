@@ -202,8 +202,8 @@ public class Rhythm_ChapterManager : MonoBehaviour
 
     public void ResultAppear()
     {
-        if (GameManager.instance.IsStoryMode) MainButton.SetActive(false);
-        else NextButton.SetActive(false);
+        MainButton.SetActive(!GameManager.instance.isStoryMode);
+        NextButton.SetActive(GameManager.instance.isStoryMode);
 
         resultVcam.Priority = mainBcam.Priority + 1;
         Menu.SetActive(false);

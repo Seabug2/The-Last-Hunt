@@ -5,11 +5,13 @@ public class Run_Input : MonoBehaviour
     private void Awake()
     {
         move = GetComponent<Run_PlayerMove>();
+        voice = GetComponent<Run_HunterVoice>();
         tileChecker = GetComponent<Run_TileChecker>();
     }
 
     Run_PlayerMove move;
     Run_TileChecker tileChecker;
+    Run_HunterVoice voice;
 
     private void Update()
     {
@@ -19,6 +21,7 @@ public class Run_Input : MonoBehaviour
         //만약 스페이스바를 눌렀으면
         if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.UpArrow))
         {
+            voice.PlayAudio("기합소리");
             //캐릭터가 점프를 한다.
             move.Jumping();
             return;
@@ -27,6 +30,7 @@ public class Run_Input : MonoBehaviour
         //만약 s 키를 눌렀으면
         if (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow))
         {
+            voice.PlayAudio("기합소리");
             //슬라이딩을 실행
             move.Sliding();
             return;

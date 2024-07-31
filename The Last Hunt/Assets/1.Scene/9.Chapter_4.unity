@@ -9260,6 +9260,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
+      - m_Target: {fileID: 1509780658}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
   EndGame:
     m_PersistentCalls:
       m_Calls:
@@ -10436,7 +10448,7 @@ Light:
   m_Type: 1
   m_Shape: 0
   m_Color: {r: 1, g: 0.93566036, b: 0.82452834, a: 1}
-  m_Intensity: 1
+  m_Intensity: 1.4
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -13639,6 +13651,49 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5068370417586779512, guid: 429c3d602aa44434cb40e0a4fea3c07b, type: 3}
   m_PrefabInstance: {fileID: 1503540175}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1509780658
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1509780660}
+  - component: {fileID: 1509780659}
+  m_Layer: 0
+  m_Name: Admin Power
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!114 &1509780659
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1509780658}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2de88ff0ce156d94a891531c4ae9367e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &1509780660
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1509780658}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 12
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1524185731
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -47080,6 +47135,10 @@ PrefabInstance:
       propertyPath: m_audioClip
       value: 
       objectReference: {fileID: 8300000, guid: 4a6ef58512ee8134aa663898f64bdeac, type: 3}
+    - target: {fileID: 5005487815428144170, guid: 7f6e7dc70c8b3934b9c217a101f3dd74, type: 3}
+      propertyPath: OutputAudioMixerGroup
+      value: 
+      objectReference: {fileID: 7063044450789205771, guid: 14af5919092fdc048ac56cb7940ed04c, type: 2}
     - target: {fileID: 5005487815428144341, guid: 7f6e7dc70c8b3934b9c217a101f3dd74, type: 3}
       propertyPath: m_Name
       value: Horse

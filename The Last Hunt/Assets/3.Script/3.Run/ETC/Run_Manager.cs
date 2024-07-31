@@ -37,10 +37,10 @@ public class Run_Manager : MonoBehaviour
     CinemachineVirtualCamera EndingVCam;
 
     [Header("시스템"), Space(10)]
-    [SerializeField]
-    Timer timer;
+    public Timer timer;
     [SerializeField]
     float targetTime = 120f;
+    public float TargetTime => targetTime;
 
     [Header("이벤트"), Space(10)]
     public UnityEvent StartEvent;
@@ -69,6 +69,7 @@ public class Run_Manager : MonoBehaviour
         //StartEvent.AddListener(() => { });
         EndEvent.AddListener(() =>
         {
+            IsGameOver = true;
             StartCoroutine(GameClose());
         });
         //GameOverEvent.AddListener(() => { });
@@ -97,9 +98,9 @@ public class Run_Manager : MonoBehaviour
         message.sizeDelta = new Vector2(Screen.width, 0);
         message.gameObject.SetActive(true);
         message.DOSizeDelta(new Vector2(Screen.width, 150f), 1.8f).SetEase(Ease.OutCubic);
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(.5f);
 
-        float t = 3f;
+        float t = 6f;
         while (t > 0)
         {
             t -= Time.deltaTime;
@@ -120,6 +121,7 @@ public class Run_Manager : MonoBehaviour
         InGameVCam.Priority = IntroVCam.Priority + 1;
 
         yield return new WaitUntil(()=>brain.ActiveVirtualCamera.Equals(InGameVCam));
+        yield return new WaitUntil(()=>brain.IsBlending);
 
         StartEvent?.Invoke();
     }
@@ -131,8 +133,8 @@ public class Run_Manager : MonoBehaviour
         {
             print("2분 이상을 기록");
 
-            nextButton.gameObject.SetActive(GameManager.instance.IsStoryMode);
-            homeButton.gameObject.SetActive(!GameManager.instance.IsStoryMode);
+            nextButton.gameObject.SetActive(GameManager.instance.isStoryMode);
+            homeButton.gameObject.SetActive(!GameManager.instance.isStoryMode);
 
             if (GameManager.instance.IsNewHighScore(2, currentScore))
             {
@@ -140,6 +142,7 @@ public class Run_Manager : MonoBehaviour
             }
 
             currentScoreText.text = Timer.ConvertTimeCode(currentScore);
+            GameManager.instance.currentGameScore[2] = currentScoreText.text;
             bestScoreText.text = Timer.ConvertTimeCode(GameManager.instance.userData.score[2]);
 
             GameClearEvent?.Invoke();
@@ -147,14 +150,15 @@ public class Run_Manager : MonoBehaviour
         }
         else
         {
+            yield return new WaitForSeconds(1f);
             message.transform.GetComponentInChildren<Text>().text = "2분 만 버텨보자...!";
             // 메세지 출력
             message.sizeDelta = new Vector2(Screen.width, 0);
             message.gameObject.SetActive(true);
             message.DOSizeDelta(new Vector2(Screen.width, 150f), 1.8f).SetEase(Ease.OutCubic);
-            yield return new WaitForSeconds(2f);
+            yield return new WaitForSeconds(.5f);
 
-            float t = 3f;
+            float t = 3.5f;
             while (t > 0)
             {
                 t -= Time.deltaTime;
@@ -176,5 +180,4 @@ public class Run_Manager : MonoBehaviour
             GameOverEvent?.Invoke();
         }
     }
-
 }
