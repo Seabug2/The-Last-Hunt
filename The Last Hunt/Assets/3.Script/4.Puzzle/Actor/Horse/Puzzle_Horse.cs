@@ -21,7 +21,7 @@ public class Puzzle_Horse : Puzzle_TileChecker
         }
         else
         {
-            ViewingTile.TileEvent(this);
+            ViewingTile.OnStepped(this);
         }
     }
 

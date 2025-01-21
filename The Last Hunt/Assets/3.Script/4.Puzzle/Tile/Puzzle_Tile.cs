@@ -51,7 +51,7 @@ public class Puzzle_Tile : MonoBehaviour
     }
 
     //타일을 상속 구조로 만든 이유
-    public virtual void TileEvent(Puzzle_Horse target)
+    public virtual void OnStepped(Puzzle_Horse target)
     {
         print($"말이 {name} 타일을 밟았습니다.");
     }
@@ -74,8 +74,8 @@ public class Puzzle_Tile : MonoBehaviour
             //타일이 놓여져 있는 경우 자신도 검출이 될 수 있으므로 타일 레이어를 제외한 모든 레이어를 검사
             ~ignoreLayer.value;
 
-        Collider[] cols = Physics.OverlapBox(transform.position, Vector3.one * range, Quaternion.identity, targetLayer);
-        if (cols.Length > 0)
+        bool overlapedTile= Physics.CheckBox(transform.position, Vector3.one * range, Quaternion.identity, targetLayer);
+        if (overlapedTile)
         {
             return true;
         }

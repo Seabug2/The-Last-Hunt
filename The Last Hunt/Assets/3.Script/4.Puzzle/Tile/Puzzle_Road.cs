@@ -37,7 +37,7 @@ public class Puzzle_Road : Puzzle_Tile
     /// </summary>
     const float duration = 6.9f;
 
-    public override void TileEvent(Puzzle_Horse target)
+    public override void OnStepped(Puzzle_Horse target)
     {
         StartMoveHorse(target);
     }

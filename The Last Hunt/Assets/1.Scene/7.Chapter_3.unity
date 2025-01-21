@@ -1967,6 +1967,7 @@ MonoBehaviour:
   - 
   - 
   audioMixer: {fileID: 24100000, guid: 14af5919092fdc048ac56cb7940ed04c, type: 2}
+  isStoryMode: 0
   userData:
     IsCleared: 00000000
     score:

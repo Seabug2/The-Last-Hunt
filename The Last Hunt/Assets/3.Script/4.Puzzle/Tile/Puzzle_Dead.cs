@@ -11,7 +11,7 @@ public class Puzzle_Dead : Puzzle_Tile
         ignoreLayer = 0;
     }
 
-    public override void TileEvent(Puzzle_Horse target)
+    public override void OnStepped(Puzzle_Horse target)
     {
         //게임이 이미 끝난 상태라면 작동하지 않습니다.
         if (Puzzle_GameManager.instance.IsGameOver) return;
